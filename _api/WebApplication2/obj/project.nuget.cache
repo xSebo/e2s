@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6f9aosalWZ5yrflWwdlOjUpKC0PnWuMO+cYPvlB35ZwO4jW2QKiqeS2JUOxmbqZ8kZ8olvC4cHm+JJnLT2BjXg==",
+  "dgSpecHash": "VTNFj7cd5bf9udAHkYT0hRiFxF2VqJCeUY4X1aAAcfzAMSLPpQ7oYOcABVYyQQaG9Kuee2bUhGbRJMnrs2nmsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+  "projectFilePath": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\c2065864\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.7\\microsoft.entityframeworkcore.6.0.7.nupkg.sha512",
     "C:\\Users\\c2065864\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.7\\microsoft.entityframeworkcore.abstractions.6.0.7.nupkg.sha512",

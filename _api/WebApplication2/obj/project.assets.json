@@ -725,11 +725,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectUniqueName": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
       "projectName": "WebApplication2",
-      "projectPath": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectPath": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
       "packagesPath": "C:\\Users\\c2065864\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\obj\\",
+      "outputPath": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\c2065864\\AppData\\Roaming\\NuGet\\NuGet.Config"
