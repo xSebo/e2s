@@ -720,19 +720,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\c2065864\\.nuget\\packages\\": {}
+    "C:\\Users\\c2040622\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectUniqueName": "C:\\Users\\c2040622\\OneDrive - Cardiff University\\Documents\\Work\\Year 3\\_adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
       "projectName": "WebApplication2",
-      "projectPath": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
-      "packagesPath": "C:\\Users\\c2065864\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\c2065864\\RiderProjects\\WebApplication2\\WebApplication2\\obj\\",
+      "projectPath": "C:\\Users\\c2040622\\OneDrive - Cardiff University\\Documents\\Work\\Year 3\\_adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
+      "packagesPath": "C:\\Users\\c2040622\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\c2040622\\OneDrive - Cardiff University\\Documents\\Work\\Year 3\\_adopting-tech-team-3\\_api\\WebApplication2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\c2065864\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\c2040622\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -780,7 +780,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\c2065864\\.dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\c2040622\\.dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
