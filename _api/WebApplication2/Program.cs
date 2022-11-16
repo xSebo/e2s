@@ -16,6 +16,7 @@ MariaDbServerVersion serverVersion = new MariaDbServerVersion(new Version(10, 7,
 builder.Services.AddDbContext<E2SContext>(
     dbContextOptions => dbContextOptions
         .UseMySql(connectionString, serverVersion)
+        .UseLazyLoadingProxies()
         // The following three options help with debugging, but should
         // be changed or removed for production.
         .LogTo(Console.WriteLine, LogLevel.Information)
