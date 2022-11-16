@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
 using WebApplication2.Models;
@@ -6,24 +7,18 @@ using WebApplication2.Models;
 namespace WebApplication2.Controllers;
 
 [ApiController]
-public class CustomerController : Controller{
+public class UserController : Controller{
 
     private readonly E2SContext _context;
 
-    public CustomerController(E2SContext context){
+    public UserController(E2SContext context){
         _context = context;
     }
     
-    [Route("/test")]
+    [Route("")]
     [AllowAnonymous]
     [HttpGet]
     public User Hello(){
-        
-        int authId = _context.Authorities.SingleOrDefault(authority => authority.Name == "Admin")!.Id ?? 1;
-        int userId = _context.UserAuthorityLinks.SingleOrDefault(link => link.AuthorityId == authId)!.UserId ?? 1;
-        User user = _context.Users.Find(userId)!;
-        
-
-        return user;
+        return _context.Users.SingleOrDefault(x=>x.Name == "Sam")!;
     }
 }
