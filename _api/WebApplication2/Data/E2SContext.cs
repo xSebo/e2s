@@ -12,10 +12,7 @@ public class E2SContext : DbContext{
     public virtual DbSet<Authority> Authorities{ get;set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
-        modelBuilder.Entity<User>().ToTable("Users")
-            .HasOne(a => a.Authority)
-            .WithOne()
-            .HasForeignKey<User>(x => x.AuthorityId);
+        modelBuilder.Entity<User>().ToTable("Users");
 
         modelBuilder.Entity<Authority>().ToTable("Authorities");
     }
