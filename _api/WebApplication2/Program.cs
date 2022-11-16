@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Data;
-using Microsoft.Extensions.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ string connectionString = config.GetConnectionString("DefaultConnection");
 builder.Services.AddControllers();
 
 MariaDbServerVersion serverVersion = new MariaDbServerVersion(new Version(10, 7, 4));
-builder.Services.AddDbContext<ShopContext>(
+builder.Services.AddDbContext<E2SContext>(
     dbContextOptions => dbContextOptions
         .UseMySql(connectionString, serverVersion)
         // The following three options help with debugging, but should
