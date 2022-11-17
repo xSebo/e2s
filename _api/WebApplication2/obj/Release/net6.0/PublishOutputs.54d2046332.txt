@@ -1,7 +1,0 @@
-C:\Users\c2065864\RiderProjects\WebApplication2.exe
-C:\Users\c2065864\RiderProjects\appsettings.Development.json
-C:\Users\c2065864\RiderProjects\appsettings.json
-C:\Users\c2065864\RiderProjects\WebApplication2.dll
-C:\Users\c2065864\RiderProjects\WebApplication2.deps.json
-C:\Users\c2065864\RiderProjects\WebApplication2.runtimeconfig.json
-C:\Users\c2065864\RiderProjects\WebApplication2.pdb
