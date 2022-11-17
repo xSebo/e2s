@@ -1,7 +1,0 @@
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\WebApplication2.exe
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\appsettings.Development.json
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\appsettings.json
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\WebApplication2.dll
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\WebApplication2.deps.json
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\WebApplication2.runtimeconfig.json
-C:\Users\c2065864\RiderProjects\WebApplication2\WebApplication2\bin\Release\net6.0\publish\WebApplication2.pdb
