@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WebApplication2.Data;
-
+using WebApplication2.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +9,9 @@ var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
     .Build();
 
-string connectionString = config.GetConnectionString("DefaultConnection");
-
 builder.Services.AddControllers();
 
+string connectionString = config.GetConnectionString("DefaultConnection");
 MariaDbServerVersion serverVersion = new MariaDbServerVersion(new Version(10, 7, 4));
 builder.Services.AddDbContext<E2SContext>(
     dbContextOptions => dbContextOptions
@@ -23,6 +23,8 @@ builder.Services.AddDbContext<E2SContext>(
         .EnableSensitiveDataLogging()
         .EnableDetailedErrors()
 );
+
+builder.Services.Configure<JWTKey>(builder.Configuration.GetSection(JWTKey.Position));
 
 var app = builder.Build();
 
