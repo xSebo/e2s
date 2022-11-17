@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj": {}
+    "C:\\Users\\c1950117\\OneDrive - Cardiff University\\Desktop\\team3Repo\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj": {
+    "C:\\Users\\c1950117\\OneDrive - Cardiff University\\Desktop\\team3Repo\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
+        "projectUniqueName": "C:\\Users\\c1950117\\OneDrive - Cardiff University\\Desktop\\team3Repo\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
         "projectName": "WebApplication2",
-        "projectPath": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
-        "packagesPath": "C:\\Users\\c2065864\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\c2065864\\RiderProjects\\adopting-tech-team-3\\_api\\WebApplication2\\obj\\",
+        "projectPath": "C:\\Users\\c1950117\\OneDrive - Cardiff University\\Desktop\\team3Repo\\adopting-tech-team-3\\_api\\WebApplication2\\WebApplication2.csproj",
+        "packagesPath": "C:\\Users\\c1950117\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\c1950117\\OneDrive - Cardiff University\\Desktop\\team3Repo\\adopting-tech-team-3\\_api\\WebApplication2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\c2065864\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\c1950117\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -38,6 +38,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[6.0.2, )"
@@ -62,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\c2065864\\.dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\c1950117\\.dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
