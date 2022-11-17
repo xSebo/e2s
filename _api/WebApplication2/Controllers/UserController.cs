@@ -18,7 +18,7 @@ public class UserController : Controller{
     [Route("")]
     [AllowAnonymous]
     [HttpGet]
-    public User Hello(){
-        return _context.Users.SingleOrDefault(x=>x.Name == "Sam")!;
+    public Authority Hello(){
+        return _context.Authorities.Find(1)!;
     }
 }
