@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="531d26f5-f693-46aa-8ab5-eb99a3ef9234" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../_api/.idea/.idea.WebApplication2/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/.idea/.idea.WebApplication2/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/.idea/.idea.WebApplication2/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/.idea/.idea.WebApplication2/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/.vs/ProjectSettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/.vs/VSWorkspaceState.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/.vs/_api/FileContentIndex/d3af9d5d-530d-4912-805c-7bbbbc5e1db6.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/Backup/WebApplication2.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/UpgradeLog.htm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/WebApplication2/.idea/.idea.WebApplication2.dir/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/WebApplication2/.idea/.idea.WebApplication2.dir/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/WebApplication2/.idea/.idea.WebApplication2.dir/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../_api/WebApplication2/.idea/.idea.WebApplication2.dir/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../_api/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/Microsoft.Extensions.Caching.Memory.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/MySqlConnector.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/Pomelo.EntityFrameworkCore.MySql.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/WebApplication2.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/WebApplication2.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Debug/net6.0/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/WebApplication2.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/WebApplication2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/WebApplication2.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/WebApplication2.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/WebApplication2.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/WebApplication2.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/WebApplication2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/WebApplication2.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/WebApplication2.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/WebApplication2.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/bin/Release/net6.0/publish/web.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/WebApplication2.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/WebApplication2.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/WebApplication2.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/WebApplication2.MvcApplicationPartsAssemblyInfo.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../_api/.vs/_api/FileContentIndex/read.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/WebApplication2.csproj.CopyComplete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/apphost.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Debug/net6.0/staticwebassets.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/PublishOutputs.54d2046332.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/PublishOutputs.73f7a1029b.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.MvcApplicationPartsAssemblyInfo.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.genruntimeconfig.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/WebApplication2.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/apphost.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/ref/WebApplication2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/refint/WebApplication2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/staticwebassets.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/Release/net6.0/staticwebassets.publish.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/WebApplication2/obj/WebApplication2.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_api/creation.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../database/creation.sql" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2HfkUSX4mtzGAuoW2221PhNqgVI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="531d26f5-f693-46aa-8ab5-eb99a3ef9234" name="Changes" comment="" />
+      <created>1668683544271</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668683544271</updated>
+      <workItem from="1668683553484" duration="4658000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
