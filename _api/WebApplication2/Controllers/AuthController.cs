@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
@@ -8,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebApplication2.Data;
 using WebApplication2.DTOs;
 using WebApplication2.Models;
+using WebApplication2.Services;
 
 namespace WebApplication2.Controllers;
 
@@ -15,20 +17,18 @@ namespace WebApplication2.Controllers;
 [ApiController]
 public class AuthController : Controller{
     private readonly E2SContext _e2sContext;
-    private readonly JWTKey _jwt;
-    
-    public AuthController(E2SContext e2sContext, IOptions<JWTKey> security){
+    private readonly IJwt _jwt;
+
+    public AuthController(E2SContext e2sContext, IJwt jwt){
         _e2sContext = e2sContext;
-        _jwt = security.Value; 
+        _jwt = jwt; 
     }
     
     
     [HttpPost]
-    [Route("test")]
-    [Consumes("application/json")]
-    public IActionResult Authenticate([FromBody] UserLoginDTO userLoginDto){
-        Console.WriteLine(_jwt.Key);
-        
+    [Route("create")]
+    public IActionResult Auth([FromBody] UserLoginDTO userLoginDto){
+
         User user = _e2sContext.Users.First(u => u.Email == userLoginDto.Email);
         if (user == null){
             return Unauthorized();
@@ -37,24 +37,24 @@ public class AuthController : Controller{
             return Unauthorized();
         }
 
-        var tokenhandler = new JwtSecurityTokenHandler();
-        var tokenkey = Encoding.UTF8.GetBytes(_jwt.Key);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(
-                new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Authority.Name!)
-
-                }
-            ),
-            Expires = DateTime.Now.AddMinutes(180),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
+        TokenResponse tokenResponse = new TokenResponse{
+            JWTtoken = _jwt.GenJwt(user),
+            RefreshToken = _jwt.RefreshToken(user)
         };
-        var token = tokenhandler.CreateToken(tokenDescriptor);
-        string finalToken = tokenhandler.WriteToken(token);
+        
+        return Ok(tokenResponse);
+    }
 
-        return Ok(finalToken);
-    }    
+    [HttpPost]
+    [Route("refresh")]
+    public IActionResult Refresh([FromBody] TokenResponse token){
+
+        var refreshResponse = _jwt.RefreshJwt(token);
+        if (refreshResponse.Unauthorised){
+            return Unauthorized();
+        }
+
+        return Ok(refreshResponse.Response);
+    }
+    
 }
