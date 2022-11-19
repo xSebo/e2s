@@ -1,11 +1,11 @@
+stages:
+  - API
+  - SPA
+
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
-
-stages:
-  - API
-  - SPA
 
 trigger_api:
   stage: API
