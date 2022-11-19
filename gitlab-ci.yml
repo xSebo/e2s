@@ -1,0 +1,20 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+
+stages:
+  - API
+  - SPA
+
+trigger_api:
+  stage: API
+  trigger:
+    include: _api/.gitlab-ci.yml
+    strategy: depend
+
+trigger_spa:
+  stage: SPA
+  trigger:
+    include: _spa/.gitlab-ci.yml
+    strategy: depend

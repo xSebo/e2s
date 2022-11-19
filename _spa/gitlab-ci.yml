@@ -1,0 +1,28 @@
+default:
+  image: node
+
+variables:
+  spa_dir: '_spa/react-spa/'
+
+cache:
+  paths:
+    - _spa/react-spa/node_modules/
+
+stages:
+  - Test
+  - Build
+  - Deploy
+
+test_job:
+  stage: Test
+  script:
+    - 'cd $spa_dir'
+    - 'npm install'
+    - 'npm test'
+
+build_job:
+  stage: Build
+  script:
+    - 'cd $spa_dir'
+    - 'npm install'
+    - 'npm test'
