@@ -15,6 +15,7 @@ test_job:
     - 'cd $api_dir'
     - 'dotnet test --no-restore'
   only:
+    - main
     - merge_requests
 
 build_job:
@@ -24,4 +25,5 @@ build_job:
     - 'dotnet restore'
     - 'dotnet build --no-restore'
   only:
+    - main
     - merge_requests

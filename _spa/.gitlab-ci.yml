@@ -20,6 +20,7 @@ test_job:
     - 'npm install'
     - 'npm test'
   only:
+    - main
     - merge_requests
 
 build_job:
@@ -29,4 +30,5 @@ build_job:
     - 'npm install'
     - 'npm test'
   only:
+    - main
     - merge_requests
