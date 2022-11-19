@@ -1,6 +1,11 @@
 default:
   image: mcr.microsoft.com/dotnet/sdk:6.0
 
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+    
 variables:
   api_dir: '_api/'
 
@@ -14,9 +19,6 @@ test_job:
   script:
     - 'cd $api_dir'
     - 'dotnet test --no-restore'
-  only:
-    - main
-    - merge_requests
 
 build_job:
   stage: Build
@@ -24,7 +26,3 @@ build_job:
     - 'cd $api_dir'
     - 'dotnet restore'
     - 'dotnet build --no-restore'
-  only:
-    refs:
-      - main
-      - merge_requests

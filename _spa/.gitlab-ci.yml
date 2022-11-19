@@ -1,6 +1,11 @@
 default:
   image: node
 
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+
 variables:
   spa_dir: '_spa/react-spa/'
 
@@ -19,9 +24,6 @@ test_job:
     - 'cd $spa_dir'
     - 'npm install'
     - 'npm test'
-  only:
-    - main
-    - merge_requests
 
 build_job:
   stage: Build
@@ -29,7 +31,3 @@ build_job:
     - 'cd $spa_dir'
     - 'npm install'
     - 'npm test'
-  only:
-    refs:
-      - main
-      - merge_requests
