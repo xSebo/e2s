@@ -30,5 +30,6 @@ build_job:
     - 'npm install'
     - 'npm test'
   only:
-    - main
-    - merge_requests
+    refs:
+      - main
+      - merge_requests
