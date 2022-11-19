@@ -14,7 +14,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema e2s
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `e2s`;
 CREATE SCHEMA IF NOT EXISTS `e2s` DEFAULT CHARACTER SET latin1 ;
 USE `e2s` ;
 
@@ -48,13 +47,34 @@ CREATE TABLE IF NOT EXISTS `e2s`.`users` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+
+-- -----------------------------------------------------
+-- Table `e2s`.`usertokens`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `e2s`.`usertokens` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `userId` INT(11) NOT NULL,
+  `tokenId` INT(11) NOT NULL,
+  `refreshToken` VARCHAR(200) NOT NULL,
+  `isActive` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userId_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `userId`
+    FOREIGN KEY (`userId`)
+    REFERENCES `e2s`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
 insert into authorities (name) values ("User");
 insert into authorities (name) values ("Admin");
 insert into authorities (name) values ("Super Admin");
 
-insert into users (name,email,password,authorityId) values ("Seb","email@email.com","example",1);
-insert into users (name,email,password,authorityId) values ("Sam","email@email.com","example",2);
-insert into users (name,email,password,authorityId) values ("Sam2","email@email.com","example",3);
+insert into users (name,email,password,authorityId) values ("Seb","seb@email.com","example",1);
+insert into users (name,email,password,authorityId) values ("Sam","sam@email.com","example",2);
+insert into users (name,email,password,authorityId) values ("Sam2","sam2@email.com","example",3);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
