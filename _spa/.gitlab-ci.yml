@@ -19,6 +19,8 @@ test_job:
     - 'cd $spa_dir'
     - 'npm install'
     - 'npm test'
+  only:
+    - merge_requests
 
 build_job:
   stage: Build
@@ -26,3 +28,5 @@ build_job:
     - 'cd $spa_dir'
     - 'npm install'
     - 'npm test'
+  only:
+    - merge_requests
