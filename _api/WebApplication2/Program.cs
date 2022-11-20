@@ -55,6 +55,10 @@ builder.Services.AddAuthentication(item =>
 });
 
 var app = builder.Build();
+app.UseCors(options =>
+    options.WithOrigins("http://localhost:3000")
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 
 app.UseAuthentication();
 app.UseAuthorization();

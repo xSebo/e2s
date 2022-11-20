@@ -5,7 +5,6 @@ using WebApplication2.Models;
 namespace WebApplication2.Controllers;
 
 [ApiController]
-[Area("/api")]
 
 public class People : Controller
 {
