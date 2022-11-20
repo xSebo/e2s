@@ -1,3 +1,8 @@
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_BRANCH
+
 default:
   image: mcr.microsoft.com/dotnet/sdk:6.0
 
