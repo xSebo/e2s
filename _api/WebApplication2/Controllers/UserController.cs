@@ -7,6 +7,7 @@ using WebApplication2.Models;
 namespace WebApplication2.Controllers;
 
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class UserController : Controller{
 
     private readonly E2SContext _context;
@@ -16,9 +17,8 @@ public class UserController : Controller{
     }
     
     [Route("")]
-    [AllowAnonymous]
     [HttpGet]
-    public Authority Hello(){
-        return _context.Authorities.Find(1)!;
+    public List<UserToken> Hello(){
+        return _context.UserTokens.ToList();
     }
 }

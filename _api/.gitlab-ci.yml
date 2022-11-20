@@ -1,0 +1,23 @@
+default:
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+
+variables:
+  api_dir: '_api/'
+
+stages:
+  - Test
+  - Build
+  - Deploy
+
+test_job:
+  stage: Test
+  script:
+    - 'cd $api_dir'
+    - 'dotnet test --no-restore'
+
+build_job:
+  stage: Build
+  script:
+    - 'cd $api_dir'
+    - 'dotnet restore'
+    - 'dotnet build --no-restore'

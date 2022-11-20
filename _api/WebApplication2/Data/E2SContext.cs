@@ -10,10 +10,12 @@ public class E2SContext : DbContext{
 
     public virtual DbSet<User> Users{ get; set; } = null!;
     public virtual DbSet<Authority> Authorities{ get;set; } = null!;
+    public virtual DbSet<UserToken> UserTokens{ get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         modelBuilder.Entity<User>().ToTable("Users");
-
         modelBuilder.Entity<Authority>().ToTable("Authorities");
+        modelBuilder.Entity<UserToken>().ToTable("UserTokens");
+
     }
 }
