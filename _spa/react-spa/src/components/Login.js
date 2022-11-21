@@ -52,7 +52,7 @@ export default function Login() {
 
         e.preventDefault();
         if (validate())
-        console.log(values);
+        console.log(adValues);
 
 
         // createAPIEndpoint("/api/peeps")
@@ -61,8 +61,8 @@ export default function Login() {
 
     const validate = ()=> {
         let temp ={}
-        temp.email = (/\S+@\S+\.\S+/).test(values.email)?"":"Email is not vaild."
-        temp.name = values.password!=""?"":"Password doesn't match with this email."
+        temp.email = (/\S+@\S+\.\S+/).test(adValues.email)?"":"Email is not vaild."
+        temp.password = (/\S+@\S+\.\S+/).test(adValues.password)?"":"Password must be x length and contain 1 special character."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
     }
@@ -70,6 +70,7 @@ export default function Login() {
 
     const [adValues, setAdValues] = React.useState({
         amount: '',
+        email: '',
         password: '',
         weight: '',
         weightRange: '',
@@ -116,19 +117,19 @@ export default function Login() {
 
                                 label="Email"
                                 name="email"
-                                value={values.email}
-                                onChange={handleInputChange}
+                                value={adValues.email}
+                                onChange={handleChange('email')}
                                 variant="outlined"
                                 {...(errors.email && {error:true, helperText:errors.email})}
                             />
-                            <TextField
-                                label="Password"
-                                name="password"
-                                value={values.password}
-                                onChange={handleInputChange}
-                                variant="outlined"
-                                {...(errors.name && {error:true, helperText:errors.name})}
-                            />
+                            {/*<TextField*/}
+                            {/*    label="Password"*/}
+                            {/*    name="password"*/}
+                            {/*    value={values.password}*/}
+                            {/*    onChange={handleInputChange}*/}
+                            {/*    variant="outlined"*/}
+                            {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
+                            {/*/>*/}
                             <div>
                                 <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
@@ -137,7 +138,7 @@ export default function Login() {
                                         type={adValues.showPassword ? 'text' : 'password'}
                                         value={adValues.password}
                                         onChange={handleChange('password')}
-                                        {...(errors.name && {error:true, helperText:errors.name})}
+                                        {...(errors.password && {error:true, helperText:errors.password})}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 <IconButton
@@ -152,7 +153,7 @@ export default function Login() {
                                         }
                                         label="Password"
                                     />
-                                    <FormHelperText {...(errors.name && {error:true})}>{errors.name}</FormHelperText>
+                                    <FormHelperText {...(errors.password && {error:true})}>{errors.password}</FormHelperText>
                                 </FormControl>
                             </div>
                             <div>
