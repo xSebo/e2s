@@ -6,7 +6,7 @@ import {
     CardContent,
     Checkbox,
     FormControl,
-    FormControlLabel, IconButton, InputAdornment, InputLabel,
+    FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel,
     Link, OutlinedInput,
     TextField,
     Typography
@@ -46,10 +46,15 @@ export default function Login() {
             res.set('Access-Control-Allow-Origin', '*');
             res.send({ "msg": "This has CORS enabled 🎈" })
         }).then(res => {console.log(res.data)})
+
         // api.get('/').then(res => {console.log(res.data)})
+
+
         e.preventDefault();
         if (validate())
         console.log(values);
+
+
         // createAPIEndpoint("/api/peeps")
         // console.log(createAPIEndpoint("api/peeps"))
     }
@@ -57,7 +62,7 @@ export default function Login() {
     const validate = ()=> {
         let temp ={}
         temp.email = (/\S+@\S+\.\S+/).test(values.email)?"":"Email is not vaild."
-        temp.name = values.name!=""?"":"This field is required."
+        temp.name = values.password!=""?"":"Password doesn't match with this email."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
     }
@@ -116,20 +121,23 @@ export default function Login() {
                                 variant="outlined"
                                 {...(errors.email && {error:true, helperText:errors.email})}
                             />
-                            {/*<TextField*/}
-                            {/*    label="Password"*/}
-                            {/*    name="password"*/}
-                            {/*    value={values.password}*/}
-                            {/*    onChange={handleInputChange}*/}
-                            {/*    variant="outlined"/>*/}
+                            <TextField
+                                label="Password"
+                                name="password"
+                                value={values.password}
+                                onChange={handleInputChange}
+                                variant="outlined"
+                                {...(errors.name && {error:true, helperText:errors.name})}
+                            />
                             <div>
-                                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
                                         type={adValues.showPassword ? 'text' : 'password'}
                                         value={adValues.password}
                                         onChange={handleChange('password')}
+                                        {...(errors.name && {error:true, helperText:errors.name})}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 <IconButton
@@ -144,6 +152,7 @@ export default function Login() {
                                         }
                                         label="Password"
                                     />
+                                    <FormHelperText {...(errors.name && {error:true})}>{errors.name}</FormHelperText>
                                 </FormControl>
                             </div>
                             <div>
