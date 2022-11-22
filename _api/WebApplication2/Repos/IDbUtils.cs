@@ -1,6 +1,6 @@
 ﻿namespace WebApplication2.Repos;
 
-public interface IDBUtils{
+public interface IDbUtils{
     public void SaveChanges();
     public void SaveChangesAsync();
 }

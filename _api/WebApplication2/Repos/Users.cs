@@ -6,9 +6,9 @@ namespace WebApplication2.Repos;
 
 public class Users : IUsers{
     private readonly DbSet<User> _userDb;
-    private readonly DBUtils _dbUtils;
+    private readonly IDbUtils _dbUtils;
 
-    public Users(E2SContext e2sContext, DBUtils dbUtils){
+    public Users(E2SContext e2sContext, IDbUtils dbUtils){
         _userDb = e2sContext.Users;
         _dbUtils = dbUtils;
     }

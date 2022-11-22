@@ -24,8 +24,7 @@ public class AuthController : Controller{
         _users = users;
         _jwt = jwt; 
     }
-    
-    
+
     [HttpPost]
     [Route("create")]
     public IActionResult Auth([FromBody] UserLoginDTO userLoginDto){

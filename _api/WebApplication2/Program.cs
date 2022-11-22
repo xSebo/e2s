@@ -31,7 +31,7 @@ builder.Services.AddDbContext<E2SContext>(
 
 builder.Services.Configure<JWTKey>(builder.Configuration.GetSection(JWTKey.Position));
 builder.Services.AddScoped<IJwt, Jwt>();
-builder.Services.AddScoped<IDBUtils, DBUtils>();
+builder.Services.AddScoped<IDbUtils, DbUtils>();
 builder.Services.AddScoped<IUsers, Users>();
 builder.Services.AddScoped<IAuthorities, Authorities>();
 
