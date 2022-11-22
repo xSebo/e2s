@@ -2,8 +2,6 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication2.Data;
@@ -13,8 +11,8 @@ using WebApplication2.Models;
 namespace WebApplication2.Services;
 
 public class Jwt : IJwt{
-    private string _secret;
-    private E2SContext _e2sContext;
+    private readonly string _secret;
+    private readonly E2SContext _e2sContext;
 
     public Jwt(IOptions<JWTKey> secret, E2SContext e2SContext){
         _secret = secret.Value.Key;
@@ -31,7 +29,7 @@ public class Jwt : IJwt{
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(
-                new Claim[]
+                new[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Authority.Name!)
@@ -49,32 +47,18 @@ public class Jwt : IJwt{
 
     public string RefreshToken(User user){
         var randomNumber = new byte[32];
-        using (var randomNumberGenerator = RandomNumberGenerator.Create()){
-            randomNumberGenerator.GetBytes(randomNumber);
-            string refreshToken = Convert.ToBase64String(randomNumber);
-            UserToken userToken = _e2sContext.UserTokens.FirstOrDefault(x => x.User == user);
-            if (userToken != null){
-                userToken.RefreshToken = refreshToken;
-                _e2sContext.SaveChanges();
-            }
-            else{
-                userToken = new UserToken{
-                    User = user,
-                    TokenId = 0,
-                    RefreshToken = refreshToken,
-                    IsActive = 1
-                };
-                _e2sContext.UserTokens.Add(userToken);
-                _e2sContext.SaveChanges();
-            }
+        using var randomNumberGenerator = RandomNumberGenerator.Create();
+        randomNumberGenerator.GetBytes(randomNumber);
+        string refreshToken = Convert.ToBase64String(randomNumber);
+        UserToken userToken = _e2sContext.UserTokens.FirstOrDefault(x => x.User == user) ?? throw new InvalidOperationException();
+        userToken.RefreshToken = refreshToken;
+        _e2sContext.SaveChanges();
 
-            return refreshToken;
-        }
-
+        return refreshToken;
     }
 
     public RefreshResponse RefreshJwt(TokenResponse token){
-        RefreshResponse _refreshResponse = new RefreshResponse(){
+        RefreshResponse refreshResponse = new RefreshResponse(){
             Response = new TokenResponse(){
                 JWTtoken = "",
                 RefreshToken = ""
@@ -83,7 +67,6 @@ public class Jwt : IJwt{
         };
         
         JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken securityToken;
         ClaimsPrincipal principle = tokenHandler.ValidateToken(token.JWTtoken, new TokenValidationParameters{
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret)),
@@ -91,26 +74,28 @@ public class Jwt : IJwt{
             ValidateAudience = false,
             ValidateLifetime = true,
             ClockSkew=TimeSpan.Zero
-        }, out securityToken);
-        
-        JwtSecurityToken? _token = securityToken as JwtSecurityToken;
-        if (_token != null && !_token.Header.Alg.Equals(SecurityAlgorithms.HmacSha256)){
-            _refreshResponse.Unauthorised = true;
-            return _refreshResponse;
+        }, out var securityToken);
+
+        if (securityToken is JwtSecurityToken jwtSecurityToken && !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256)){
+            refreshResponse.Unauthorised = true;
+            return refreshResponse;
         }
 
-        int id = Convert.ToInt32(principle.Identity.Name);
-        User user = _e2sContext.Users.FirstOrDefault(o=> o.Id == id);
-        var _refTable = _e2sContext.UserTokens.FirstOrDefault(o => o.User.Id == user.Id && o.RefreshToken == token.RefreshToken);
-        if (_refTable == null){
-            _refreshResponse.Unauthorised = true;
-            return _refreshResponse;
-        }
+        if (principle.Identity != null){
+            int id = Convert.ToInt32(principle.Identity.Name);
+            User user = _e2sContext.Users.FirstOrDefault(o=> o.Id == id)!;
+            var refTable = _e2sContext.UserTokens.FirstOrDefault(o => o.User.Id == user.Id && o.RefreshToken == token.RefreshToken);
+            if (refTable == null){
+                refreshResponse.Unauthorised = true;
+                return refreshResponse;
+            }
         
-        TokenResponse _result = Authenticate(user, principle.Claims.ToArray());
+            TokenResponse result = Authenticate(user, principle.Claims.ToArray());
 
-        _refreshResponse.Response = _result;
-        return _refreshResponse;
+            refreshResponse.Response = result;
+        }
+
+        return refreshResponse;
     }
 
     public TokenResponse Authenticate(User user, Claim[] claims){
@@ -131,5 +116,5 @@ public class Jwt : IJwt{
 
 public class RefreshResponse{
     public bool Unauthorised{ get; set; }
-    public TokenResponse Response{ get; set; }
+    public TokenResponse Response{ get; set; } = null!;
 }
