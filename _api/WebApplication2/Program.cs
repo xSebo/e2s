@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication2.Data;
 using WebApplication2.Models;
+using WebApplication2.Repos;
 using WebApplication2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,9 @@ builder.Services.AddDbContext<E2SContext>(
 
 builder.Services.Configure<JWTKey>(builder.Configuration.GetSection(JWTKey.Position));
 builder.Services.AddScoped<IJwt, Jwt>();
-
+builder.Services.AddScoped<IDBUtils, DBUtils>();
+builder.Services.AddScoped<IUsers, Users>();
+builder.Services.AddScoped<IAuthorities, Authorities>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 

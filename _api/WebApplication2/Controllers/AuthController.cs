@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebApplication2.Data;
 using WebApplication2.DTOs;
 using WebApplication2.Models;
+using WebApplication2.Repos;
 using WebApplication2.Services;
 
 namespace WebApplication2.Controllers;
@@ -16,11 +17,11 @@ namespace WebApplication2.Controllers;
 [Route("authenticate/")]
 [ApiController]
 public class AuthController : Controller{
-    private readonly E2SContext _e2sContext;
+    private readonly IUsers _users;
     private readonly IJwt _jwt;
 
-    public AuthController(E2SContext e2sContext, IJwt jwt){
-        _e2sContext = e2sContext;
+    public AuthController(IUsers users, IJwt jwt){
+        _users = users;
         _jwt = jwt; 
     }
     
@@ -29,11 +30,11 @@ public class AuthController : Controller{
     [Route("create")]
     public IActionResult Auth([FromBody] UserLoginDTO userLoginDto){
 
-        User user = _e2sContext.Users.First(u => u.Email == userLoginDto.Email);
+        User? user = _users.ByEmail(userLoginDto.Email);
         if (user == null){
             return Unauthorized();
         }
-        if (!user.Password.Equals(userLoginDto.Password)){
+        if (!user.Password!.Equals(userLoginDto.Password)){
             return Unauthorized();
         }
 
