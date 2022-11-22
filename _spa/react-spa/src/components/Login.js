@@ -21,7 +21,7 @@ import logo from '../logo.png';
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215/api/peeps'
+    baseURL: 'https://localhost:7215/authenticate/create'
 })
 const getFreshModel = ()=>({
     password: '',
@@ -42,10 +42,15 @@ export default function Login() {
     } = useForm(getFreshModel);
 
     const login = e => {
-        api.get('/', (req, res) => {
-            res.set('Access-Control-Allow-Origin', '*');
-            res.send({ "msg": "This has CORS enabled 🎈" })
-        }).then(res => {console.log(res.data)})
+        let loginForm = {
+            "email":adValues.email,
+            "password":adValues.password
+        }
+
+        api.post('/', loginForm
+        ).then(res => {console.log(res.data)}).catch(function (error) {
+            console.log(error);
+        });
 
         // api.get('/').then(res => {console.log(res.data)})
 
@@ -62,7 +67,7 @@ export default function Login() {
     const validate = ()=> {
         let temp ={}
         temp.email = (/\S+@\S+\.\S+/).test(adValues.email)?"":"Email is not vaild."
-        temp.password = (/\S+@\S+\.\S+/).test(adValues.password)?"":"Password must be x length and contain 1 special character."
+        // temp.password = (/\S+@\S+\.\S+/).test(adValues.password)?"":"Password must be x length and contain 1 special character."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
     }
