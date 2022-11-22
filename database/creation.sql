@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema e2s
 -- -----------------------------------------------------
-DROP SCHEME IF EXISTS `e2s`;
+DROP SCHEMA IF EXISTS `e2s`;
 CREATE SCHEMA IF NOT EXISTS `e2s` DEFAULT CHARACTER SET latin1 ;
 USE `e2s` ;
 
