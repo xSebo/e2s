@@ -47,16 +47,14 @@ public class Jwt : IJwt{
 
     public string RefreshToken(User user){
         var randomNumber = new byte[32];
-        using (var randomNumberGenerator = RandomNumberGenerator.Create()){
-            randomNumberGenerator.GetBytes(randomNumber);
-            string refreshToken = Convert.ToBase64String(randomNumber);
-            UserToken userToken = _e2sContext.UserTokens.FirstOrDefault(x => x.User == user) ?? throw new InvalidOperationException();
-            userToken.RefreshToken = refreshToken;
-            _e2sContext.SaveChanges();
+        using var randomNumberGenerator = RandomNumberGenerator.Create();
+        randomNumberGenerator.GetBytes(randomNumber);
+        string refreshToken = Convert.ToBase64String(randomNumber);
+        UserToken userToken = _e2sContext.UserTokens.FirstOrDefault(x => x.User == user) ?? throw new InvalidOperationException();
+        userToken.RefreshToken = refreshToken;
+        _e2sContext.SaveChanges();
 
-            return refreshToken;
-        }
-
+        return refreshToken;
     }
 
     public RefreshResponse RefreshJwt(TokenResponse token){
