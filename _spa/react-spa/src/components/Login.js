@@ -59,7 +59,7 @@ export default function Login() {
             headers: {
                 'Access-Control-Allow-Origin': 'https://localhost:7215',
                 'Access-Control-Allow-Credentials' : 'true',
-                'Authorization' : "bearer " + getCookie("jwTtoken").toString()
+                'Authorization' : "bearer "
             }
         }
         function getCookie(name)
@@ -71,7 +71,7 @@ export default function Login() {
 
         api.post('/authenticate/create', loginForm, config
         ).then(res => {
-            api.get('/', token
+            api.get('/', {headers:{'Authorization' : "bearer " + getCookie("jwTtoken")}}
             ).then(res => {console.log(res.data)}).catch(function (error) {
                 console.log(error);
                 console.log(getCookie("jwTtoken"))
