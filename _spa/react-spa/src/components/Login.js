@@ -21,7 +21,8 @@ import logo from '../logo.png';
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215/authenticate/create'
+    baseURL: 'https://localhost:7215/authenticate/create',
+    withCredentials: true
 })
 const getFreshModel = ()=>({
     password: '',
@@ -47,7 +48,14 @@ export default function Login() {
             "password":adValues.password
         }
 
-        api.post('/', loginForm
+        let config = {
+            headers: {
+                'Access-Control-Allow-Origin': 'https://localhost:7215',
+                'Access-Control-Allow-Credentials' : 'true'
+            }
+        }
+
+        api.post('/', loginForm, config
         ).then(res => {console.log(res.data)}).catch(function (error) {
             console.log(error);
             unauthorised()
