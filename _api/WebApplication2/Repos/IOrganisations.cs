@@ -8,4 +8,8 @@ public interface IOrganisations{
     public Organisation? ById(int id);
 
     public Organisation? ByName(string name);
+    
+    public void Add(Organisation organisation);
+    public void Save();
+    public void SaveAsync();
 }

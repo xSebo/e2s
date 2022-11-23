@@ -53,14 +53,14 @@ CREATE TABLE IF NOT EXISTS `e2s`.`users` (
   `organisationId` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `authorityId_idx` (`authorityId` ASC) VISIBLE,
-  INDEX `orgId_idx` (`orgId` ASC) VISIBLE,
+  INDEX `organisationId_idx` (`organisationId` ASC) VISIBLE,
   CONSTRAINT `authorityId`
     FOREIGN KEY (`authorityId`)
     REFERENCES `e2s`.`authorities` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `orgId`
-    FOREIGN KEY (`orgId`)
+  CONSTRAINT `organisationId`
+    FOREIGN KEY (`organisationId`)
     REFERENCES `e2s`.`organisations` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -94,9 +94,9 @@ insert into authorities (name) values ("Super Admin");
 insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
 insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 
-insert into users (name,email,password,authorityId,organisationId) values ("Seb","email@email.com","example",1,2);
-insert into users (name,email,password,authorityId,organisationId) values ("Sam","email@email.com","example",2,1);
-insert into users (name,email,password,authorityId,organisationId) values ("Sam2","email@email.com","example",3,2);
+insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","example",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","example",2,1);
+insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","example",3,2);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

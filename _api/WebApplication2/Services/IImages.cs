@@ -3,5 +3,5 @@
 namespace WebApplication2.Services;
 
 public interface IImages{
-    public FileUpload Upload(IFormFileCollection files);
+    public FileUpload Upload(IFormFile files);
 }
