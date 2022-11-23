@@ -61,7 +61,7 @@ var app = builder.Build();
 app.UseCors(options =>
     options.WithOrigins("http://localhost:3000")
         .AllowAnyMethod()
-        .AllowAnyHeader());
+        .WithHeaders("access-control-allow-credentials","access-control-allow-origin","content-type","authorization").AllowCredentials());
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -40,7 +40,13 @@ public class AuthController : Controller{
             JWTtoken = _jwt.GenJwt(user),
             RefreshToken = _jwt.RefreshToken(user)
         };
+        var cookieOptions = new CookieOptions();
         
+        cookieOptions.Expires = DateTime.Now.AddDays(1);
+        cookieOptions.Path = "/";
+        Response.Cookies.Append("jwTtoken", tokenResponse.JWTtoken, new CookieOptions() {  SameSite = SameSiteMode.None, Secure = true});
+        Response.Headers.Append("Access-Control-Allow-Credentials", "true");
+               
         return Ok(tokenResponse);
     }
 
