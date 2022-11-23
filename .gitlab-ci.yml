@@ -1,20 +1,58 @@
-stages:
-  - API
-  - SPA
-
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
 
-trigger_api:
-  stage: API
-  trigger:
-    include: _api/.gitlab-ci.yml
-    strategy: depend
+variables:
+  spa_dir: '_spa/react-spa'
+  api_dir: '_api/'
 
-trigger_spa:
-  stage: SPA
-  trigger:
-    include: _spa/.gitlab-ci.yml
-    strategy: depend
+stages:
+  - Testing
+  - Containerizing
+
+cache:
+  paths:
+    - $spa_dir/node_modules/
+
+spa_test:
+  stage: Testing
+  image: node
+  script:
+    - 'cd $spa_dir'
+    - 'npm install'
+    - 'npm test'
+
+api_test:
+  stage: Testing
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  script:
+    - 'cd $api_dir'
+    - 'dotnet test --no-restore'
+
+build_containers:
+  stage: Containerizing
+  image: alpine:latest
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - eval $(ssh-agent -s)
+    - echo "$CONTAINER_BUILDER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $CONTAINER_BUILDER_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh $CONTAINER_BUILDER_HOSTNAME "ssh-agent bash -c 'ssh-add e2s_gitlab_repo.key; git clone git@git.cardiff.ac.uk:c1950117/adopting-tech-team-3.git'"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD"
+
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker build -t spa-latest $spa_dir"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker tag spa-latest:latest samueltoland/adopting-tech-team-3:spa-latest"
+
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker build -t api-latest $api_dir"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker tag api-latest:latest samueltoland/adopting-tech-team-3:api-latest"
+
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker push samueltoland/adopting-tech-team-3:spa-latest"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker push samueltoland/adopting-tech-team-3:api-latest"
+
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker logout"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "rm -f -r adopting-tech-team-3"
