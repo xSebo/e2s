@@ -31,9 +31,12 @@ builder.Services.AddDbContext<E2SContext>(
 
 builder.Services.Configure<JWTKey>(builder.Configuration.GetSection(JWTKey.Position));
 builder.Services.AddScoped<IJwt, Jwt>();
+builder.Services.AddScoped<IImages, Images>();
 builder.Services.AddScoped<IDbUtils, DbUtils>();
+
 builder.Services.AddScoped<IUsers, Users>();
 builder.Services.AddScoped<IAuthorities, Authorities>();
+builder.Services.AddScoped<IOrganisations, Organisations>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 
@@ -65,6 +68,8 @@ app.UseCors(options =>
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles();
 
 app.MapControllers();
 app.Run();

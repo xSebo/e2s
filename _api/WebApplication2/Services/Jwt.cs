@@ -50,7 +50,21 @@ public class Jwt : IJwt{
         using var randomNumberGenerator = RandomNumberGenerator.Create();
         randomNumberGenerator.GetBytes(randomNumber);
         string refreshToken = Convert.ToBase64String(randomNumber);
-        UserToken userToken = _e2sContext.UserTokens.FirstOrDefault(x => x.User == user) ?? throw new InvalidOperationException();
+        UserToken userToken = _e2sContext.UserTokens.FirstOrDefault(x => x.User == user);
+        if (userToken != null){
+            userToken.RefreshToken = refreshToken;
+            _e2sContext.SaveChanges();
+        }
+        else{
+            userToken = new UserToken{
+                User = user,
+                TokenId = 0,
+                RefreshToken = refreshToken,
+                IsActive = 1
+            };
+            _e2sContext.UserTokens.Add(userToken);
+            _e2sContext.SaveChanges();
+        }
         userToken.RefreshToken = refreshToken;
         _e2sContext.SaveChanges();
 

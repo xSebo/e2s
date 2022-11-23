@@ -25,6 +25,10 @@ public class Users : IUsers{
         return _userDb.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == email.ToLower());
     }
 
+    public List<User> ByOrgId(int id){
+        return _userDb.Where(u => u.Organisation.Id == id).ToList();
+    }
+
     public void Add(User user){
         _userDb.Add(user);
     }

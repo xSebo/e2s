@@ -1,24 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
 using WebApplication2.Models;
+using WebApplication2.Repos;
 
 namespace WebApplication2.Controllers;
 
 [ApiController]
 
-public class People : Controller
-{
-private readonly E2SContext _context;
+public class People : Controller{
+    private readonly IUsers _users;
 
-    public People(E2SContext context)
-    {
-        _context = context;
+    public People(IUsers users){
+        _users = users;
     }
 
-    [Route("/api/peeps")]
+    [Route("")]
     [HttpGet]
-    public List<User> getPeople()
-    {
-        return _context.Users.ToList();
+    public List<User> getPeople(){
+        return _users.ByOrgId(2);
     }
 }
