@@ -45,7 +45,7 @@ public class AuthController : Controller{
         
         cookieOptions.Expires = DateTime.Now.AddDays(1);
         cookieOptions.Path = "/";
-        Response.Cookies.Append("jwTtoken", tokenResponse.JWTtoken, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.None, Secure = true});
+        Response.Cookies.Append("jwTtoken", tokenResponse.JWTtoken, new CookieOptions() {  SameSite = SameSiteMode.None, Secure = true});
         Response.Headers.Append("Access-Control-Allow-Credentials", "true");
                
         return Ok(tokenResponse);

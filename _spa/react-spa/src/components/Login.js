@@ -19,9 +19,10 @@ import useForm from "../hooks/useForm";
 import {createAPIEndpoint} from "../api";
 import logo from '../logo.png';
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215/authenticate/create',
+    baseURL: 'https://localhost:7215',
     withCredentials: true
 })
 const getFreshModel = ()=>({
@@ -54,9 +55,32 @@ export default function Login() {
                 'Access-Control-Allow-Credentials' : 'true'
             }
         }
+        let token = {
+            headers: {
+                'Access-Control-Allow-Origin': 'https://localhost:7215',
+                'Access-Control-Allow-Credentials' : 'true',
+                'Authorization' : "bearer " + getCookie("jwTtoken").toString()
+            }
+        }
+        function getCookie(name)
+        {
+            var re = new RegExp(name + "=([^;]+)");
+            var value = re.exec(document.cookie);
+            return (value != null) ? unescape(value[1]) : null;
+        }
 
-        api.post('/', loginForm, config
-        ).then(res => {console.log(res.data)}).catch(function (error) {
+        api.post('/authenticate/create', loginForm, config
+        ).then(res => {
+            api.get('/', token
+            ).then(res => {console.log(res.data)}).catch(function (error) {
+                console.log(error);
+                console.log(getCookie("jwTtoken"))
+                console.log("sam")
+            });
+
+
+
+            }).catch(function (error) {
             console.log(error);
             unauthorised()
         });
