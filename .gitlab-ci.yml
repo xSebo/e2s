@@ -33,6 +33,11 @@ api_test:
 build_containers:
   stage: Containerizing
   image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+    - changes:
+      - $api_dir/**/*
+      - _spa/**/*
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
     - eval $(ssh-agent -s)
