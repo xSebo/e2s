@@ -10,6 +10,8 @@ public interface IUsers{
 
     public User? ByEmail(string Email);
 
+    public List<User> ByOrgId(int id);
+
     public void Add(User User);
 
     public void Save();
