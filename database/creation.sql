@@ -14,17 +14,28 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema e2s
 -- -----------------------------------------------------
-DROP SCHEME IF EXISTS `e2s`;
+DROP SCHEMA IF EXISTS `e2s`;
 CREATE SCHEMA IF NOT EXISTS `e2s` DEFAULT CHARACTER SET latin1 ;
 USE `e2s` ;
 
 -- -----------------------------------------------------
 -- Table `e2s`.`authorities`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `e2s`.`authorities` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `e2s`.`organisations`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `e2s`.`organisations` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `logo` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -38,12 +49,19 @@ CREATE TABLE IF NOT EXISTS `e2s`.`users` (
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `authorityId` INT(11) NULL DEFAULT NULL,
+  `authorityId` INT(11) NOT NULL,
+  `organisationId` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `authorityId_idx` (`authorityId` ASC) VISIBLE,
+  INDEX `organisationId_idx` (`organisationId` ASC) VISIBLE,
   CONSTRAINT `authorityId`
     FOREIGN KEY (`authorityId`)
     REFERENCES `e2s`.`authorities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `organisationId`
+    FOREIGN KEY (`organisationId`)
+    REFERENCES `e2s`.`organisations` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -69,15 +87,16 @@ CREATE TABLE IF NOT EXISTS `e2s`.`usertokens` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
 insert into authorities (name) values ("User");
 insert into authorities (name) values ("Admin");
 insert into authorities (name) values ("Super Admin");
 
-insert into users (name,email,password,authorityId) values ("Seb","seb@email.com","example",1);
-insert into users (name,email,password,authorityId) values ("Sam","sam@email.com","example",2);
-insert into users (name,email,password,authorityId) values ("Sam2","sam2@email.com","example",3);
+insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
+insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 
+insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","example",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","example",2,1);
+insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","example",3,2);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

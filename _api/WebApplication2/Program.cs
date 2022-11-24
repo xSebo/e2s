@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication2.Data;
 using WebApplication2.Models;
+using WebApplication2.Repos;
 using WebApplication2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,12 @@ builder.Services.AddDbContext<E2SContext>(
 
 builder.Services.Configure<JWTKey>(builder.Configuration.GetSection(JWTKey.Position));
 builder.Services.AddScoped<IJwt, Jwt>();
+builder.Services.AddScoped<IImages, Images>();
+builder.Services.AddScoped<IDbUtils, DbUtils>();
 
+builder.Services.AddScoped<IUsers, Users>();
+builder.Services.AddScoped<IAuthorities, Authorities>();
+builder.Services.AddScoped<IOrganisations, Organisations>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 
@@ -58,10 +64,12 @@ var app = builder.Build();
 app.UseCors(options =>
     options.WithOrigins("http://localhost:3000")
         .AllowAnyMethod()
-        .AllowAnyHeader());
+        .WithHeaders("access-control-allow-credentials","access-control-allow-origin","content-type","authorization").AllowCredentials());
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles();
 
 app.MapControllers();
 app.Run();
