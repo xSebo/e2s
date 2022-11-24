@@ -51,10 +51,10 @@ build_containers:
     - ssh $CONTAINER_BUILDER_HOSTNAME "ssh-agent bash -c 'ssh-add e2s_gitlab_repo.key; git clone git@git.cardiff.ac.uk:c1950117/adopting-tech-team-3.git'"
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD"
 
-    - ssh $CONTAINER_BUILDER_HOSTNAME "docker build -t spa-latest $spa_dir"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker build -t spa-latest adopting-tech-team-3/$spa_dir"
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker tag spa-latest:latest samueltoland/adopting-tech-team-3:spa-latest"
 
-    - ssh $CONTAINER_BUILDER_HOSTNAME "docker build -t api-latest $api_dir"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "docker build -t api-latest adopting-tech-team-3/$api_dir"
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker tag api-latest:latest samueltoland/adopting-tech-team-3:api-latest"
 
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker push samueltoland/adopting-tech-team-3:spa-latest"
