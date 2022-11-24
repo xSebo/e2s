@@ -47,6 +47,7 @@ build_containers:
     - ssh-keyscan $CONTAINER_BUILDER_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
+    - ssh $CONTAINER_BUILDER_HOSTNAME "rm -f -r adopting-tech-team-3"
     - ssh $CONTAINER_BUILDER_HOSTNAME "ssh-agent bash -c 'ssh-add e2s_gitlab_repo.key; git clone git@git.cardiff.ac.uk:c1950117/adopting-tech-team-3.git'"
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD"
 
@@ -60,4 +61,3 @@ build_containers:
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker push samueltoland/adopting-tech-team-3:api-latest"
 
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker logout"
-    - ssh $CONTAINER_BUILDER_HOSTNAME "rm -f -r adopting-tech-team-3"
