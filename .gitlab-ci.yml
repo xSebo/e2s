@@ -17,7 +17,7 @@ cache:
 
 spa_test:
   stage: Testing
-  image: node
+  image: node:19-alpine
   script:
     - 'cd $spa_dir'
     - 'npm install'
