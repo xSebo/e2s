@@ -176,7 +176,7 @@ export default function Login() {
                             {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
                             {/*/>*/}
                             <div>
-                                <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
+                                <FormControl sx={{ m: 1, width: '36ch' }} variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
