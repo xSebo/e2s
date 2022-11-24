@@ -61,3 +61,4 @@ build_containers:
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker push samueltoland/adopting-tech-team-3:api-latest"
 
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker logout"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "aws ecs update-service --cluster at3-spa --service at3-spa-service --force-new-deployment"
