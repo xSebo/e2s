@@ -27,4 +27,8 @@
       <ProjectReference Include="..\WebApplication2\WebApplication2.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CompanyLogos" />
+    </ItemGroup>
+
 </Project>

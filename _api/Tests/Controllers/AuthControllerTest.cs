@@ -19,24 +19,19 @@ namespace Tests.Controllers;
 
 [TestClass]
 public class AuthControllerTest : IClassFixture<AuthController>{
-    private readonly IJwt _jwt;
-    private readonly IUsers _users;
+    private readonly AuthController _authController;
 
     public AuthControllerTest(){
         var serviceProvider = Startup.GetServices();
-
-        _jwt = serviceProvider.GetService<IJwt>()!;
-        _users = serviceProvider.GetService<IUsers>()!;
+        _authController = new AuthController(serviceProvider.GetService<IUsers>()!, serviceProvider.GetService<IJwt>()!);
     }
 
     [DataTestMethod]
     [DataRow("wrongemail", "wrongpassword")]
-    [DataRow("seb@email.com","wrongpassword")]
+    [DataRow("test@email.com","wrongpassword")]
     public void WrongDetails(string email, string password){
-        // arrange
-        AuthController authController = new AuthController(_users, _jwt);
         // act
-        var actual = authController.Auth(new UserLoginDTO{
+        var actual = _authController.Auth(new UserLoginDTO{
             Password = password,
             Email = email
         });
@@ -46,12 +41,10 @@ public class AuthControllerTest : IClassFixture<AuthController>{
     }
     
     [DataTestMethod]
-    [DataRow("seb@email.com", "example")]
+    [DataRow("test@email.com", "example")]
     public void CorrectDetails(string email, string password){
-        // arrange
-        AuthController authController = new AuthController(_users, _jwt);
         // act
-        var actual = authController.Auth(new UserLoginDTO{
+        var actual = _authController.Auth(new UserLoginDTO{
             Password = password,
             Email = email
         });

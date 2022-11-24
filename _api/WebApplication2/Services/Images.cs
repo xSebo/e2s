@@ -11,7 +11,7 @@ public class Images : IImages{
 
     public FileUpload Upload(IFormFile file){
         FileInfo fi = new FileInfo(file.FileName);
-        string? fileName = System.Guid.NewGuid() + fi.Extension;
+        string? fileName = Guid.NewGuid() + fi.Extension;
         var path = _hostEnvironment.ContentRootPath + "/CompanyLogos/" + fileName;
         using (var stream = new FileStream(path, FileMode.Create)){
             file.CopyTo(stream);

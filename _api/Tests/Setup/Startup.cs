@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebApplication2.Data;
 using WebApplication2.Models;
@@ -15,7 +18,7 @@ public class Startup{
         var config = new ConfigurationManager()
             .AddJsonFile("appsettings.json", optional: false)
             .Build();
-        string connectionString = config.GetConnectionString("DefaultConnection");
+        string connectionString = config.GetConnectionString("TestConnection");
         MariaDbServerVersion serverVersion = new MariaDbServerVersion(new Version(10, 7, 4));
         services.AddDbContext<E2SContext>(
             dbContextOptions => dbContextOptions
@@ -24,10 +27,14 @@ public class Startup{
         );
 
         services.AddTransient<IJwt, Jwt>();
+        services.AddTransient<IDbUtils, DbUtils>();
+        services.AddTransient<IImages, Images>();
+        
         services.AddTransient<IUsers, Users>();
+        services.AddTransient<IAuthorities, Authorities>();
+        services.AddTransient<IOrganisations, Organisations>();
+
         services.Configure<JWTKey>(config.GetSection(JWTKey.Position));
-        services.AddScoped<IDbUtils, DbUtils>();
-        services.AddScoped<IAuthorities, Authorities>();
 
         return services.BuildServiceProvider();
     }
