@@ -36,6 +36,7 @@ public class OrganisationControllerTest{
     
     [DataTestMethod]
     [DataRow("Org Name", "file.png")]
+    [DataRow("Org Name", "file.jpg")]
     public void ValidFiles(string orgName, string fileName){
         //Setup mock file using a memory stream
         var content = "Hello World from a Fake File";
@@ -57,5 +58,31 @@ public class OrganisationControllerTest{
         int response = (int)((IStatusCodeActionResult)request).StatusCode!;
         
         Assert.Equal((int)HttpStatusCode.OK, response);
+    }
+    
+    [DataTestMethod]
+    [DataRow("Org Name", "file.pdf")]
+    [DataRow("Org Name", "file.docx")]
+    public void InvalidFiles(string orgName, string fileName){
+        //Setup mock file using a memory stream
+        var content = "Hello World from a Fake File";
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(content);
+        writer.Flush();
+        stream.Position = 0;
+
+        //create FormFile with desired data
+        IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
+
+        OrganisationCreationDTO orgDto = new OrganisationCreationDTO{
+            Name = orgName,
+            File = file
+        };
+
+        var request = _orgController.CreateOrganisation(orgDto);
+        int response = (int)((IStatusCodeActionResult)request).StatusCode!;
+        
+        Assert.Equal((int)HttpStatusCode.InternalServerError, response);
     }
 }

@@ -11,6 +11,13 @@ public class Images : IImages{
 
     public FileUpload Upload(IFormFile file){
         FileInfo fi = new FileInfo(file.FileName);
+        if (fi.Extension != ".png" && fi.Extension != ".jpg"){
+            Console.WriteLine(fi.Extension);
+            return new FileUpload{
+                IsSuccess = false,
+                Name = null
+            };
+        }
         string? fileName = Guid.NewGuid() + fi.Extension;
         var path = _hostEnvironment.ContentRootPath + "/CompanyLogos/" + fileName;
         using (var stream = new FileStream(path, FileMode.Create)){
