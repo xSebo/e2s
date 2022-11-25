@@ -13,10 +13,15 @@ namespace WebApplication2.Controllers;
 public class OrganisationController : Controller{
     private readonly IImages _images;
     private readonly IOrganisations _orgDb;
+    private readonly IUsers _users;
+    private readonly IAuthorities _authorities;
+    
 
-    public OrganisationController(IImages images, IOrganisations orgDb){
+    public OrganisationController(IImages images, IOrganisations orgDb, IUsers users, IAuthorities authorities){
         _images = images;
         _orgDb = orgDb;
+        _users = users;
+        _authorities = authorities;
     }
 
     [HttpPost]
@@ -37,4 +42,27 @@ public class OrganisationController : Controller{
 
     }
     
+    [HttpPost]
+    [Route("createUser")]
+    public IActionResult CreateUser([FromBody] UserCreationDTO userForm)
+    {
+        //if this email has not already been taken
+        if (_users.ByEmail(userForm.Email) == null)
+        {
+            Organisation org = _orgDb.ById(int.Parse(userForm.OrganisationId));
+            Authority? auth = _authorities.ByName("user");
+            User user = new User
+            {
+                Name = userForm.Name,
+                Password = userForm.Password,
+                Email = userForm.Email,
+                Authority = auth,
+                Organisation = org
+            };
+            _users.Add(user);
+            _users.Save();
+            return Ok();
+        }
+        return Problem();
+    }
 }

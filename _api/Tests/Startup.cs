@@ -28,6 +28,7 @@ public class Startup{
         services.Configure<JWTKey>(config.GetSection(JWTKey.Position));
         services.AddScoped<IDbUtils, DbUtils>();
         services.AddScoped<IAuthorities, Authorities>();
+        services.AddScoped<IOrganisations, Organisations>();
 
         return services.BuildServiceProvider();
     }
