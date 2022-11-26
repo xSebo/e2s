@@ -9,7 +9,7 @@ variables:
 
 stages:
   - Testing
-  - Containerizing
+  - Deployment
 
 cache:
   paths:
@@ -31,7 +31,7 @@ api_test:
     - 'dotnet test --no-restore'
 
 build_containers:
-  stage: Containerizing
+  stage: Deployment
   image: alpine:latest
   rules:
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
@@ -62,3 +62,16 @@ build_containers:
 
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker logout"
     - ssh $CONTAINER_BUILDER_HOSTNAME "aws ecs update-service --cluster at3-spa --service at3-spa-service --force-new-deployment"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "aws ecs update-service --cluster at3-spa --service at3-api-service --force-new-deployment"
+
+recreate_database:
+  stage: Deployment
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+    - changes:
+      - database/**/*
+  before_script:
+    - 'apk add mysql-client'
+  script:
+    - 'mysql -u $DATABASE_USER -p'$DATABASE_PASSWORD' -h $DATABASE_HOST -P $DATABASE_PORT < database/creation.sql'
