@@ -72,6 +72,6 @@ recreate_database:
     - changes:
       - database/**/*
   before_script:
-    - 'apk add mysql-client'
+    - apk add mysql-client
   script:
-    - 'mysql -u $DATABASE_USER -p'$DATABASE_PASSWORD' -h $DATABASE_HOST -P $DATABASE_PORT < database/creation.sql'
+    - mysql -u $DATABASE_USER -p'$DATABASE_PASSWORD' -h $DATABASE_HOST -P $DATABASE_PORT < database/creation.sql
