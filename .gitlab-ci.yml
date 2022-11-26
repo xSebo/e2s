@@ -1,8 +1,3 @@
-workflow:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
-
 variables:
   spa_dir: '_spa/react-spa'
   api_dir: '_api/'
@@ -18,6 +13,9 @@ cache:
 spa_test:
   stage: Testing
   image: node:19-alpine
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
   script:
     - 'cd $spa_dir'
     - 'npm install'
@@ -26,6 +24,9 @@ spa_test:
 api_test:
   stage: Testing
   image: mcr.microsoft.com/dotnet/sdk:6.0
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
   script:
     - 'cd $api_dir'
     - 'dotnet test --no-restore'
@@ -74,4 +75,4 @@ recreate_database:
   before_script:
     - apk add mysql-client
   script:
-    - mysql -u $DATABASE_USER -p'$DATABASE_PASSWORD' -h $DATABASE_HOST -P $DATABASE_PORT < database/creation.sql
+    - mysql -u $AT3_DATABASE_USER -p'$AT3_DATABASE_PASSWORD' -h $AT3_DATABASE_HOST -P $AT3_DATABASE_PORT < database/creation.sql
