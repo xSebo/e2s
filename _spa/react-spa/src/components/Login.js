@@ -7,7 +7,7 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel,
-    Link, OutlinedInput,
+    Link, OutlinedInput, Switch,
     TextField,
     Typography
 } from '@mui/material'
@@ -20,6 +20,9 @@ import {createAPIEndpoint} from "../api";
 import logo from '../logo.png';
 import axios from "axios";
 import Cookies from 'js-cookie';
+import Reports from "./Reports";
+import {Route, Router, Routes} from "react-router-dom";
+
 
 const api = axios.create({
     baseURL: 'https://localhost:7215',
@@ -30,11 +33,8 @@ const getFreshModel = ()=>({
     email: ''
 })
 
-
-
-
 export default function Login() {
-
+    
     const {
         values,
         setValues,
