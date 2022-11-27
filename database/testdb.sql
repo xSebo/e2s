@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `e2sTest`.`users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(65) NOT NULL,
   `authorityId` INT(11) NOT NULL,
   `organisationId` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
