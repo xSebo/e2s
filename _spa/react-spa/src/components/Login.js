@@ -22,6 +22,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import Reports from "./Reports";
 import {Route, Router, Routes} from "react-router-dom";
+import background from "../background.png";
 
 
 const api = axios.create({
@@ -136,87 +137,99 @@ export default function Login() {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    
+    const sectionStyle = {
+        width: "100%",
+        height: "100%",
+        backgroundImage: `url(${background})`
+    };
 
+    const shadows = {
+        boxShadow: '1px 2px 9px #BFAFB2'
+    };
 
     return (
-        <Center>
-            <Card sx={{width: 400}}>
-                <CardContent sx={{textAlign:'center'}}>
-                    <div>
-                        <img src={logo} alt="E2S logo"/>
-                    </div>
-                    <Typography variant="h4"  sx ={{my:3, fontWeight:'bold'}} >
-                        Sign in
-                    </Typography>
-                    <Typography  sx ={{my:3}}>
-                        Log in to see your organisation's statistics.
-                    </Typography>
-                    <Box sx={{
-                        '& .MuiTextField-root': {
-                            margin: 1,
-                            width: '90%'
-                        }
-                    }}>
-                        <form noValidate autoComplete="off" onSubmit={login}>
-                            <TextField
-
-                                label="Email"
-                                name="email"
-                                value={adValues.email}
-                                onChange={handleChange('email')}
-                                variant="outlined"
-                                {...(errors.email && {error:true, helperText:errors.email})}
-                            />
-                            {/*<TextField*/}
-                            {/*    label="Password"*/}
-                            {/*    name="password"*/}
-                            {/*    value={values.password}*/}
-                            {/*    onChange={handleInputChange}*/}
-                            {/*    variant="outlined"*/}
-                            {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
-                            {/*/>*/}
+        <div style={sectionStyle}>
+            <Center>
+                <div style={shadows}>
+                    <Card sx={{width: 400}}>
+                        <CardContent sx={{textAlign:'center'}}>
                             <div>
-                                <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
-                                    <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-password"
-                                        type={adValues.showPassword ? 'text' : 'password'}
-                                        value={adValues.password}
-                                        onChange={handleChange('password')}
-                                        {...(errors.password && {error:true, helperText:errors.password})}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {adValues.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        label="Password"
+                                <img src={logo} alt="E2S logo"/>
+                            </div>
+                            <Typography variant="h4"  sx ={{my:3, fontWeight:'bold'}} >
+                                Sign in
+                            </Typography>
+                            <Typography  sx ={{my:3}}>
+                                Log in to see your organisation's statistics.
+                            </Typography>
+                            <Box sx={{
+                                '& .MuiTextField-root': {
+                                    margin: 1,
+                                    width: '90%'
+                                }
+                            }}>
+                                <form noValidate autoComplete="off" onSubmit={login}>
+                                    <TextField
+        
+                                        label="Email"
+                                        name="email"
+                                        value={adValues.email}
+                                        onChange={handleChange('email')}
+                                        variant="outlined"
+                                        {...(errors.email && {error:true, helperText:errors.email})}
                                     />
-                                    <FormHelperText {...(errors.password && {error:true})}>{errors.password}</FormHelperText>
-                                </FormControl>
-                            </div>
-                            <div>
-                                <FormControlLabel control={<Checkbox defaultChecked={false} size={"small"} />}
-                                                  label={<Typography variant="caption">Remember Me</Typography>} sx={{mr:10}}/>
-                                <Link href="#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
-                            </div>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                size="large"
-                                sx={{width: '90%'}}>Sign In</Button>
-                        </form>
-                    </Box>
-                </CardContent>
-            </Card>
-        </Center>
-
+                                    {/*<TextField*/}
+                                    {/*    label="Password"*/}
+                                    {/*    name="password"*/}
+                                    {/*    value={values.password}*/}
+                                    {/*    onChange={handleInputChange}*/}
+                                    {/*    variant="outlined"*/}
+                                    {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
+                                    {/*/>*/}
+                                    <div>
+                                        <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
+                                            <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
+                                            <OutlinedInput
+                                                id="outlined-adornment-password"
+                                                type={adValues.showPassword ? 'text' : 'password'}
+                                                value={adValues.password}
+                                                onChange={handleChange('password')}
+                                                {...(errors.password && {error:true, helperText:errors.password})}
+                                                endAdornment={
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                            edge="end"
+                                                        >
+                                                            {adValues.showPassword ? <VisibilityOff /> : <Visibility />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                }
+                                                label="Password"
+                                            />
+                                            <FormHelperText {...(errors.password && {error:true})}>{errors.password}</FormHelperText>
+                                        </FormControl>
+                                    </div>
+                                    <div>
+                                        <FormControlLabel control={<Checkbox defaultChecked={false} size={"small"} />}
+                                                          label={<Typography variant="caption">Remember Me</Typography>} sx={{mr:10}}/>
+                                        <Link href="#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
+                                    </div>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        size="large"
+                                        sx={{width: '90%'}}>Sign In</Button>
+                                </form>
+                            </Box>
+                        </CardContent>
+                    </Card>
+                </div>
+            </Center>
+        </div>
     )
 }
 
