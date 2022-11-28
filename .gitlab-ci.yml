@@ -1,15 +1,10 @@
-workflow:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
-
 variables:
   spa_dir: '_spa/react-spa'
   api_dir: '_api/'
 
 stages:
   - Testing
-  - Containerizing
+  - Deployment
 
 cache:
   paths:
@@ -18,6 +13,9 @@ cache:
 spa_test:
   stage: Testing
   image: node:19-alpine
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
   script:
     - 'cd $spa_dir'
     - 'npm install'
@@ -26,12 +24,15 @@ spa_test:
 api_test:
   stage: Testing
   image: mcr.microsoft.com/dotnet/sdk:6.0
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
   script:
     - 'cd $api_dir'
     - 'dotnet test --no-restore'
 
 build_containers:
-  stage: Containerizing
+  stage: Deployment
   image: alpine:latest
   rules:
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
@@ -61,3 +62,26 @@ build_containers:
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker push samueltoland/adopting-tech-team-3:api-latest"
 
     - ssh $CONTAINER_BUILDER_HOSTNAME "docker logout"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "aws ecs update-service --cluster at3-spa --service at3-spa-service --force-new-deployment"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "aws ecs update-service --cluster at3-spa --service at3-api-service --force-new-deployment"
+
+# Can't connect to the database from the runner, maybe due to cardiff security policy?
+recreate_database:
+  stage: Deployment
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+    - changes:
+      - database/**/*
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - eval $(ssh-agent -s)
+    - echo "$CONTAINER_BUILDER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $CONTAINER_BUILDER_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh $CONTAINER_BUILDER_HOSTNAME "rm -f -r adopting-tech-team-3"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "ssh-agent bash -c 'ssh-add e2s_gitlab_repo.key; git clone git@git.cardiff.ac.uk:c1950117/adopting-tech-team-3.git'"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "mysql -u $AT3_DATABASE_USER -p'$AT3_DATABASE_PASSWORD' -h $AT3_DATABASE_HOST -P $AT3_DATABASE_PORT < adopting-tech-team-3/database/creation.sql"

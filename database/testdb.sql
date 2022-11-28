@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `e2sTest`.`users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(65) NOT NULL,
   `authorityId` INT(11) NOT NULL,
   `organisationId` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -94,7 +94,8 @@ insert into authorities (name) values ("Super Admin");
 insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
 insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 
-insert into users (name,email,password,authorityId,organisationId) values ("TestUser","test@email.com","example",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("TestUser","user@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("TestAdmin","admin@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,2);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

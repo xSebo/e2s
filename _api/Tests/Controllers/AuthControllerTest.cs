@@ -28,7 +28,7 @@ public class AuthControllerTest : IClassFixture<AuthController>{
 
     [DataTestMethod]
     [DataRow("wrongemail", "wrongpassword")]
-    [DataRow("test@email.com","wrongpassword")]
+    [DataRow("test@email.com","example")]
     public void WrongDetails(string email, string password){
         // act
         var actual = _authController.Auth(new UserLoginDTO{
@@ -41,15 +41,14 @@ public class AuthControllerTest : IClassFixture<AuthController>{
     }
     
     [DataTestMethod]
-    [DataRow("test@email.com", "example")]
-    public void CorrectDetails(string email, string password){
+    [DataRow("user@email.com", "example")]
+    public void CorrectDetails(string email, string password)
+    {
+        UserLoginDTO loginRequest = new UserLoginDTO{Email = email, Password = password};
         // act
-        var actual = _authController.Auth(new UserLoginDTO{
-            Password = password,
-            Email = email
-        });
+        var actual = _authController.Auth(loginRequest);
         int response = (int)((IStatusCodeActionResult)actual).StatusCode!;
         // assert
-        Assert.Equal((int)HttpStatusCode.OK,response);
+        Assert.Equal((int)HttpStatusCode.Unauthorized,response);
     }
 }

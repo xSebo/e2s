@@ -32,7 +32,8 @@ public class AuthController : Controller{
         if (user == null){
             return Unauthorized();
         }
-        if (!user.Password!.Equals(userLoginDto.Password)){
+        bool verified = BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password);
+        if (!verified){
             return Unauthorized();
         }
 
