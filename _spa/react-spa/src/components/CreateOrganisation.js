@@ -33,6 +33,8 @@ export default function CreateOrganisation() {
     }
     const [changed, setChanged] = useState(false);
 
+    const [emptyField, setEmpty] = useState(false);
+
     function getCookie(name) {
         var re = new RegExp(name + "=([^;]+)");
         var value = re.exec(document.cookie);
@@ -41,6 +43,10 @@ export default function CreateOrganisation() {
 
 
     function submitForm() {
+        if(formData.Name == ""){
+            setEmpty(true);
+            return;
+        }
         console.log(formData.File);
         console.log(formData.Name);
         api.post("/organisations/createOrganisation", formData, config);
@@ -62,10 +68,14 @@ export default function CreateOrganisation() {
                                 Create an organisation
                             </Typography>
                             <TextField
+                                error={emptyField ? emptyField : emptyField}
                                 id="emailField"
                                 style={{width: "100%"}}
-                                label="Company name"
+                                label="Company name*"
                                 name="name"
+                                variant={emptyField ? "filled" : "outlined"}
+                                color={emptyField ? "error" : "secondary"}
+                                helperText={emptyField ? "Company name required" : ""}
                                 onChange={(event) => {
                                     formData.Name = event.target.value
                                 }}/>
