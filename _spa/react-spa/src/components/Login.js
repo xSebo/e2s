@@ -7,9 +7,13 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel,
-    Link, OutlinedInput,
+     OutlinedInput,
     TextField,
     Typography
+} from '@mui/material'
+import {
+
+    Link as Alink
 } from '@mui/material'
 import Center from "./Center";
 import Visibility from '@mui/icons-material/Visibility';
@@ -20,6 +24,11 @@ import {createAPIEndpoint} from "../api";
 import logo from '../logo.png';
 import axios from "axios";
 import Cookies from 'js-cookie';
+
+import { useRef, useState, useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
 
 const api = axios.create({
     baseURL: 'https://localhost:7215',
@@ -42,8 +51,19 @@ export default function Login() {
         setErrors,
         handleInputChange
     } = useForm(getFreshModel);
+    const { setAuth } = useAuth();
 
-    const login = e => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const userRef = useRef();
+    const errRef = useRef();
+
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const logain = e => {
         let loginForm = {
             "email":adValues.email,
             "password":adValues.password
@@ -97,6 +117,47 @@ export default function Login() {
         // console.log(createAPIEndpoint("api/peeps"))
     }
 
+    const login = async (e) => {
+        e.preventDefault();
+        let loginForm = {
+            "email":adValues.email,
+            "password":adValues.password
+        }
+
+        try {
+            const response = await api.post("/authenticate/create",
+                JSON.stringify({ "email":adValues.email, "password":adValues.password }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+
+                }
+            );
+
+            console.log("a");
+            console.log(JSON.stringify(response?.data));
+            console.log(from)
+            console.log("b");
+            //console.log(JSON.stringify(response));
+            const accessToken = response?.data?.jwTtoken;
+            const roles = "User";
+            setAuth({ user, pwd, roles, accessToken });
+            setUser('seb');
+            setPwd(adValues.password);
+            navigate(from, { replace: true });
+        } catch (err) {
+            if (!err?.response) {
+                // setErrMsg('No Server Response');
+            } else if (err.response?.status === 400) {
+                // setErrMsg('Missing Username or Password');
+            } else if (err.response?.status === 401) {
+                // setErrMsg('Unauthorized');
+            } else {
+                // setErrMsg('Login Failed');
+            }
+            // errRef.current.focus();
+        }
+    }
     const validate = ()=> {
         let temp ={}
         temp.email = (/\S+@\S+\.\S+/).test(adValues.email)?"":"Email is not vaild."

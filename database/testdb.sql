@@ -94,8 +94,8 @@ insert into authorities (name) values ("Super Admin");
 insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
 insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 
-insert into users (name,email,password,authorityId,organisationId) values ("TestUser","user@email.com","example",1,2);
-insert into users (name,email,password,authorityId,organisationId) values ("TestAdmin","admin@email.com","example",2,2);
+insert into users (name,email,password,authorityId,organisationId) values ("TestUser","user@email.com","'$2a$11$BQYwMRLV.DP1.2iAzvTc3OSuTFJmWBiGIbTnmX7R1LfjVCjf4yAVW'",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("TestAdmin","admin@email.com","'$2a$11$BQYwMRLV.DP1.2iAzvTc3OSuTFJmWBiGIbTnmX7R1LfjVCjf4yAVW'",2,2);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
