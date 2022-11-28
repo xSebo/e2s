@@ -51,10 +51,11 @@ public class OrganisationController : Controller{
         {
             Organisation org = _orgDb.ById(int.Parse(userForm.OrganisationId));
             Authority? auth = _authorities.ByName("user");
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(userForm.Password);
             User user = new User
             {
                 Name = userForm.Name,
-                Password = userForm.Password,
+                Password = passwordHash,
                 Email = userForm.Email,
                 Authority = auth,
                 Organisation = org
