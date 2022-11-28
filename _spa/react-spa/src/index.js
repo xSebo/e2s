@@ -17,6 +17,7 @@ import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import Dashboard from "./routes/Dashboard";
+import CreateOrganisation from "./components/CreateOrganisation";
 import Login from "./components/Login";
 
 const AppLayout = () => (
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
         element: <AppLayout />,
         children: [
+            {
+                path:"/createOrganisation",
+                element: <CreateOrganisation />,
+            },
             {
                 path: "/",
                 element: <Login />,

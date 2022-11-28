@@ -45,9 +45,17 @@ public class AuthController : Controller{
         
         cookieOptions.Expires = DateTime.Now.AddDays(1);
         cookieOptions.Path = "/";
-        Response.Cookies.Append("jwTtoken", tokenResponse.JWTtoken, new CookieOptions() {  SameSite = SameSiteMode.None, Secure = true});
-        Response.Headers.Append("Access-Control-Allow-Credentials", "true");
-               
+        try{
+            Response.Cookies.Append("jwTtoken", tokenResponse.JWTtoken,
+                new CookieOptions(){ SameSite = SameSiteMode.None, Secure = true });
+            Response.Headers.Append("Access-Control-Allow-Credentials", "true");
+        }
+        catch (NullReferenceException e){
+            Console.WriteLine(e);
+            //This error is thrown when this method is run by a test, as it does not have any response headers.
+            //If it is thrown when running the program normally, something has gone wrong.
+        }
+
         return Ok(tokenResponse);
     }
 

@@ -63,15 +63,14 @@ public class OrganisationControllerTest{
 
         var request = _orgController.CreateOrganisation(orgDto);
         int response = (int)((IStatusCodeActionResult)request).StatusCode!;
-
+        
         Assert.Equal((int)HttpStatusCode.OK, response);
     }
-
+    
     [DataTestMethod]
     [DataRow("Org Name", "file.pdf")]
     [DataRow("Org Name", "file.docx")]
-    public void InvalidFiles(string orgName, string fileName)
-    {
+    public void InvalidFiles(string orgName, string fileName){
         //Setup mock file using a memory stream
         var content = "Hello World from a Fake File";
         var stream = new MemoryStream();
@@ -83,8 +82,7 @@ public class OrganisationControllerTest{
         //create FormFile with desired data
         IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
 
-        OrganisationCreationDTO orgDto = new OrganisationCreationDTO
-        {
+        OrganisationCreationDTO orgDto = new OrganisationCreationDTO{
             Name = orgName,
             File = file
         };
