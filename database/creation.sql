@@ -104,6 +104,22 @@ CREATE TABLE `e2s`.`emaillinks` (
     REFERENCES `e2s`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+    
+CREATE TABLE `e2s`.`powerdata` (
+  `date` DATETIME NOT NULL,
+  `CHP1ElectricityGen` FLOAT NULL,
+  `CHP2ElectricityGen` FLOAT NULL,
+  `CHP1HeatGen` FLOAT NULL,
+  `CHP2HeatGen` FLOAT NULL,
+  `BoiletHeat` FLOAT NULL,
+  `FeelsLike` FLOAT NULL,
+  `WindSpeed` FLOAT NULL,
+  `SiteElectricityDemand` FLOAT NULL,
+  `DayPowerPrice` FLOAT NULL,
+  `SiteHeatDemand` FLOAT NULL,
+  `ImportElectricity` FLOAT NULL,
+  `ExportElectricity` FLOAT NULL,
+  PRIMARY KEY (`date`));
 
 
 insert into authorities (name) values ("User");
