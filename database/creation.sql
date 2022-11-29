@@ -111,7 +111,7 @@ CREATE TABLE `e2s`.`powerdata` (
   `CHP2ElectricityGen` FLOAT NULL,
   `CHP1HeatGen` FLOAT NULL,
   `CHP2HeatGen` FLOAT NULL,
-  `BoiletHeat` FLOAT NULL,
+  `BoilerHeat` FLOAT NULL,
   `FeelsLike` FLOAT NULL,
   `WindSpeed` FLOAT NULL,
   `SiteElectricityDemand` FLOAT NULL,
