@@ -7,17 +7,18 @@ using WebApplication2.Repos;
 namespace WebApplication2.Controllers;
 
 [ApiController]
-[Authorize(Roles="Admin")]
 public class People : Controller{
-    private readonly IUsers _users;
+    private readonly IPowerDatas _powerData;
 
-    public People(IUsers users){
-        _users = users;
+    public People(IPowerDatas powerData){
+        _powerData = powerData;
     }
 
     [Route("")]
     [HttpGet]
-    public List<User> getPeople(){
-        return _users.ByOrgId(2);
+    public List<PowerData> getPeople(){
+        string dateInput = "Jan 1, 2020";
+        var parsedDate = DateTime.Parse(dateInput);
+        return _powerData.ByDate(parsedDate);
     }
 }
