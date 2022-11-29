@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
+    .AddEnvironmentVariables()
     .Build();
 
 builder.Services.AddControllers();
@@ -61,8 +62,9 @@ builder.Services.AddAuthentication(item =>
 });
 
 var app = builder.Build();
+
 app.UseCors(options =>
-    options.WithOrigins("http://localhost:3000")
+    options.WithOrigins(Environment.GetEnvironmentVariable("CORS_ORIGINS") ?? "http://localhost:3000")
         .AllowAnyMethod()
         .WithHeaders("access-control-allow-credentials","access-control-allow-origin","content-type","authorization").AllowCredentials());
 
