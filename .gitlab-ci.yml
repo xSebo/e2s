@@ -71,8 +71,8 @@ recreate_database:
   image: alpine:latest
   rules:
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
-    - changes:
-      - database/**/*
+      changes:
+        - database/**/*
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
     - eval $(ssh-agent -s)
