@@ -17,8 +17,9 @@ import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import Dashboard from "./routes/Dashboard";
-import CreateOrganisation from "./components/CreateOrganisation";
+import CreateOrganisation from "./fragments/CreateOrganisation";
 import Login from "./components/Login";
+import LoadGraph from "./components/Graph";
 
 const AppLayout = () => (
     <>
@@ -27,8 +28,6 @@ const AppLayout = () => (
     </>
 );
 
-
-
 const router = createBrowserRouter([
     {
         element: <AppLayout />,
@@ -36,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path:"/createOrganisation",
                 element: <CreateOrganisation />,
+            },
+            {
+                path:"/graph",
+                element:<LoadGraph />,
             },
             {
                 path: "/",

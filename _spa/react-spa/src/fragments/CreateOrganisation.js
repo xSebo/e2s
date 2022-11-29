@@ -11,14 +11,14 @@ import {
     TextField,
     Typography
 } from '@mui/material'
-import Center from "./Center";
+import Center from "../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from "axios";
 import {PhotoCamera} from "@mui/icons-material";
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215',
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
 })
 
