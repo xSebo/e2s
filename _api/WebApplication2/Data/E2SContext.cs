@@ -12,6 +12,7 @@ public class E2SContext : DbContext{
     public virtual DbSet<Authority> Authorities{ get;set; } = null!;
     public virtual DbSet<UserToken> UserTokens{ get; set; } = null!;
     public virtual DbSet<Organisation> Organisations{ get; set; } = null!;
+    public virtual DbSet<EmailLink> EmailLinks{ get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         modelBuilder.Entity<User>().ToTable("users");

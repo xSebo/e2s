@@ -38,6 +38,7 @@ builder.Services.AddScoped<IDbUtils, DbUtils>();
 builder.Services.AddScoped<IUsers, Users>();
 builder.Services.AddScoped<IAuthorities, Authorities>();
 builder.Services.AddScoped<IOrganisations, Organisations>();
+builder.Services.AddScoped<IEmailLinks, EmailLinks>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 
