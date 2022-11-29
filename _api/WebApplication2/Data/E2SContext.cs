@@ -14,9 +14,9 @@ public class E2SContext : DbContext{
     public virtual DbSet<Organisation> Organisations{ get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
-        modelBuilder.Entity<User>().ToTable("Users");
-        modelBuilder.Entity<Authority>().ToTable("Authorities");
-        modelBuilder.Entity<UserToken>().ToTable("UserTokens");
-        modelBuilder.Entity<Organisation>().ToTable("Organisations");
+        modelBuilder.Entity<User>().ToTable("users");
+        modelBuilder.Entity<Authority>().ToTable("authorities");
+        modelBuilder.Entity<UserToken>().ToTable("usertokens");
+        modelBuilder.Entity<Organisation>().ToTable("organisations");
     }
 }
