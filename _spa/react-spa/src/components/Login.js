@@ -22,7 +22,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215',
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
 })
 const getFreshModel = ()=>({
@@ -48,13 +48,13 @@ export default function Login() {
 
         let config = {
             headers: {
-                'Access-Control-Allow-Origin': 'https://localhost:7215',
+                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
                 'Access-Control-Allow-Credentials' : 'true'
             }
         }
         let token = {
             headers: {
-                'Access-Control-Allow-Origin': 'https://localhost:7215',
+                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
                 'Access-Control-Allow-Credentials' : 'true',
                 'Authorization' : "bearer "
             }
