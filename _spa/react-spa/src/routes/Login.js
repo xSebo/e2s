@@ -60,9 +60,11 @@ export default function Login() {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('seb');
-    const [pwd, setPwd] = useState('ex');
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
+
+
     const logain = e => {
         let loginForm = {
             "email":adValues.email,
@@ -140,13 +142,13 @@ export default function Login() {
             console.log("b");
             //console.log(JSON.stringify(response));
             const accessToken = response?.data?.jwTtoken;
-            const roles = response?.data?.roles;
-            setUser('seb');
+            const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
+            const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
+            setUser(response.data.name);
             setPwd(adValues.password);
             console.log(user)
             console.log(pwd)
-
-            setAuth({ user, pwd, roles, accessToken });
+            setAuth({ name, pwd, roles, accessToken });
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {

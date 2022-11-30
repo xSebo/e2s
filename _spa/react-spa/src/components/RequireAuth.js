@@ -26,27 +26,27 @@ const RequireAuth = ({ allowedRoles }) => {
     // console.log(roleToken.toString())
 
 
-    // return (
-    //
-    //
-    //     // auth?.roles?.find(role => allowedRoles?.includes(role))
-    //     auth.roles == allowedRoles
-    //     // allowedRoles?.equals(auth?.roles)
-    //         ? <Outlet />
-    //         : auth?.user
-    //             ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-    //             : <Navigate to="/login" state={{ from: location }} replace />
-    // );
-
     return (
 
-        auth?.user
-            ? roleToken === allowedRoles
-                ? <Outlet />
-                : <Navigate to="/unauthorized" state={{ from: location }} replace />
-            : <Navigate to="/login" state={{ from: location }} replace />
 
+        // auth?.roles?.find(role => allowedRoles?.includes(role))
+        auth.roles == allowedRoles
+        // allowedRoles?.equals(auth?.roles)
+            ? <Outlet />
+            : auth?.user
+                ? <Navigate to="/unauthorized" state={{ from: location }} replace />
+                : <Navigate to="/login" state={{ from: location }} replace />
     );
+
+    // return (
+    //
+    //     auth?.user
+    //         ? roleToken === allowedRoles
+    //             ? <Outlet />
+    //             : <Navigate to="/unauthorized" state={{ from: location }} replace />
+    //         : <Navigate to="/login" state={{ from: location }} replace />
+    //
+    // );
 
     // return (
     //
