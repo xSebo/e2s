@@ -87,6 +87,41 @@ CREATE TABLE IF NOT EXISTS `e2s`.`usertokens` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+
+-- -----------------------------------------------------
+-- Table `e2s`.`emaillinks`
+-- -----------------------------------------------------
+CREATE TABLE `e2s`.`emaillinks` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `userId` INT NOT NULL,
+  `weekly` TINYINT NOT NULL,
+  `monthly` TINYINT NOT NULL,
+  `yearly` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userEmailLink_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `userEmailLink`
+    FOREIGN KEY (`userId`)
+    REFERENCES `e2s`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
+CREATE TABLE `e2s`.`powerdata` (
+  `date` DATETIME NOT NULL,
+  `CHP1ElectricityGen` FLOAT NULL,
+  `CHP2ElectricityGen` FLOAT NULL,
+  `CHP1HeatGen` FLOAT NULL,
+  `CHP2HeatGen` FLOAT NULL,
+  `BoilerHeat` FLOAT NULL,
+  `FeelsLike` FLOAT NULL,
+  `WindSpeed` FLOAT NULL,
+  `SiteElectricityDemand` FLOAT NULL,
+  `DayPowerPrice` FLOAT NULL,
+  `SiteHeatDemand` FLOAT NULL,
+  `ImportElectricity` FLOAT NULL,
+  `ExportElectricity` FLOAT NULL,
+  PRIMARY KEY (`date`));
+
+
 insert into authorities (name) values ("User");
 insert into authorities (name) values ("Admin");
 insert into authorities (name) values ("Super Admin");
@@ -97,6 +132,10 @@ insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,1);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",3,2);
+
+insert into emaillinks (userId, weekly, monthly, yearly) values (1,0,0,0);
+insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);
+insert into emaillinks (userId, weekly, monthly, yearly) values (3,0,0,0);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
