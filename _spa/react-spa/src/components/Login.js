@@ -60,8 +60,8 @@ export default function Login() {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
+    const [user, setUser] = useState('seb');
+    const [pwd, setPwd] = useState('ex');
     const [errMsg, setErrMsg] = useState('');
     const logain = e => {
         let loginForm = {
@@ -140,10 +140,13 @@ export default function Login() {
             console.log("b");
             //console.log(JSON.stringify(response));
             const accessToken = response?.data?.jwTtoken;
-            const roles = "User";
-            setAuth({ user, pwd, roles, accessToken });
+            const roles = response?.data?.roles;
             setUser('seb');
             setPwd(adValues.password);
+            console.log(user)
+            console.log(pwd)
+
+            setAuth({ user, pwd, roles, accessToken });
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {

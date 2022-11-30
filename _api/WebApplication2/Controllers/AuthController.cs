@@ -39,7 +39,8 @@ public class AuthController : Controller{
 
         TokenResponse tokenResponse = new TokenResponse{
             JWTtoken = _jwt.GenJwt(user),
-            RefreshToken = _jwt.RefreshToken(user)
+            RefreshToken = _jwt.RefreshToken(user),
+            Roles = user.Authority.Id.ToString()
         };
         var cookieOptions = new CookieOptions();
         
