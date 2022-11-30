@@ -20,13 +20,12 @@ import {createAPIEndpoint} from "../api";
 import logo from '../logo.png';
 import axios from "axios";
 import Cookies from 'js-cookie';
-import Reports from "./Reports";
 import {Route, Router, Routes} from "react-router-dom";
 import background from "../background.png";
 
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215',
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
 })
 const getFreshModel = ()=>({
@@ -52,13 +51,13 @@ export default function Login() {
 
         let config = {
             headers: {
-                'Access-Control-Allow-Origin': 'https://localhost:7215',
+                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
                 'Access-Control-Allow-Credentials' : 'true'
             }
         }
         let token = {
             headers: {
-                'Access-Control-Allow-Origin': 'https://localhost:7215',
+                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
                 'Access-Control-Allow-Credentials' : 'true',
                 'Authorization' : "bearer "
             }
@@ -188,7 +187,7 @@ export default function Login() {
                                     {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
                                     {/*/>*/}
                                     <div>
-                                        <FormControl sx={{ m: 1, width: '38ch' }} variant="outlined">
+                                        <FormControl sx={{ m: 1, width: '36ch' }} variant="outlined">
                                             <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-password"

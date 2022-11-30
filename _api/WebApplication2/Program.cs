@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
+    .AddEnvironmentVariables()
     .Build();
 
 builder.Services.AddControllers();
@@ -37,6 +38,8 @@ builder.Services.AddScoped<IDbUtils, DbUtils>();
 builder.Services.AddScoped<IUsers, Users>();
 builder.Services.AddScoped<IAuthorities, Authorities>();
 builder.Services.AddScoped<IOrganisations, Organisations>();
+builder.Services.AddScoped<IEmailLinks, EmailLinks>();
+builder.Services.AddScoped<IPowerDatas, PowerDatas>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 
@@ -61,8 +64,9 @@ builder.Services.AddAuthentication(item =>
 });
 
 var app = builder.Build();
+
 app.UseCors(options =>
-    options.WithOrigins("http://localhost:3000")
+    options.WithOrigins(Environment.GetEnvironmentVariable("CORS_ORIGINS") ?? "http://localhost:3000")
         .AllowAnyMethod()
         .WithHeaders("access-control-allow-credentials","access-control-allow-origin","content-type","authorization").AllowCredentials());
 
