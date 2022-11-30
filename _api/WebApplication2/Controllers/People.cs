@@ -1,23 +1,23 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
+using WebApplication2.DTOs;
 using WebApplication2.Models;
 using WebApplication2.Repos;
 
 namespace WebApplication2.Controllers;
 
 [ApiController]
-[Authorize(Roles="Admin")]
 public class People : Controller{
-    private readonly IUsers _users;
+    private readonly IPowerDatas _powerData;
 
-    public People(IUsers users){
-        _users = users;
+    public People(IPowerDatas powerData){
+        _powerData = powerData;
     }
 
     [Route("")]
     [HttpGet]
-    public List<User> getPeople(){
-        return _users.ByOrgId(2);
+    public List<DataResponse> GetPeople(){
+        return new List<DataResponse>();
     }
 }
