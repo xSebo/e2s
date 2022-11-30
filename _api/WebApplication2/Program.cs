@@ -15,6 +15,18 @@ var config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
+// https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-7.0 @ 30/11/2022
+var corsRulesName = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: corsRulesName,
+        policy => {
+            policy.WithOrigins(Environment.GetEnvironmentVariable("CORS_ORIGINS") ?? "http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
+
 builder.Services.AddControllers();
 
 string connectionString = config.GetConnectionString("DefaultConnection");
@@ -63,15 +75,13 @@ builder.Services.AddAuthentication(item =>
 
 var app = builder.Build();
 
-app.UseCors(options =>
-    options.WithOrigins(Environment.GetEnvironmentVariable("CORS_ORIGINS") ?? "http://localhost:3000")
-        .AllowAnyMethod()
-        .WithHeaders("access-control-allow-credentials","access-control-allow-origin","content-type","authorization").AllowCredentials());
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors(corsRulesName);
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseStaticFiles();
 
 app.MapControllers();
 app.Run();
