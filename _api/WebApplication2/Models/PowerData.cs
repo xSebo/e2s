@@ -16,4 +16,5 @@ public class PowerData{
     public float SiteHeatDemand{ get; set; }
     public float ImportElectricity{ get; set; }
     public float ExportElectricity{ get; set; }
+
 }

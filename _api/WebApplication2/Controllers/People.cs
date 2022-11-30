@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
+using WebApplication2.DTOs;
 using WebApplication2.Models;
 using WebApplication2.Repos;
 
@@ -16,9 +17,7 @@ public class People : Controller{
 
     [Route("")]
     [HttpGet]
-    public List<PowerData> getPeople(){
-        string dateInput = "Jan 1, 2020";
-        var parsedDate = DateTime.Parse(dateInput);
-        return _powerData.ByDate(parsedDate);
+    public List<DataResponse> GetPeople(){
+        return new List<DataResponse>();
     }
 }

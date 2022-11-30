@@ -18,7 +18,7 @@ import axios from "axios";
 import {PhotoCamera} from "@mui/icons-material";
 
 const api = axios.create({
-    baseURL: 'https://localhost:7215',
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
 })
 
