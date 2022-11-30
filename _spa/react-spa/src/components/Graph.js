@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import axios from "axios";
-import {Area, CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line} from "recharts";
+import {CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line, BarChart, Bar} from "recharts";
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import {TextField} from "@mui/material";
 import dayjs from 'dayjs';
@@ -13,13 +13,13 @@ const api = axios.create({
     withCredentials: true
 })
 
-export default function LoadLineGraph(dataType, date1, date2) {
+export default function Graph(props) {
     const [data, setData] = useState([]);
 
     function getList() {
-        dataType = "windSpeed"
-        date1 = encodeURIComponent(time1.format())
-        date2 = encodeURIComponent(time2.format())
+        let dataType = props.dataType
+        let date1 = encodeURIComponent(time1.format())
+        let date2 = encodeURIComponent(time2.format())
         return api.get("/data/byDate?dataType=" + dataType + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
             .then(data => data.data);
     }
@@ -32,12 +32,22 @@ export default function LoadLineGraph(dataType, date1, date2) {
                     setData(items)
                 }
             })
+        let graphTemp
+        if(props.graphType == "line"){
+            graphTemp = <CustLineChart data={data}/>
+            setGraph(graphTemp);
+        }if(props.graphType == "bar"){
+            graphTemp = <CustBarChart data={data}/>
+            setGraph(graphTemp);
+        }
         return () => mounted = false;
     }
 
+    const [graph,setGraph] = useState();
+
     useEffect(() => {
         loadList()
-    }, [])
+    }, [props.dataType])
 
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
     const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
@@ -52,6 +62,7 @@ export default function LoadLineGraph(dataType, date1, date2) {
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
+            <h1>{props.dataType}</h1>
             <div style={{display:"flex", flexDirection:"row", gap:"100px", justifyContent:"space-between"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
@@ -80,15 +91,34 @@ export default function LoadLineGraph(dataType, date1, date2) {
                 />
                 </LocalizationProvider>
             </div>
-            <LineChart width={1000} height={250} data={data}
-                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="xAxis"/>
-                <YAxis/>
-                <Tooltip/>
-                <Legend/>
-                <Line type="monotone" dataKey="yAxis" stroke="#8884d8" dot={false}/>
-            </LineChart>
+            {graph}
         </div>
+    )
+}
+
+function CustLineChart(props) {
+    return(
+        <LineChart width={1000} height={250} data={props.data}
+                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+            <CartesianGrid strokeDasharray="3 3"/>
+            <XAxis dataKey="xAxis"/>
+            <YAxis/>
+            <Tooltip/>
+            <Legend/>
+            <Line type="monotone" dataKey="yAxis" stroke="#8884d8" dot={false}/>
+        </LineChart>
+    )
+}
+
+function CustBarChart(props){
+    return(
+        <BarChart width={730} height={250} data={props.data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="xAxis"/>
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="yAxis" fill="#8884d8" />
+        </BarChart>
     )
 }
