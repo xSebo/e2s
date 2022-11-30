@@ -22,13 +22,14 @@ public class DataController : Controller{
         List<DataResponse> dataResponse = new List<DataResponse>();
         foreach (PowerData powerdata in powerDatas){
             try{
+                string date = powerdata.Date.ToString("dd/M/yyy HH:mm:ss");
                 dataResponse.Add(new DataResponse{
-                    XAxis = powerdata.Date.ToString(),
-                    YAxis = powerdata.dict[dataType]
+                    XAxis = date,
+                    YAxis = new PowerDataMap(powerdata).dict[dataType]
                 });
             }
             catch (Exception e){
-                return Problem();
+                return Problem(e.Message);
             }
         }
         return Ok(dataResponse);
