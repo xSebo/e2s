@@ -1,10 +1,10 @@
-import Login from './components/Login';
+import Login from './routes/Login';
 import Dashboard from "./routes/Home";
 import Layout from './components/Layout';
-import Missing from './components/Missing';
+import Missing from './routes/Missing';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
-import Unauthorized from './components/Unauthorized';
+import Unauthorized from './routes/Unauthorized';
 
 
 const ROLES = {

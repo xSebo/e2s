@@ -11,7 +11,7 @@ import {
     TextField,
     Typography
 } from '@mui/material'
-import Center from "./Center";
+import Center from "../../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from "axios";

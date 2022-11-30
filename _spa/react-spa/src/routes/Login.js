@@ -15,17 +15,17 @@ import {
 
     Link as Alink
 } from '@mui/material'
-import Center from "./Center";
+import Center from "../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import useForm from "../hooks/useForm";
 import {createAPIEndpoint} from "../api";
-import logo from '../logo.png';
+import logo from '../static/images/logo.png';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import {Route, Router, Routes} from "react-router-dom";
-import background from "../background.png";
+import background from "../static/images/background.png";
 
 
 import { useRef, useState, useEffect } from 'react';
@@ -279,7 +279,7 @@ export default function Login() {
                                     <div>
                                         <FormControlLabel control={<Checkbox defaultChecked={false} size={"small"} />}
                                                           label={<Typography variant="caption">Remember Me</Typography>} sx={{mr:10}}/>
-                                        <Link href="#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
+                                        <Link href="src/routes/Login#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
                                     </div>
                                     <Button
                                         type="submit"
