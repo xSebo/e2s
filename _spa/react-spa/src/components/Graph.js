@@ -8,11 +8,12 @@ const api = axios.create({
     withCredentials: true
 })
 
-export default function LoadGraph() {
+export default function LoadLineGraph(dataType, date1, date2) {
     const [data, setData] = useState([]);
 
     function getList(){
-        return api.get("/").then(data => data.data);
+        return api.get("/data/byDate?dataType=" + dataType +  "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
+            .then(data => data.data);
     }
 
     useEffect(() => {

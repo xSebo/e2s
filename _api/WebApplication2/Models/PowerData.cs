@@ -16,4 +16,23 @@ public class PowerData{
     public float SiteHeatDemand{ get; set; }
     public float ImportElectricity{ get; set; }
     public float ExportElectricity{ get; set; }
+
+    public readonly Dictionary<string, float> dict;
+    public PowerData(){
+        dict = new Dictionary<string, float>{
+            { "chp1ElectricityGen", CHP1ElectricityGen },
+            { "chp2ElectricityGen", CHP2ElectricityGen },
+            { "chp1HeatGen", CHP1HeatGen },
+            { "chp2HeatGen", CHP2HeatGen },
+            { "boilerHeat", BoilerHeat },
+            { "feelsLike", FeelsLike },
+            { "windSpeed", WindSpeed },
+            { "siteElectricityDemand", SiteElectricityDemand },
+            { "dayPowerPrice", DayPowerPrice },
+            { "siteHeatDemand", SiteHeatDemand },
+            { "importElectricity", ImportElectricity },
+            { "exportElectricity", ExportElectricity }
+        };
+    }
+
 }

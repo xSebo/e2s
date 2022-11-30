@@ -19,7 +19,7 @@ import "./App.css";
 import Dashboard from "./routes/Dashboard";
 import CreateOrganisation from "./fragments/CreateOrganisation";
 import Login from "./components/Login";
-import LoadGraph from "./components/Graph";
+import LoadLineGraph from "./components/Graph";
 
 const AppLayout = () => (
     <>
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             },
             {
                 path:"/graph",
-                element:<LoadGraph />,
+                element:<LoadLineGraph />,
             },
             {
                 path: "/",
