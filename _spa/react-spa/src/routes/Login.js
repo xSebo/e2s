@@ -97,7 +97,6 @@ export default function Login() {
             ).then(res => {console.log(res.data)}).catch(function (error) {
                 console.log(error);
                 console.log(getCookie("jwTtoken"))
-                console.log("sam")
             });
 
 
@@ -107,16 +106,10 @@ export default function Login() {
             unauthorised()
         });
 
-        // api.get('/').then(res => {console.log(res.data)})
-
-
         e.preventDefault();
         if (validate())
         console.log(adValues);
 
-
-        // createAPIEndpoint("/api/peeps")
-        // console.log(createAPIEndpoint("api/peeps"))
     }
 
     const login = async (e) => {
@@ -136,18 +129,9 @@ export default function Login() {
                 }
             );
 
-            console.log("a");
-            console.log(JSON.stringify(response?.data));
-            console.log(from)
-            console.log("b");
-            //console.log(JSON.stringify(response));
             const accessToken = response?.data?.jwTtoken;
             const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
             const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
-            setUser(response.data.name);
-            setPwd(adValues.password);
-            console.log(user)
-            console.log(pwd)
             setAuth({ name, pwd, roles, accessToken });
             navigate(from, { replace: true });
         } catch (err) {

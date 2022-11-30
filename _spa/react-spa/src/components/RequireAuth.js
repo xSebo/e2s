@@ -4,14 +4,12 @@ import useAuth from "../hooks/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
-    console.log(auth)
-    console.log("your roles are vvv")
-    console.log(auth.roles)
-    console.log("allowed roles are vvv")
-    console.log(allowedRoles)
-    if (auth.roles == allowedRoles) {
-        console.log("yes")
-    }
+    // console.log(auth)
+    // console.log("your roles are vvv")
+    // console.log(auth.roles)
+    // console.log("allowed roles are vvv")
+    // console.log(allowedRoles)
+
     let roleToken = ""
     if (auth?.user){
         const token = auth.accessToken
