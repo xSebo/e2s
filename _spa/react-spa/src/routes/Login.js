@@ -65,53 +65,6 @@ export default function Login() {
     const [errMsg, setErrMsg] = useState('');
 
 
-    const logain = e => {
-        let loginForm = {
-            "email":adValues.email,
-            "password":adValues.password
-        }
-
-        let config = {
-            headers: {
-                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
-                'Access-Control-Allow-Credentials' : 'true'
-            }
-        }
-        let token = {
-            headers: {
-                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
-                'Access-Control-Allow-Credentials' : 'true',
-                'Authorization' : "bearer "
-            }
-        }
-        function getCookie(name)
-        {
-            var re = new RegExp(name + "=([^;]+)");
-            var value = re.exec(document.cookie);
-            return (value != null) ? unescape(value[1]) : null;
-        }
-
-        api.post('/authenticate/create', loginForm, config
-        ).then(res => {
-            api.get('/', {headers:{'Authorization' : "bearer " + getCookie("jwTtoken")}}
-            ).then(res => {console.log(res.data)}).catch(function (error) {
-                console.log(error);
-                console.log(getCookie("jwTtoken"))
-            });
-
-
-
-            }).catch(function (error) {
-            console.log(error);
-            unauthorised()
-        });
-
-        e.preventDefault();
-        if (validate())
-        console.log(adValues);
-
-    }
-
     const login = async (e) => {
         e.preventDefault();
         let loginForm = {
@@ -132,6 +85,10 @@ export default function Login() {
             const accessToken = response?.data?.jwTtoken;
             const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
             const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
+            localStorage.removeItem('user')
+            localStorage.removeItem('isLoggedIn')
+            localStorage.setItem('user', response.data)
+            localStorage.setItem('isLoggedIn', 'true')
             setAuth({ name, pwd, roles, accessToken });
             navigate(from, { replace: true });
         } catch (err) {
@@ -160,6 +117,13 @@ export default function Login() {
         temp.password = "Password does not match with this email."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
+    }
+
+    //TODO remove logout button
+    const logout = ()=> {
+        localStorage.removeItem('user')
+        localStorage.removeItem('isLoggedIn')
+        localStorage.setItem('isLoggedIn', 'false')
     }
 //////////////////
 
@@ -273,6 +237,7 @@ export default function Login() {
                                         size="large"
                                         sx={{width: '90%'}}>Sign In</Button>
                                 </form>
+                                <Button onClick={logout}>Logout</Button>
                             </Box>
                         </CardContent>
                     </Card>
