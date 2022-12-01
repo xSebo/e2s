@@ -60,62 +60,10 @@ export default function Login() {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('seb');
-    const [pwd, setPwd] = useState('ex');
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const logain = e => {
-        let loginForm = {
-            "email":adValues.email,
-            "password":adValues.password
-        }
 
-        let config = {
-            headers: {
-                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
-                'Access-Control-Allow-Credentials' : 'true'
-            }
-        }
-        let token = {
-            headers: {
-                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
-                'Access-Control-Allow-Credentials' : 'true',
-                'Authorization' : "bearer "
-            }
-        }
-        function getCookie(name)
-        {
-            var re = new RegExp(name + "=([^;]+)");
-            var value = re.exec(document.cookie);
-            return (value != null) ? unescape(value[1]) : null;
-        }
-
-        api.post('/authenticate/create', loginForm, config
-        ).then(res => {
-            api.get('/', {headers:{'Authorization' : "bearer " + getCookie("jwTtoken")}}
-            ).then(res => {console.log(res.data)}).catch(function (error) {
-                console.log(error);
-                console.log(getCookie("jwTtoken"))
-                console.log("sam")
-            });
-
-
-
-            }).catch(function (error) {
-            console.log(error);
-            unauthorised()
-        });
-
-        // api.get('/').then(res => {console.log(res.data)})
-
-
-        e.preventDefault();
-        if (validate())
-        console.log(adValues);
-
-
-        // createAPIEndpoint("/api/peeps")
-        // console.log(createAPIEndpoint("api/peeps"))
-    }
 
     const login = async (e) => {
         e.preventDefault();
@@ -134,19 +82,14 @@ export default function Login() {
                 }
             );
 
-            console.log("a");
-            console.log(JSON.stringify(response?.data));
-            console.log(from)
-            console.log("b");
-            //console.log(JSON.stringify(response));
             const accessToken = response?.data?.jwTtoken;
-            const roles = response?.data?.roles;
-            setUser('seb');
-            setPwd(adValues.password);
-            console.log(user)
-            console.log(pwd)
-
-            setAuth({ user, pwd, roles, accessToken });
+            const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
+            const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
+            localStorage.removeItem('user')
+            localStorage.removeItem('isLoggedIn')
+            localStorage.setItem('user', response.data)
+            localStorage.setItem('isLoggedIn', 'true')
+            setAuth({ name, pwd, roles, accessToken });
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
@@ -174,6 +117,13 @@ export default function Login() {
         temp.password = "Password does not match with this email."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
+    }
+
+    //TODO remove logout button
+    const logout = ()=> {
+        localStorage.removeItem('user')
+        localStorage.removeItem('isLoggedIn')
+        localStorage.setItem('isLoggedIn', 'false')
     }
 //////////////////
 
@@ -287,6 +237,7 @@ export default function Login() {
                                         size="large"
                                         sx={{width: '90%'}}>Sign In</Button>
                                 </form>
+                                <Button onClick={logout}>Logout</Button>
                             </Box>
                         </CardContent>
                     </Card>

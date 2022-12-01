@@ -131,7 +131,7 @@ insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 
 insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,1);
-insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",3,2);
+insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","$2a$12$IiRb3RdMSK4/nvfkyXkecuVtIUlwEdMLcB/3u/fstWm6Uuj5RoBWa",3,2);
 
 insert into emaillinks (userId, weekly, monthly, yearly) values (1,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);

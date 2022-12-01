@@ -4,56 +4,45 @@ import useAuth from "../hooks/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
-    console.log(auth)
-    console.log("your roles are vvv")
-    console.log(auth.roles)
-    console.log("allowed roles are vvv")
-    console.log(allowedRoles)
-    if (auth.roles == allowedRoles) {
-        console.log("yes")
-    }
-    let roleToken = ""
-    if (auth?.user){
-        const token = auth.accessToken
-        roleToken = JSON.parse(window.atob(token.split(".")[1])).role;
-    }
-    else {roleToken = "anon"}
-    // const token = auth.accessToken
-    // console.log("token vvv")
-    // console.log(token)
-    // const roleToken = JSON.parse(window.atob(token.split(".")[1])).role;
-    // console.log("roletoken")
-    // console.log(roleToken.toString())
 
+    function getCookie(name)
+    {
+        var re = new RegExp(name + "=([^;]+)");
+        var value = re.exec(document.cookie);
+        return (value != null) ? unescape(value[1]) : null;
+    }
 
-    // return (
-    //
-    //
-    //     // auth?.roles?.find(role => allowedRoles?.includes(role))
-    //     auth.roles == allowedRoles
-    //     // allowedRoles?.equals(auth?.roles)
-    //         ? <Outlet />
-    //         : auth?.user
-    //             ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-    //             : <Navigate to="/login" state={{ from: location }} replace />
-    // );
+    const loggedIn = window.localStorage.getItem("isLoggedIn")
+    let logToken;
+    let logRoles = '';
+    // console.log(auth)
+    // console.log("your roles are vvv")
+    // console.log(auth.roles)
+    // console.log("allowed roles are vvv")
+    // console.log(allowedRoles)
+
+    if (loggedIn == "true"){
+        logToken = getCookie("jwTtoken")
+        logRoles = JSON.parse(window.atob(logToken.split(".")[1])).role;
+    }
+    else {}
+    console.log(logRoles)
 
     return (
-
-        auth?.user
-            ? roleToken === allowedRoles
+        loggedIn === "true"
+            ? logRoles == allowedRoles
                 ? <Outlet />
-                : <Navigate to="/unauthorized" state={{ from: location }} replace />
-            : <Navigate to="/login" state={{ from: location }} replace />
+                : loggedIn == "true"
+                    ? <Navigate to="/unauthorized" state={{ from: location }} replace />
+                    : <Navigate to="/login" state={{ from: location }} replace />
+            : auth.roles == allowedRoles
+                ? <Outlet />
+                : auth?.user
+                    ? <Navigate to="/unauthorized" state={{ from: location }} replace />
+                    : <Navigate to="/login" state={{ from: location }} replace />
 
     );
 
-    // return (
-    //
-    //      auth?.user
-    //         ? <Outlet/>
-    //          : <Navigate to="/login" state={{from: location}} replace/>
-    // );
 }
 
 export default RequireAuth;
