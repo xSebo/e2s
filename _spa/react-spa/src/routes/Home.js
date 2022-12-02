@@ -6,7 +6,7 @@ function Home(){
         <div className="home">
             <h1>Home</h1>
             <br/>
-            <AdviceCard></AdviceCard>
+            <AdviceCard title={"Lorem ipsum"} text={"Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation."}></AdviceCard>
         </div>
     ); 
 }
