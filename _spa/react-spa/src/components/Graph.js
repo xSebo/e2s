@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
+import TwoTimeSelector from "./TwoTimeSelector";
+
 import axios from "axios";
 import {CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line, BarChart, Bar, Label} from "recharts";
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
@@ -24,6 +26,10 @@ export default function Graph(props) {
             .then(data => data.data);
     }
 
+    useEffect(() => {
+        loadList()
+    }, [props.dataType]);
+
     function loadList(){
         let mounted = true;
         getList()
@@ -44,53 +50,33 @@ export default function Graph(props) {
     }
 
     const [graph,setGraph] = useState();
-
+/*
     useEffect(() => {
         loadList()
     }, [props.dataType])
 
+ */
+
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
     const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
 
-
     const handleChange1 = (newValue) => {
-        setTime1(newValue);
+        if(newValue != null) {
+            setTime1(newValue);
+            loadList()
+        }
     };
     const handleChange2 = (newValue) => {
-        setTime2(newValue);
+        if(newValue != null) {
+            setTime2(newValue);
+            loadList()
+        }
     }
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
             <h1>{props.dataType}</h1>
-            <div style={{display:"flex", flexDirection:"row", gap:"100px", justifyContent:"space-between"}}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                    label="Start date & time"
-                    value={time1}
-                    ampm={false}
-                    views={["month", "day", "hours", "minutes"]}
-                    inputFormat="DD/MM/YYYY HH:mm:ss"
-                    onChange={(value) => {
-                        handleChange1(value);
-                        loadList();
-                }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-                <DateTimePicker
-                    label="End date & time"
-                    value={time2}
-                    ampm={false}
-                    views={["month", "day", "hours", "minutes"]}
-                    inputFormat="DD/MM/YYYY HH:mm:ss"
-                    onChange={(value) => {
-                        handleChange2(value);
-                        loadList();
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-                </LocalizationProvider>
-            </div>
+            <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1} initTime2={time2}/>
             {graph}
         </div>
     )
