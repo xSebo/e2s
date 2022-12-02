@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import axios from "axios";
-import {CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line, BarChart, Bar} from "recharts";
+import {CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line, BarChart, Bar, Label} from "recharts";
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import {TextField} from "@mui/material";
 import dayjs from 'dayjs';
@@ -34,10 +34,10 @@ export default function Graph(props) {
             })
         let graphTemp
         if(props.graphType == "line"){
-            graphTemp = <CustLineChart data={data}/>
+            graphTemp = <CustLineChart data={data} xTitle={props.xTitle} yTitle={props.yTitle}/>
             setGraph(graphTemp);
         }if(props.graphType == "bar"){
-            graphTemp = <CustBarChart data={data}/>
+            graphTemp = <CustBarChart data={data} xTitle={props.xTitle} yTitle={props.yTitle}/>
             setGraph(graphTemp);
         }
         return () => mounted = false;
@@ -101,10 +101,9 @@ function CustLineChart(props) {
         <LineChart width={1000} height={250} data={props.data}
                    margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <CartesianGrid strokeDasharray="3 3"/>
-            <XAxis dataKey="xAxis"/>
-            <YAxis/>
+            <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
+            <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip/>
-            <Legend/>
             <Line type="monotone" dataKey="yAxis" stroke="#8884d8" dot={false}/>
         </LineChart>
     )
@@ -114,10 +113,9 @@ function CustBarChart(props){
     return(
         <BarChart width={730} height={250} data={props.data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="xAxis"/>
-            <YAxis />
+            <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
+            <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip />
-            <Legend />
             <Bar dataKey="yAxis" fill="#8884d8" />
         </BarChart>
     )

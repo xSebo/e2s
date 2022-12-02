@@ -34,7 +34,7 @@ const Costs = () => {
                     <MenuItem value={"exportElectricity"}>exportElectricity</MenuItem>
                 </Select>
             </FormControl>
-            <Graph dataType={dataType} graphType={"bar"} />
+            <Graph dataType={dataType} xTitle={"TestX"} yTitle={"TestY"} graphType={"line"} />
         </div>
     )
 }
