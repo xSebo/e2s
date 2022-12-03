@@ -4,6 +4,7 @@ import axios from "axios";
 import dayjs from 'dayjs';
 import {Card, CardContent, Divider, Typography} from "@mui/material"
 import shadows from "@mui/material/styles/shadows";
+import {AiOutlineArrowUp, AiOutlineArrowDown} from 'react-icons/ai';
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -37,14 +38,29 @@ export default function LoadAdviceCard({title, text, sub}) {
     // }, [])
 
     const persons = [
-        { firstName: "Jane", lastName: "Smith" },
-        { firstName: "Alex", lastName: "Jones" },
-        { firstName: "May", lastName: "Wong" }
+        { sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true },
+        { sTitle: "emissions", sText: "£100,000", percent: "40", arrowUp:false, good:false },
+        { sTitle: "lorem ipsum", sText: "£100,000", percent: "40", arrowUp:true, good:true }
     ];
 
-    const Person = ({ firstName, lastName }) => (
-        <div>
-            {firstName} {lastName}
+    const Person = ({ sTitle, sText, percent, arrowUp, good }) => (
+        <div style={{display: "flex", borderBottomWidth: "1px", borderBottomColor: "grey", borderBottomStyle: "solid"}}>
+            <div style={{width: "120px"}}>
+                <Typography variant="h6"  sx ={{ fontWeight:'bold'}} >
+                    {sTitle}
+                </Typography>
+                <div>
+                    {sText}
+                </div>
+            </div>
+
+            <div style={{background: good ? "hsl(140,40%,55%)" : "hsl(0,100%,65%)", marginLeft:"20px", margin:"20px", width:"50px", height:"20px"}}>
+                {arrowUp
+                    ? <AiOutlineArrowUp/>
+                    : <AiOutlineArrowDown/>
+                }
+                {percent}%
+            </div>
         </div>
     );
 
@@ -66,18 +82,12 @@ export default function LoadAdviceCard({title, text, sub}) {
 
         <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
 
-            <div>
-                {persons.map((p, i) => (
-                    <Person {...p} key={i} />
-                ))}
-            </div>
-
                 <div style={shadows}>
                     <Card sx={{ padding:1}}>
                         <CardContent sx={{}}>
                             <div style={{display: "flex", justifyContent: "space-between"}}>
                                 {/*Left-hand box*/}
-                                <div style={{paddingRight: "10px", maxWidth:"50%"}}>
+                                <div style={{paddingRight: "10px", maxWidth:"50%", flexGrow: "2"}}>
                                     <Typography variant="h4"  sx ={{ fontWeight:'bold'}} >
                                         {title}
                                     </Typography>
@@ -91,44 +101,10 @@ export default function LoadAdviceCard({title, text, sub}) {
 
                                 {/*Right-hand box*/}
                                 <div style={{paddingLeft: "10px"}}>
-                                    <div style={{display: "flex", borderBottomWidth: "1px", borderBottomColor: "grey", borderBottomStyle: "solid"}}>
-                                        <div>
-                                            <Typography variant="h6"  sx ={{ fontWeight:'bold'}} >
-                                                Lorem Ipsum
-                                            </Typography>
-                                            <div>
-                                                £100,000
-                                            </div>
-                                        </div>
-                                        <div style={{background:"green", marginLeft:"20px", width:"100px"}}>
-                                            food
-                                        </div>
-                                    </div>
-                                    <div style={{display: "flex", borderBottomWidth: "1px", borderBottomColor: "grey", borderBottomStyle: "solid"}}>
-                                        <div>
-                                            <Typography variant="h6"  sx ={{ fontWeight:'bold'}} >
-                                                Lorem Ipsum
-                                            </Typography>
-                                            <div>
-                                                £100,000
-                                            </div>
-                                        </div>
-                                        <div style={{background:"green", marginLeft:"20px", width:"100px"}}>
-                                            food
-                                        </div>
-                                    </div>
-                                    <div style={{display: "flex", borderBottomWidth: "1px", borderBottomColor: "grey", borderBottomStyle: "solid"}}>
-                                        <div>
-                                            <Typography variant="h6"  sx ={{ fontWeight:'bold'}} >
-                                                Lorem Ipsum
-                                            </Typography>
-                                            <div>
-                                                £100,000
-                                            </div>
-                                        </div>
-                                        <div style={{background:"green", marginLeft:"20px", width:"100px"}}>
-                                            food
-                                        </div>
+                                    <div>
+                                        {persons.map((p, i) => (
+                                            <Person {...p} key={i} />
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +114,6 @@ export default function LoadAdviceCard({title, text, sub}) {
                 </div>
 
             <div style={{display:"flex", flexDirection:"row", gap:"100px", justifyContent:"space-between"}}>
-
 
             </div>
 
