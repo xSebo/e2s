@@ -57,11 +57,8 @@ export default function Login() {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const userRef = useRef();
-    const errRef = useRef();
 
     const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
 
@@ -71,42 +68,45 @@ export default function Login() {
             "email":adValues.email,
             "password":adValues.password
         }
+        if ((/\S+@\S+\.\S+/).test(adValues.email)) {
 
-        try {
-            const response = await api.post("/authenticate/create",
-                JSON.stringify({ "email":adValues.email, "password":adValues.password }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+            try {
+                const response = await api.post("/authenticate/create",
+                    JSON.stringify({"email": adValues.email, "password": adValues.password}),
+                    {
+                        headers: {'Content-Type': 'application/json'},
+                        withCredentials: true
 
+                    }
+                );
+
+                const accessToken = response?.data?.jwTtoken;
+                const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
+                const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
+                localStorage.removeItem('user')
+                localStorage.removeItem('isLoggedIn')
+                localStorage.setItem('user', response.data)
+                localStorage.setItem('isLoggedIn', 'true')
+
+                setAuth({name, roles, accessToken});
+                navigate(from, {replace: true});
+            } catch (err) {
+                console.log(err)
+                if (!err?.response) {
                 }
-            );
-
-            const accessToken = response?.data?.jwTtoken;
-            const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
-            const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
-            localStorage.removeItem('user')
-            localStorage.removeItem('isLoggedIn')
-            localStorage.setItem('user', response.data)
-            localStorage.setItem('isLoggedIn', 'true')
-            setAuth({ name, pwd, roles, accessToken });
-            navigate(from, { replace: true });
-        } catch (err) {
-            if (!err?.response) {
-                // setErrMsg('No Server Response');
-            } else if (err.response?.status === 400) {
-                // setErrMsg('Missing Username or Password');
-            } else if (err.response?.status === 401) {
-                // setErrMsg('Unauthorized');
-            } else {
-                // setErrMsg('Login Failed');
+                else {
+                    validate()
+                }
             }
-            // errRef.current.focus();
+        }
+        else {
+            unauthorised()
         }
     }
+
     const validate = ()=> {
         let temp ={}
-        temp.email = (/\S+@\S+\.\S+/).test(adValues.email)?"":"Email is not vaild."
+        temp.password = "Password does not match with this email."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
     }
@@ -128,11 +128,8 @@ export default function Login() {
 //////////////////
 
     const [adValues, setAdValues] = React.useState({
-        amount: '',
         email: '',
         password: '',
-        weight: '',
-        weightRange: '',
         showPassword: false,
     });
 
