@@ -26,7 +26,6 @@ const RequireAuth = ({ allowedRoles }) => {
         logRoles = JSON.parse(window.atob(logToken.split(".")[1])).role;
     }
     else {}
-    console.log(logRoles)
 
     return (
         loggedIn === "true"

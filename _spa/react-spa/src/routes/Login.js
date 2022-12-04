@@ -91,7 +91,6 @@ export default function Login() {
                 setAuth({name, roles, accessToken});
                 navigate(from, {replace: true});
             } catch (err) {
-                console.log(err)
                 if (!err?.response) {
                 }
                 else {
@@ -187,16 +186,8 @@ export default function Login() {
                                         value={adValues.email}
                                         onChange={handleChange('email')}
                                         variant="outlined"
-                                        {...(errors.email && {error:true, helperText:errors.email})}
+                                        {...(errors.email && {error:true, helpertext:errors.email})}
                                     />
-                                    {/*<TextField*/}
-                                    {/*    label="Password"*/}
-                                    {/*    name="password"*/}
-                                    {/*    value={values.password}*/}
-                                    {/*    onChange={handleInputChange}*/}
-                                    {/*    variant="outlined"*/}
-                                    {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
-                                    {/*/>*/}
                                     <div>
                                         <FormControl sx={{ m: 1, width: '36ch' }} variant="outlined">
                                             <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
@@ -205,7 +196,7 @@ export default function Login() {
                                                 type={adValues.showPassword ? 'text' : 'password'}
                                                 value={adValues.password}
                                                 onChange={handleChange('password')}
-                                                {...(errors.password && {error:true, helperText:errors.password})}
+                                                {...(errors.password && {error:true, helpertext:errors.password})}
                                                 endAdornment={
                                                     <InputAdornment position="end">
                                                         <IconButton
