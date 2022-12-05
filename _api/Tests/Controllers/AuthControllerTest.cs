@@ -41,7 +41,7 @@ public class AuthControllerTest : IClassFixture<AuthController>{
     }
     
     [DataTestMethod]
-    [DataRow("user@email.com", "example")]
+    [DataRow("user@email.com", "$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu")]
     public void CorrectDetails(string email, string password)
     {
         UserLoginDTO loginRequest = new UserLoginDTO{Email = email, Password = password};

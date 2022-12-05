@@ -1,7 +1,19 @@
 import React, {useEffect, useState} from 'react'
 
 import axios from "axios";
-import {CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line, BarChart, Bar, Label} from "recharts";
+import {
+    CartesianGrid,
+    Tooltip,
+    XAxis,
+    YAxis,
+    LineChart,
+    Legend,
+    Line,
+    BarChart,
+    Bar,
+    Label,
+    ResponsiveContainer
+} from "recharts";
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import {TextField} from "@mui/material";
 import dayjs from 'dayjs';
@@ -61,7 +73,7 @@ export default function Graph(props) {
     }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
+        <div style={{display: "flex", flexDirection: "column", alignItems:"center", width:"100%"}}>
             <h1>{props.dataType}</h1>
             <div style={{display:"flex", flexDirection:"row", gap:"100px", justifyContent:"space-between"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -98,14 +110,17 @@ export default function Graph(props) {
 
 function CustLineChart(props) {
     return(
+        <ResponsiveContainer width="100%" height={200}>
+
         <LineChart width={1000} height={250} data={props.data}
-                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                   margin={{top: 5, right: 30, left: 0, bottom: 5}}>
             <CartesianGrid strokeDasharray="3 3"/>
             <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
-            <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
+            <YAxis label={{ value: props.yTitle, angle: -90, offset: 40, position: 'insideLeft' }} />
             <Tooltip/>
             <Line type="monotone" dataKey="yAxis" stroke="#8884d8" dot={false}/>
         </LineChart>
+        </ResponsiveContainer>
     )
 }
 
