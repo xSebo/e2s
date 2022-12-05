@@ -6,7 +6,7 @@ import {
     InputLabel,
     ListItemIcon,
     ListItemText,
-    MenuItem,
+    MenuItem, OutlinedInput,
     Select
 } from "@mui/material";
 
@@ -57,54 +57,33 @@ function Multidropdown(props) {
     };
 
     const [selected, setSelected] = useState([]);
-    const isAllSelected =
-        options.length > 0 && selected.length === options.length;
 
     const handleChange = (event) => {
-        const value = event.target.value;
-        if (value[value.length - 1] === "all") {
-            setSelected(selected.length === options.length ? [] : options);
-            return;
-        }
-        setSelected(value);
+        const {
+            target: { value },
+        } = event;
+        setSelected(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        props.handleChange(typeof value === 'string' ? value.split(',') : value);
     };
 
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl sx={{ m: 1, width: 300 }}>
             <Select
-                labelId="mutiple-select-label"
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
                 multiple
                 value={selected}
                 onChange={handleChange}
-                renderValue={(selected) => selected.join(", ")}
+                input={<OutlinedInput label="Tag" />}
+                renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
-                style={{minWidth:200}}
             >
-                <MenuItem
-                    value="all"
-                    classes={{
-                        root: isAllSelected ? classes.selectedAll : ""
-                    }}
-                >
-                    <ListItemIcon>
-                        <Checkbox
-                            classes={{ indeterminate: classes.indeterminateColor }}
-                            checked={isAllSelected}
-                            indeterminate={
-                                selected.length > 0 && selected.length < options.length
-                            }
-                        />
-                    </ListItemIcon>
-                    <ListItemText
-                        classes={{ primary: classes.selectAllText }}
-                        primary="Select All"
-                    />
-                </MenuItem>
                 {options.map((option) => (
                     <MenuItem key={option} value={option}>
-                        <ListItemIcon>
-                            <Checkbox checked={selected.indexOf(option) > -1} />
-                        </ListItemIcon>
+                        <Checkbox checked={selected.indexOf(option) > -1} />
                         <ListItemText primary={option} />
                     </MenuItem>
                 ))}

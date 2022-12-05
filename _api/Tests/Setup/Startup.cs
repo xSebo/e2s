@@ -33,6 +33,7 @@ public class Startup{
         services.AddTransient<IUsers, Users>();
         services.AddTransient<IAuthorities, Authorities>();
         services.AddTransient<IOrganisations, Organisations>();
+        services.AddTransient<IEmailLinks, EmailLinks>();
 
         services.Configure<JWTKey>(config.GetSection(JWTKey.Position));
 
