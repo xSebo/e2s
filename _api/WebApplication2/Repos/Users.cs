@@ -8,11 +8,9 @@ public class Users : IUsers{
     private readonly DbSet<User> _userDb;
     private readonly IDbUtils _dbUtils;
     private readonly IEmailLinks _emailLinks;
-    private readonly E2SContext _e2sContext;
 
     public Users(E2SContext e2sContext, IDbUtils dbUtils, IEmailLinks emailLinks){
         _userDb = e2sContext.Users;
-        _e2sContext = e2sContext;
         _dbUtils = dbUtils;
         _emailLinks = emailLinks;
     }
@@ -34,7 +32,7 @@ public class Users : IUsers{
     }
 
     public void Add(User user){
-        _e2sContext.EmailLinks.Add(new EmailLink{
+        _emailLinks.Add(new EmailLink{
             User = user,
             Weekly = false,
             Monthly = false,
