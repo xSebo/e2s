@@ -20,6 +20,6 @@ public class E2SContext : DbContext{
         modelBuilder.Entity<Authority>().ToTable("authorities");
         modelBuilder.Entity<UserToken>().ToTable("usertokens");
         modelBuilder.Entity<Organisation>().ToTable("organisations");
-        modelBuilder.Entity<PowerData>().ToTable("powerdata");
+        modelBuilder.Entity<PowerData>().ToTable("powerdata").HasKey("date", "organisations_id");
     }
 }

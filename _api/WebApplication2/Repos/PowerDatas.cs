@@ -19,7 +19,12 @@ public class PowerDatas : IPowerDatas{
         return _powerData.FirstOrDefault(pd => pd.Date == date);
     }
 
-    public List<PowerData> ByDates(DateTime date1, DateTime date2){
+    public List<PowerData> ByDates(DateTime date1, DateTime date2) {
         return _powerData.Where(pd => pd.Date > date1 && pd.Date < date2).ToList();
+    }
+    
+    public List<PowerData> ByDatesAndOrganisationId(DateTime date1, DateTime date2, int orgId)
+    {
+        return _powerData.Where(pd => pd.Date > date1 && pd.Date < date2 && pd.OrganisationId == orgId).ToList();
     }
 }
