@@ -11,24 +11,15 @@ import {
     TextField,
     Typography
 } from '@mui/material'
-import {
-
-    Link as Alink
-} from '@mui/material'
 import Center from "../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import useForm from "../hooks/useForm";
-import {createAPIEndpoint} from "../api";
 import logo from '../static/images/logo.png';
 import axios from "axios";
-import Cookies from 'js-cookie';
-import {Route, Router, Routes} from "react-router-dom";
-import background from "../static/images/background.png";
 
-
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
@@ -57,65 +48,10 @@ export default function Login() {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const userRef = useRef();
-    const errRef = useRef();
 
-    const [user, setUser] = useState('seb');
-    const [pwd, setPwd] = useState('ex');
+    const [user, setUser] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const logain = e => {
-        let loginForm = {
-            "email":adValues.email,
-            "password":adValues.password
-        }
 
-        let config = {
-            headers: {
-                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
-                'Access-Control-Allow-Credentials' : 'true'
-            }
-        }
-        let token = {
-            headers: {
-                'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
-                'Access-Control-Allow-Credentials' : 'true',
-                'Authorization' : "bearer "
-            }
-        }
-        function getCookie(name)
-        {
-            var re = new RegExp(name + "=([^;]+)");
-            var value = re.exec(document.cookie);
-            return (value != null) ? unescape(value[1]) : null;
-        }
-
-        api.post('/authenticate/create', loginForm, config
-        ).then(res => {
-            api.get('/', {headers:{'Authorization' : "bearer " + getCookie("jwTtoken")}}
-            ).then(res => {console.log(res.data)}).catch(function (error) {
-                console.log(error);
-                console.log(getCookie("jwTtoken"))
-                console.log("sam")
-            });
-
-
-
-            }).catch(function (error) {
-            console.log(error);
-            unauthorised()
-        });
-
-        // api.get('/').then(res => {console.log(res.data)})
-
-
-        e.preventDefault();
-        if (validate())
-        console.log(adValues);
-
-
-        // createAPIEndpoint("/api/peeps")
-        // console.log(createAPIEndpoint("api/peeps"))
-    }
 
     const login = async (e) => {
         e.preventDefault();
@@ -123,47 +59,44 @@ export default function Login() {
             "email":adValues.email,
             "password":adValues.password
         }
+        if ((/\S+@\S+\.\S+/).test(adValues.email)) {
 
-        try {
-            const response = await api.post("/authenticate/create",
-                JSON.stringify({ "email":adValues.email, "password":adValues.password }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+            try {
+                const response = await api.post("/authenticate/create",
+                    JSON.stringify({"email": adValues.email, "password": adValues.password}),
+                    {
+                        headers: {'Content-Type': 'application/json'},
+                        withCredentials: true
 
+                    }
+                );
+
+                const accessToken = response?.data?.jwTtoken;
+                const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
+                const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
+                localStorage.removeItem('user')
+                localStorage.removeItem('isLoggedIn')
+                localStorage.setItem('user', response.data)
+                localStorage.setItem('isLoggedIn', 'true')
+
+                setAuth({name, roles, accessToken});
+                navigate(from, {replace: true});
+            } catch (err) {
+                if (!err?.response) {
                 }
-            );
-
-            console.log("a");
-            console.log(JSON.stringify(response?.data));
-            console.log(from)
-            console.log("b");
-            //console.log(JSON.stringify(response));
-            const accessToken = response?.data?.jwTtoken;
-            const roles = response?.data?.roles;
-            setUser('seb');
-            setPwd(adValues.password);
-            console.log(user)
-            console.log(pwd)
-
-            setAuth({ user, pwd, roles, accessToken });
-            navigate(from, { replace: true });
-        } catch (err) {
-            if (!err?.response) {
-                // setErrMsg('No Server Response');
-            } else if (err.response?.status === 400) {
-                // setErrMsg('Missing Username or Password');
-            } else if (err.response?.status === 401) {
-                // setErrMsg('Unauthorized');
-            } else {
-                // setErrMsg('Login Failed');
+                else {
+                    validate()
+                }
             }
-            // errRef.current.focus();
+        }
+        else {
+            unauthorised()
         }
     }
+
     const validate = ()=> {
         let temp ={}
-        temp.email = (/\S+@\S+\.\S+/).test(adValues.email)?"":"Email is not vaild."
+        temp.password = "Password does not match with this email."
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
     }
@@ -175,14 +108,18 @@ export default function Login() {
         setErrors(temp)
         return Object.values(temp).every(x=> x== "")
     }
+
+    //TODO remove logout button
+    const logout = ()=> {
+        localStorage.removeItem('user')
+        localStorage.removeItem('isLoggedIn')
+        localStorage.setItem('isLoggedIn', 'false')
+    }
 //////////////////
 
     const [adValues, setAdValues] = React.useState({
-        amount: '',
         email: '',
         password: '',
-        weight: '',
-        weightRange: '',
         showPassword: false,
     });
 
@@ -204,7 +141,6 @@ export default function Login() {
     const sectionStyle = {
         width: "100%",
         height: "100%",
-        backgroundImage: `url(${background})`
     };
 
     const shadows = {
@@ -240,16 +176,8 @@ export default function Login() {
                                         value={adValues.email}
                                         onChange={handleChange('email')}
                                         variant="outlined"
-                                        {...(errors.email && {error:true, helperText:errors.email})}
+                                        {...(errors.email && {error:true, helpertext:errors.email})}
                                     />
-                                    {/*<TextField*/}
-                                    {/*    label="Password"*/}
-                                    {/*    name="password"*/}
-                                    {/*    value={values.password}*/}
-                                    {/*    onChange={handleInputChange}*/}
-                                    {/*    variant="outlined"*/}
-                                    {/*    {...(errors.password && {error:true, helperText:errors.password})}*/}
-                                    {/*/>*/}
                                     <div>
                                         <FormControl sx={{ m: 1, width: '36ch' }} variant="outlined">
                                             <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
@@ -258,7 +186,7 @@ export default function Login() {
                                                 type={adValues.showPassword ? 'text' : 'password'}
                                                 value={adValues.password}
                                                 onChange={handleChange('password')}
-                                                {...(errors.password && {error:true, helperText:errors.password})}
+                                                {...(errors.password && {error:true, helpertext:errors.password})}
                                                 endAdornment={
                                                     <InputAdornment position="end">
                                                         <IconButton
@@ -287,6 +215,7 @@ export default function Login() {
                                         size="large"
                                         sx={{width: '90%'}}>Sign In</Button>
                                 </form>
+                                <Button onClick={logout}>Logout</Button>
                             </Box>
                         </CardContent>
                     </Card>

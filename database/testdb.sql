@@ -8,20 +8,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema e2sTest
+-- Schema e2stest
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema e2sTest
+-- Schema e2stest
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `e2sTest`;
-CREATE SCHEMA IF NOT EXISTS `e2sTest` DEFAULT CHARACTER SET latin1 ;
-USE `e2sTest` ;
+DROP SCHEMA IF EXISTS `e2stest`;
+CREATE SCHEMA IF NOT EXISTS `e2stest` DEFAULT CHARACTER SET latin1 ;
+USE `e2stest` ;
 
 -- -----------------------------------------------------
--- Table `e2sTest`.`authorities`
+-- Table `e2stest`.`authorities`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `e2sTest`.`authorities` (
+CREATE TABLE IF NOT EXISTS `e2stest`.`authorities` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -30,9 +30,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `e2sTest`.`organisations`
+-- Table `e2stest`.`organisations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `e2sTest`.`organisations` (
+CREATE TABLE IF NOT EXISTS `e2stest`.`organisations` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `logo` VARCHAR(45) NULL DEFAULT NULL,
@@ -42,9 +42,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `e2sTest`.`users`
+-- Table `e2stest`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `e2sTest`.`users` (
+CREATE TABLE IF NOT EXISTS `e2stest`.`users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -56,12 +56,12 @@ CREATE TABLE IF NOT EXISTS `e2sTest`.`users` (
   INDEX `organisationId_idx` (`organisationId` ASC) VISIBLE,
   CONSTRAINT `authorityId`
     FOREIGN KEY (`authorityId`)
-    REFERENCES `e2sTest`.`authorities` (`id`)
+    REFERENCES `e2stest`.`authorities` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `organisationId`
     FOREIGN KEY (`organisationId`)
-    REFERENCES `e2sTest`.`organisations` (`id`)
+    REFERENCES `e2stest`.`organisations` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -69,9 +69,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `e2sTest`.`usertokens`
+-- Table `e2stest`.`usertokens`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `e2sTest`.`usertokens` (
+CREATE TABLE IF NOT EXISTS `e2stest`.`usertokens` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `userId` INT(11) NOT NULL,
   `tokenId` INT(11) NOT NULL,
@@ -81,11 +81,46 @@ CREATE TABLE IF NOT EXISTS `e2sTest`.`usertokens` (
   INDEX `userId_idx` (`userId` ASC) VISIBLE,
   CONSTRAINT `userId`
     FOREIGN KEY (`userId`)
-    REFERENCES `e2sTest`.`users` (`id`)
+    REFERENCES `e2stest`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `e2stest`.`emaillinks`
+-- -----------------------------------------------------
+CREATE TABLE `e2stest`.`emaillinks` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `userId` INT NOT NULL,
+  `weekly` TINYINT NOT NULL,
+  `monthly` TINYINT NOT NULL,
+  `yearly` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userEmailLink_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `userEmailLink`
+    FOREIGN KEY (`userId`)
+    REFERENCES `e2stest`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
+CREATE TABLE `e2stest`.`powerdata` (
+  `date` DATETIME NOT NULL,
+  `CHP1ElectricityGen` FLOAT NULL,
+  `CHP2ElectricityGen` FLOAT NULL,
+  `CHP1HeatGen` FLOAT NULL,
+  `CHP2HeatGen` FLOAT NULL,
+  `BoilerHeat` FLOAT NULL,
+  `FeelsLike` FLOAT NULL,
+  `WindSpeed` FLOAT NULL,
+  `SiteElectricityDemand` FLOAT NULL,
+  `DayPowerPrice` FLOAT NULL,
+  `SiteHeatDemand` FLOAT NULL,
+  `ImportElectricity` FLOAT NULL,
+  `ExportElectricity` FLOAT NULL,
+  PRIMARY KEY (`date`));
+
 
 insert into authorities (name) values ("User");
 insert into authorities (name) values ("Admin");
@@ -94,8 +129,11 @@ insert into authorities (name) values ("Super Admin");
 insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
 insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
 
-insert into users (name,email,password,authorityId,organisationId) values ("TestUser","user@email.com","'$2a$11$BQYwMRLV.DP1.2iAzvTc3OSuTFJmWBiGIbTnmX7R1LfjVCjf4yAVW'",1,2);
-insert into users (name,email,password,authorityId,organisationId) values ("TestAdmin","admin@email.com","'$2a$11$BQYwMRLV.DP1.2iAzvTc3OSuTFJmWBiGIbTnmX7R1LfjVCjf4yAVW'",2,2);
+insert into users (name,email,password,authorityId,organisationId) values ("TestUser","user@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("TestAdmin","admin@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,2);
+
+insert into emaillinks (userId, weekly, monthly, yearly) values (1,0,0,0);
+insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
