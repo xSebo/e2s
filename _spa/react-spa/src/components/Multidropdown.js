@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 import {
     Checkbox,
@@ -57,6 +57,10 @@ function Multidropdown(props) {
     };
 
     const [selected, setSelected] = useState([props.options[0]]);
+
+    useEffect(() => {
+        props.handleChange(props.options[0])
+    });
 
     const handleChange = (event) => {
         const {

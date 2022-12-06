@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Multidropdown from "../components/Multidropdown";
 import dayjs from "dayjs";
 import TwoTimeSelector from "../components/TwoTimeSelector";
 import {Button, InputLabel, MenuItem, Select} from "@mui/material";
 import axios from "axios";
+import Graph from "../components/Graph";
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true,
-    responseType: "blob"
+    withCredentials: true
 })
 
 const Export = () => {
@@ -29,15 +29,45 @@ const Export = () => {
     const submit = () => {
         let date1 = encodeURIComponent(time1.format())
         let date2 = encodeURIComponent(time2.format())
-        return api.get("/data/fileByDate?dataTypes=" + selected + "&date1=" + date1 + "&date2=" + date2 + "&fileType=" + fileType)
-            .then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'result..csv');
-                document.body.appendChild(link);
-                link.click();
-            });
+        return api.get("/data/byDate?dataTypes=" + selected + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
+            .then(data => data.data);
+    }
+
+    function formatData(data){
+        let finalData = [];
+        for(let i = 0; i<data.length; i++){
+            let tempJson = {};
+            tempJson["date"] = data[i].xAxis
+            for(const [k, v] of Object.entries(data[i].yAxis)){
+                tempJson[k] = v;
+            }
+            finalData.push(tempJson)
+        }
+        return finalData;
+    }
+
+    async function loadData() {
+        var json = formatData(await submit());
+        var fields = Object.keys(json[0])
+        var replacer = function(key, value) { return value === null ? '' : value }
+        var csv = json.map(function(row){
+            return fields.map(function(fieldName){
+                return JSON.stringify(row[fieldName], replacer)
+            }).join(',')
+        })
+        csv.unshift(fields.join(',')) // add header column
+        csv = csv.join('\r\n');
+        console.log(csv)
+
+        var downloadLink = document.createElement("a");
+        var blob = new Blob(["\ufeff", csv]);
+        var url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = "results.csv";
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     }
 
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
@@ -63,12 +93,16 @@ const Export = () => {
     }
 
     return (
-        <div style={{maxWidth: "50%", display: "flex", alignItems: "center", flexDirection: "column", gap:"5px"}}>
+        <div style={{maxWidth: "50%", display: "flex", alignItems: "center", flexDirection: "column", gap: "10px"}}>
             <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1}
                              initTime2={time2}/>
             <Multidropdown options={dropDownOptions} handleChange={onDropdownChange}/>
-            <div style={{display:"flex", flexDirection:"row"}}>
-                <Button onClick={() => submit()} variant="contained">Download</Button>
+            <div id="preview">
+                <Graph time1={time1} time2={time2} dataTypes={selected} xTitle={"TestX"} yTitle={"TestY"}
+                       graphType={"line"}/>
+            </div>
+            <div style={{display: "flex", flexDirection: "row"}}>
+                <Button variant="contained" onClick={() => loadData()}>Download</Button>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
