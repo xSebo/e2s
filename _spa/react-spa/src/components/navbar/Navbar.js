@@ -2,7 +2,7 @@
 import {Link, useLocation} from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "../../static/css/navbar.css";
-import { FaBars } from "react-icons/fa";
+import {FaBars, FaSignOutAlt} from "react-icons/fa";
 
 function Navbar() {
     const [navbarExpanded, setNavbarExpanded] = useState(false);
@@ -34,6 +34,12 @@ function Navbar() {
                             </li>
                         );
                     })}
+                    <li key={"log-out"} className={"nav-button border-both"}>
+                        <Link to={"/log-out"}>
+                            <div className={"icon"}> <FaSignOutAlt /> </div>
+                            <span style={{display: navbarExpanded ? "block" : "none"}}>{"Log Out"}</span>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
             <div style={{display: navbarExpanded ? "block" : "none"}} className={"user-info"}>

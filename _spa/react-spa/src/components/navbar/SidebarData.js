@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import {
-    FaRegLightbulb, FaWallet, FaDownload, FaCloud, FaArrowUp, FaArrowDown, FaChartLine, FaChartBar, FaSignOutAlt
+    FaRegLightbulb, FaWallet, FaDownload, FaCloud, FaArrowUp, FaArrowDown, FaChartLine, FaChartBar
 } from "react-icons/fa";
 
 export const SidebarData = [
@@ -51,11 +51,5 @@ export const SidebarData = [
         path: "/export",
         icon: <FaDownload />,
         cName: "nav-button",
-    },
-    {
-        title: "Log Out",
-        path: "/log-out",
-        icon: <FaSignOutAlt />,
-        cName: "nav-button border-both",
     },
 ];
