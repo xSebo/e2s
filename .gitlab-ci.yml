@@ -85,3 +85,4 @@ recreate_database:
     - ssh $CONTAINER_BUILDER_HOSTNAME "rm -f -r adopting-tech-team-3"
     - ssh $CONTAINER_BUILDER_HOSTNAME "ssh-agent bash -c 'ssh-add e2s_gitlab_repo.key; git clone git@git.cardiff.ac.uk:c1950117/adopting-tech-team-3.git'"
     - ssh $CONTAINER_BUILDER_HOSTNAME "mysql -u $AT3_DATABASE_USER -p'$AT3_DATABASE_PASSWORD' -h $AT3_DATABASE_HOST -P $AT3_DATABASE_PORT < adopting-tech-team-3/database/creation.sql"
+    - ssh $CONTAINER_BUILDER_HOSTNAME "mysql -u $AT3_DATABASE_USER -p'$AT3_DATABASE_PASSWORD' -h $AT3_DATABASE_HOST -P $AT3_DATABASE_PORT < adopting-tech-team-3/database/exampleData.sql"
