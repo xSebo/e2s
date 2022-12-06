@@ -16,46 +16,45 @@ const api = axios.create({
 })
 
 export default function Graph(props) {
-    const [data, setData] = useState([]);
-
     function getList() {
-        let dataType = props.dataType
+        let dataTypes = ""
+        if(props.dataTypes == ""){
+            dataTypes = "chp1ElectricityGen"
+        }
+        else{
+            dataTypes = props.dataTypes
+        }
         let date1 = encodeURIComponent(time1.format())
         let date2 = encodeURIComponent(time2.format())
-        return api.get("/data/byDate?dataType=" + dataType + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
+        return api.get("/data/byDate?dataTypes=" + dataTypes + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
             .then(data => data.data);
     }
 
+
     useEffect(() => {
-        loadList()
-    }, [props.dataType]);
+        loadList();
+    }, [props.dataTypes]);
 
     function loadList(){
         let mounted = true;
         getList()
             .then(items => {
                 if (mounted) {
-                    setData(items)
+                    console.log(items)
+                    let graphTemp
+                    if(props.graphType == "line"){
+                        graphTemp = <CustLineChart data={items} xTitle={props.xTitle} yTitle={props.yTitle}/>
+                        setGraph(graphTemp);
+                    }if(props.graphType == "bar"){
+                        graphTemp = <CustBarChart data={items} xTitle={props.xTitle} yTitle={props.yTitle}/>
+                        setGraph(graphTemp);
+                    }
                 }
             })
-        let graphTemp
-        if(props.graphType == "line"){
-            graphTemp = <CustLineChart data={data} xTitle={props.xTitle} yTitle={props.yTitle}/>
-            setGraph(graphTemp);
-        }if(props.graphType == "bar"){
-            graphTemp = <CustBarChart data={data} xTitle={props.xTitle} yTitle={props.yTitle}/>
-            setGraph(graphTemp);
-        }
         return () => mounted = false;
     }
 
     const [graph,setGraph] = useState();
-/*
-    useEffect(() => {
-        loadList()
-    }, [props.dataType])
-
- */
 
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
     const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
@@ -75,34 +74,66 @@ export default function Graph(props) {
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
-            <h1>{props.dataType}</h1>
+            {props.dataTypes.map((types) => (
+                <h3>{types}</h3>
+            ))}
             <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1} initTime2={time2}/>
             {graph}
         </div>
     )
 }
 
+function formatData(data){
+    let finalData = [];
+    for(let i = 0; i<data.length; i++){
+        let tempJson = {};
+        console.log(data[i])
+        tempJson["date"] = data[i].xAxis
+        for(const [k, v] of Object.entries(data[i].yAxis)){
+            tempJson[k] = v;
+        }
+        finalData.push(tempJson)
+    }
+    return finalData;
+}
+
+const genRows = (data) => {
+    let lines = [];
+    for(let k in data[0]){
+        if(k != "date"){
+            lines.push(k)
+        }
+    }
+    return lines;
+};
+
 function CustLineChart(props) {
+    const data = formatData(props.data);
     return(
-        <LineChart width={1000} height={250} data={props.data}
+        <LineChart width={1000} height={250} data={data}
                    margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <CartesianGrid strokeDasharray="3 3"/>
-            <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
+            <XAxis dataKey="date" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
             <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip/>
-            <Line type="monotone" dataKey="yAxis" stroke="#8884d8" dot={false}/>
+            {genRows(data).map((k) => (
+                <Line type="monotone" name={k} dataKey={k} stroke="#8884d8" dot={false}/>
+            ))}
         </LineChart>
     )
 }
 
 function CustBarChart(props){
+    const data = formatData(props.data);
     return(
-        <BarChart width={730} height={250} data={props.data}>
+        <BarChart width={730} height={250} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
+            <XAxis dataKey="date" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
             <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip />
-            <Bar dataKey="yAxis" fill="#8884d8" />
+            {genRows(data).map((k) => (
+                <Line type="monotone" dataKey={k} stroke="#8884d8" dot={false}/>
+            ))}
         </BarChart>
     )
 }

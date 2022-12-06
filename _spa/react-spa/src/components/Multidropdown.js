@@ -56,7 +56,7 @@ function Multidropdown(props) {
         variant: "menu"
     };
 
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState([props.options[0]]);
 
     const handleChange = (event) => {
         const {
