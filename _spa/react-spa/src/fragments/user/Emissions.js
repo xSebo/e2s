@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import background from "../static/images/background.png";
-import Center from "../components/Center";
+import Center from "../../components/Center";
 import {Card, CardContent} from "@mui/material";
 import graph from "../static/images/graph.png"
 
