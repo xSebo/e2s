@@ -56,20 +56,27 @@ function Navbar() {
                 <ul className="nav-menu-items">
                     {SidebarData.map((item, index) => {
                         return (
-                            <div>
-                            {item.path !== "/log-out"
-                                    ? <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
-                                        <Link to={item.path}>
-                                            <div className={"icon"}> {item.icon} </div>
-                                            <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
-                                        </Link>
-                                    </li>
-                                    : <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
-                                        <Link onClick={logout}>
-                                            <div className={"icon"}> {item.icon} </div>
-                                            <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
-                                        </Link>
-                                    </li>}
+                            <div> {
+                                item.path !== "/log-out"
+                                    ? item.path !== "/facilities"
+                                        ?   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
+                                                <Link to={item.path}>
+                                                    <div className={"icon"}> {item.icon} </div>
+                                                    <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
+                                                </Link>
+                                            </li>
+                                        :   <li key={index} className={item.cName}>
+                                                <Link >
+                                                    <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
+                                                </Link>
+                                            </li>
+                                    :   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
+                                            <Link onClick={logout} to={"/login"}>
+                                                <div className={"icon"}> {item.icon} </div>
+                                                <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
+                                            </Link>
+                                        </li>
+                            }
                             </div>
 
                         );
