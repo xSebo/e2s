@@ -15,10 +15,23 @@ const api = axios.create({
     withCredentials: true
 })
 
+function getRandomColor() {
+    var letters = '56789ABCD';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * (letters.length-1))];
+        console.log(Math.floor(Math.random() * (letters.length + 1)))
+    }
+    console.log(color)
+    return color;
+}
+
 export default function Graph(props) {
     function getList() {
+        console.log(props.dataTypes)
         let dataTypes = ""
         if(props.dataTypes == ""){
+            console.log("thinks null")
             dataTypes = "chp1ElectricityGen"
         }
         else{
@@ -96,7 +109,7 @@ function CustLineChart(props) {
             <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip/>
             {genRows(data).map((k) => (
-                <Line type="monotone" name={k} dataKey={k} stroke="#8884d8" dot={false}/>
+                <Line type="monotone" name={k} dataKey={k} stroke={getRandomColor()} dot={false}/>
             ))}
         </LineChart>
     )
@@ -111,7 +124,7 @@ function CustBarChart(props){
             <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip />
             {genRows(data).map((k) => (
-                <Line type="monotone" dataKey={k} stroke="#8884d8" dot={false}/>
+                <Line type="monotone" dataKey={k} stroke={getRandomColor()} dot={false}/>
             ))}
         </BarChart>
     )
