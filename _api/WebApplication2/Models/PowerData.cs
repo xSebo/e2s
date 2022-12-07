@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebApplication2.Models;
 
 public class PowerData{
-    [Key] 
-    [Column(Order=1)]
-    public DateTime Date{ get; set; }
     
-    [Key]
-    [Column(Order=2)]
-    public int OrganisationId{ get; set; }
+    [Key] 
+    public int Id { get; set; }
+
+    public DateTime Date{ get; set; }
+
+    public virtual Organisation Organisation { get; set; } = null!;
     public float CHP1ElectricityGen{ get; set; }
     public float CHP2ElectricityGen{ get; set; }
     public float CHP1HeatGen{ get; set; }

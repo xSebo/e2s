@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `e2s`.`organisations` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `logo` VARCHAR(45) NULL DEFAULT NULL,
-  `facilityName` VARCHAR(45) NULL,
+  `facilityName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -93,8 +93,9 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `e2s`.`powerdata`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e2s`.`powerdata` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL,
-  `organisations_id` INT(11) NOT NULL,
+  `organisationId` INT(11) NOT NULL,
   `CHP1ElectricityGen` FLOAT NULL DEFAULT NULL,
   `CHP2ElectricityGen` FLOAT NULL DEFAULT NULL,
   `CHP1HeatGen` FLOAT NULL DEFAULT NULL,
@@ -107,10 +108,10 @@ CREATE TABLE IF NOT EXISTS `e2s`.`powerdata` (
   `SiteHeatDemand` FLOAT NULL DEFAULT NULL,
   `ImportElectricity` FLOAT NULL DEFAULT NULL,
   `ExportElectricity` FLOAT NULL DEFAULT NULL,
-  PRIMARY KEY (`date`, `organisations_id`),
-  INDEX `fk_powerdata_organisations1_idx` (`organisations_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  INDEX `fk_powerdata_organisations1_idx` (`organisationId` ASC) VISIBLE,
   CONSTRAINT `fk_powerdata_organisations1`
-    FOREIGN KEY (`organisations_id`)
+    FOREIGN KEY (`organisationId`)
     REFERENCES `e2s`.`organisations` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -143,13 +144,13 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e2s`.`insights` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `organisations_id` INT(11) NOT NULL,
+  `organisationId` INT(11) NOT NULL,
   `type` VARCHAR(45) NOT NULL DEFAULT '\"\"',
   `insight` MEDIUMTEXT NULL DEFAULT '\"\"',
-  PRIMARY KEY (`id`, `organisations_id`),
-  INDEX `fk_powerdata_organisations1_idx` (`organisations_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`, `organisationId`),
+  INDEX `fk_powerdata_organisations1_idx` (`organisationId` ASC) VISIBLE,
   CONSTRAINT `fk_powerdata_organisations10`
-    FOREIGN KEY (`organisations_id`)
+    FOREIGN KEY (`organisationId`)
     REFERENCES `e2s`.`organisations` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -166,8 +167,8 @@ insert into authorities (name) values ("User");
 insert into authorities (name) values ("Admin");
 insert into authorities (name) values ("Super Admin");
 
-insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
-insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
+insert into organisations (name,logo, facilityName) values ("TestOrg1","Testimg.png", "Abacws");
+insert into organisations (name,logo, facilityName) values ("TestOrg2","Testimg.png", "Abacws");
 
 insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,1);
@@ -177,9 +178,9 @@ insert into emaillinks (userId, weekly, monthly, yearly) values (1,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (3,0,0,0);
 
-insert into insights (organisations_id, type, insight) values (1, "costs", "Considering your energy prices forecasts, your CHP units should be ran into thermal led mode. This could help you save £20k on your energy bills and 3 tCO2e.");
-insert into insights (organisations_id, type, insight) values (1, "energy", "You have exported 5,000 kWh this week. This is the equivalent of £2,000. By running your CHP units at maximum load, you could have exported an additional 6,000 kWh and increase your revenues by £3,000.");
-insert into insights (organisations_id, type, insight) values (1, "emissions", "Your carbon emissions have decreased by 10% for the past week compared to the week before.");
+insert into insights (organisationId, type, insight) values (1, "costs", "Considering your energy prices forecasts, your CHP units should be ran into thermal led mode. This could help you save £20k on your energy bills and 3 tCO2e.");
+insert into insights (organisationId, type, insight) values (1, "energy", "You have exported 5,000 kWh this week. This is the equivalent of £2,000. By running your CHP units at maximum load, you could have exported an additional 6,000 kWh and increase your revenues by £3,000.");
+insert into insights (organisationId, type, insight) values (1, "emissions", "Your carbon emissions have decreased by 10% for the past week compared to the week before.");
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
