@@ -1,0 +1,126 @@
+/* navbar CSS */
+
+/* The Navbar*/
+.navbar {
+  display: flex;
+  flex-direction: column;
+  background-color: #1b1b1b;
+  padding-top: 2%;
+  transition: all 0.5s;
+}
+
+.nav-menu-expanded {
+  width: 20%;
+}
+
+.nav-menu-collapsed {
+  width: 5%;
+}
+
+/* The Navbar's title */
+.nav-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2%;
+}
+
+.nav-expand-button {
+  color: white;
+  font-size: 25px;
+  margin-left: 50px;
+}
+
+.nav-logo {
+  font-size: 30px;
+  color: white;
+}
+
+/* The Navbar's Buttons */
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+}
+
+.nav-menu-items {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-button {
+  max-width: 100%;
+  height: 70px;
+}
+
+.nav-button .border-top {
+  border-bottom: grey;
+}
+
+.border-both {
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+.nav-button a {
+  text-decoration: none;
+  color: #c7c7c7;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-button .icon {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-menu-expanded .nav-button .icon {
+  width: 20%;
+}
+
+.nav-menu-collapsed .nav-button .icon {
+  width: 100%;
+}
+
+.nav-button span {
+  width: 100%;
+  margin-left: 16px;
+}
+
+.nav-button a:hover {
+  background-color: #000000;
+  color: #fff;
+}
+
+.nav-menu .selected {
+  color: white;
+  border-right: white solid 4px;
+}
+
+.nav-menu .selected a {
+  color: white;
+}
+
+/* The Navbar's Bottom USer Info Text */
+.navbar .user-info {
+  text-decoration: none;
+  color: #9a9a9a;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5%;
+}
+
+.navbar .user-info h4 {
+  margin: 5px;
+}
+

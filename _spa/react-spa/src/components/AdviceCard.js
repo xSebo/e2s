@@ -40,7 +40,8 @@ export default function LoadAdviceCard({title, text, sub}) {
     };
 
     return (
-        <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
+
+            <div style={{display: "flex", flexDirection: "column", alignItems:"center", maxWidth:"80%"}}>
                 <div style={shadows}>
                     <Card sx={{ padding:1}}>
                         <CardContent sx={{}}>
@@ -69,7 +70,9 @@ export default function LoadAdviceCard({title, text, sub}) {
                         </CardContent>
                     </Card>
                 </div>
-        </div>
+            </div>
+
+
     )
 }
 

@@ -11,24 +11,15 @@ import {
     TextField,
     Typography
 } from '@mui/material'
-import {
-
-    Link as Alink
-} from '@mui/material'
 import Center from "../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import useForm from "../hooks/useForm";
-import {createAPIEndpoint} from "../api";
 import logo from '../static/images/logo.png';
 import axios from "axios";
-import Cookies from 'js-cookie';
-import {Route, Router, Routes} from "react-router-dom";
-import background from "../static/images/background.png";
 
-
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
@@ -150,7 +141,6 @@ export default function Login() {
     const sectionStyle = {
         width: "100%",
         height: "100%",
-        backgroundImage: `url(${background})`
     };
 
     const shadows = {
