@@ -113,7 +113,7 @@ const Export = () => {
                                          initTime2={time2}/>
                         <Multidropdown options={dropDownOptions} handleChange={onDropdownChange}/>
                         <div id="preview">
-                            <Graph time1={time1} time2={time2} dataTypes={selected} xTitle={"TestX"} yTitle={"TestY"}
+                            <Graph time1={time1} time2={time2} dataTypes={selected} xTitle={""} yTitle={""}
                                    graphType={"line"}/>
                         </div>
                         <div style={{display: "flex", flexDirection: "row"}}>
