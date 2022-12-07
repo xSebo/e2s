@@ -13,11 +13,20 @@ function Navbar() {
 
     const currentPath = useLocation().pathname
 
+    const logout = ()=> {
+        localStorage.removeItem('user')
+        localStorage.removeItem('isLoggedIn')
+        localStorage.setItem('isLoggedIn', 'false')
+    }
+
     return (
         <div className={navbarExpanded ? "navbar nav-menu-expanded" : "navbar nav-menu-collapsed"}>
             <div className={"nav-title"}>
-                <h1 style={{display: navbarExpanded ? "block" : "none"}} className="nav-logo">E2S</h1>
-                <div style={{marginLeft: navbarExpanded ? "50px" : "0px"}} className="nav-expand-button">
+                {/*<h1 style={{display: navbarExpanded ? "block" : "none"}} className="nav-logo">E2S</h1>*/}
+                <div>
+                    <img src={"Logo_v1_EES.png"} style={{backgroundColor:"white", width:"75%"}}/>
+                </div>
+                <div style={{marginLeft: navbarExpanded ? "10px" : "0px"}} className="nav-expand-button">
                     <FaBars onClick={toggleExpanded}/>
                 </div>
             </div>
@@ -26,12 +35,22 @@ function Navbar() {
                 <ul className="nav-menu-items">
                     {SidebarData.map((item, index) => {
                         return (
-                            <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
-                                <Link to={item.path}>
-                                    <div className={"icon"}> {item.icon} </div>
-                                    <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
-                                </Link>
-                            </li>
+                            <div>
+                            {item.path !== "/log-out"
+                                    ? <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
+                                        <Link to={item.path}>
+                                            <div className={"icon"}> {item.icon} </div>
+                                            <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
+                                        </Link>
+                                    </li>
+                                    : <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
+                                        <Link onClick={logout}>
+                                            <div className={"icon"}> {item.icon} </div>
+                                            <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
+                                        </Link>
+                                    </li>}
+                            </div>
+
                         );
                     })}
                 </ul>
