@@ -5,11 +5,32 @@ import "../../static/css/navbar.css";
 import { FaBars } from "react-icons/fa";
 
 function Navbar() {
+
+    function getCookie(name)
+    {
+        var re = new RegExp(name + "=([^;]+)");
+        var value = re.exec(document.cookie);
+        return (value != null) ? unescape(value[1]) : null;
+    }
+
     const [navbarExpanded, setNavbarExpanded] = useState(false);
     const toggleExpanded = () => setNavbarExpanded(!navbarExpanded);
 
-    const currentUserName = "John Smith"
-    const currentUserEmail = "JohnSmith@SmithCo.com"
+    const loggedIn = window.localStorage.getItem("isLoggedIn")
+
+    let currentUserName = ""
+    let currentUserEmail = ""
+
+    if (loggedIn == "true") {
+        const currentUserToken = getCookie("jwTtoken")
+        currentUserName = JSON.parse(window.atob(currentUserToken.split(".")[1])).family_name;
+        currentUserEmail = JSON.parse(window.atob(currentUserToken.split(".")[1])).email;
+    }
+    else {
+        currentUserName = "John Smith"
+        currentUserEmail = "JohnSmith@SmithCo.com"
+    }
+
 
     const currentPath = useLocation().pathname
 
