@@ -1,40 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Graph from '../components/Graph';
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import Multidropdown from "../components/Multidropdown";
+import dayjs from "dayjs";
+import TwoTimeSelector from "../components/TwoTimeSelector";
 
 const Costs = () => {
-    const [dataType, setDataType] = React.useState('chp1ElectricityGen');
+    const dropDownOptions = [
+        "chp1ElectricityGen",
+        "chp2ElectricityGen",
+        "chp1HeatGen",
+        "chp2HeatGen",
+        "boilerHeat",
+        "feelsLike",
+        "windSpeed",
+        "siteElectricityDemand",
+        "dayPowerPrice",
+        "siteHeatDemand",
+        "importElectricity",
+        "exportElectricity"
+    ];
+    const [selected, setSelected] = useState([]);
 
-    const handleChange = (event) => {
-        setDataType(event.target.value);
+    const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
+    const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
+
+    const handleChange1 = (newValue) => {
+        setTime1(newValue);
     };
+    const handleChange2 = (newValue) => {
+        setTime2(newValue);
+    }
+
+    const onDropdownChange = (value) => {
+        setSelected(value)
+    }
 
     return(
         <div style={{display:"flex",flexDirection:"column",alignItems:"center", gap:"10px", maxWidth:"50%"}}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Data</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={dataType}
-                    label="Select"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={"chp1ElectricityGen"}>chp1ElectricityGen</MenuItem>
-                    <MenuItem value={"chp2ElectricityGen"}>chp2ElectricityGen</MenuItem>
-                    <MenuItem value={"chp1HeatGen"}>chp1HeatGen</MenuItem>
-                    <MenuItem value={"chp2HeatGen"}>chp2HeatGen</MenuItem>
-                    <MenuItem value={"boilerHeat"}>boilerHeat</MenuItem>
-                    <MenuItem value={"feelsLike"}>feelsLike</MenuItem>
-                    <MenuItem value={"windSpeed"}>windSpeed</MenuItem>
-                    <MenuItem value={"siteElectricityDemand"}>siteElectricityDemand</MenuItem>
-                    <MenuItem value={"dayPowerPrice"}>dayPowerPrice</MenuItem>
-                    <MenuItem value={"siteHeatDemand"}>siteHeatDemand</MenuItem>
-                    <MenuItem value={"importElectricity"}>importElectricity</MenuItem>
-                    <MenuItem value={"exportElectricity"}>exportElectricity</MenuItem>
-                </Select>
-            </FormControl>
-            <Graph dataType={dataType} xTitle={"TestX"} yTitle={"TestY"} graphType={"line"} />
+            <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1}
+                             initTime2={time2}/>
+            <Multidropdown options={dropDownOptions} handleChange={onDropdownChange}/>
+            <Graph time1={time1} time2={time2} dataTypes={selected} xTitle={"TestX"} yTitle={"TestY"} graphType={"line"} />
         </div>
     )
 }
