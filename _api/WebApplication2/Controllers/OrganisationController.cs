@@ -31,7 +31,8 @@ public class OrganisationController : Controller{
         if (upload.IsSuccess){
             Organisation organisation = new Organisation{
                 Name = org.Name,
-                Logo = upload.Name!
+                Logo = upload.Name!,
+                FacilityName = ""
             };
             _orgDb.Add(organisation);
             _orgDb.Save();

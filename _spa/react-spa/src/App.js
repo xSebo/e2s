@@ -12,6 +12,7 @@ import EnergyFlow from "./fragments/user/EnergyFlow";
 import CO2Emissions from "./fragments/user/CO2Emissions";
 import Export from "./fragments/user/Export";
 import "./static/css/App.css"
+import CreateOrganisation from "./routes/CreateOrganisation";
 
 const ROLES = {
     'User': "User",
@@ -20,7 +21,6 @@ const ROLES = {
 }
 
 function App() {
-
     return (
         <div className={"background-img"}>
             <Routes>
@@ -41,7 +41,9 @@ function App() {
                         <Route path="co2-emissions" element={<Dashboard fragment={CO2Emissions} />} />
                         <Route path="export" element={<Dashboard fragment={Export} />} />
                         <Route path="log-out" element={<Dashboard />} />
-
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={ROLES.Admin}/>}>
+                        <Route path="createOrganisation" element={<CreateOrganisation />}/>
                     </Route>
 
                     {/* Error Pages */}
