@@ -1,7 +1,7 @@
 import Login from './routes/Login';
 import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import ErrorPage from "./routes/ErrorPage";
 import Dashboard from "./routes/Dashboard";
 import Advice from "./fragments/user/Advice";
@@ -20,7 +20,6 @@ const ROLES = {
 }
 
 function App() {
-
     return (
         <div className={"background-img"}>
             <Routes>
@@ -45,8 +44,12 @@ function App() {
                     </Route>
 
                     {/* Error Pages */}
+                    <Route path="error" element={<ErrorPage errorTitle="Error!" errorMessage="Sorry we've encountered and error on our end :(" />} />
                     <Route path="*" element={<ErrorPage errorTitle="Page Not Found!" errorMessage="Sorry, we couldn't find the page you're looking for." />} />
-                    <Route path="unauthorized" element={<ErrorPage errorTitle="Unauthorised!" errorMessage="You're no authorised to view this page." />} />
+                    <Route path="unauthorised" element={<ErrorPage errorTitle="Unauthorised!" errorMessage="You're no authorised to view this page, please sign in first." />} />
+                    <Route path="forbidden" element={<ErrorPage errorTitle="Unauthorised!" errorMessage="You're no authorised to view this page." />} />
+                    <Route path="request-timeout" element={<ErrorPage errorTitle="Request Timed Out!" errorMessage="Sorry, the request timed out, please try again" />} />
+                    <Route path="teapot" element={<ErrorPage errorTitle="I'm a Teapot!" errorMessage="Not sorry, you cannot brew coffee in a teapot." />} />
 
                 </Route>
             </Routes>
