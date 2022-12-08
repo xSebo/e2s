@@ -40,7 +40,10 @@ public class PowerData{
             { "exportElectricity", this.ExportElectricity }
         };
     }
-    public float? GetDataByString(string dataType) {
+    public float? GetDataByDataType(string dataType) {
+        if (!GetDataTypeStringDict().ContainsKey(dataType)) {
+            return null;
+        }
         return GetDataTypeStringDict()[dataType];
     }
 }

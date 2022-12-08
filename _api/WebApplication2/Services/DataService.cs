@@ -12,21 +12,24 @@ public class DataService {
         _insights = insights;
     }
 
-    public List<DataResponse> GetDataByDates(string dataType, DateTime date1, DateTime date2, int orgId) {
+    public List<GraphDataDTO>? GetDataByDates(string dataType, DateTime date1, DateTime date2, int orgId) {
         List<PowerData> powerDatas = _powerData.ByDates(date1, date2, orgId);
         
-        foreach (PowerData powerdata in powerDatas){
-            try {
-                string date = powerdata.Date.ToString("dd/M/yyy HH:mm:ss");
-                dataResponse.Add(new DataResponse{
-                    XAxis = date,
-                    YAxis = new PowerDataMap(powerdata).dict[dataType]
-                });
-            }
-            catch (Exception e){
-                return Problem(e.Message);
-            }
+        if (powerDatas.Count <= 0) {
+            // TODO Throw NOT_FOUND Exception
+            return null;
+        } 
+        if (powerDatas[0].GetDataByDataType(dataType) == null) {
+            // TODO Throw BAD_REQUEST Exception
+            return null;
         }
+
+        List<GraphDataDTO> graphData = new List<GraphDataDTO>();
+        powerDatas.ForEach(powerdata => {
+            graphData.Add(new GraphDataDTO(dataType, powerdata));
+        });
+        
+        return graphData;
     }
     
     public InsightDTO? GetTopInsight(String dataType, int orgId) {

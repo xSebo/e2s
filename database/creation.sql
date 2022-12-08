@@ -170,7 +170,7 @@ insert into authorities (name) values ("Super Admin");
 insert into organisations (name,logo, facilityName) values ("TestOrg1","Testimg.png", "Abacws");
 insert into organisations (name,logo, facilityName) values ("TestOrg2","Testimg.png", "Abacws");
 
-insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,1);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,1);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","$2a$12$IiRb3RdMSK4/nvfkyXkecuVtIUlwEdMLcB/3u/fstWm6Uuj5RoBWa",3,2);
 
@@ -178,7 +178,7 @@ insert into emaillinks (userId, weekly, monthly, yearly) values (1,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (3,0,0,0);
 
-insert into insights (organisationId, type, text) values (2, "costs", "Considering your energy prices forecasts, your CHP units should be ran into thermal led mode. This could help you save £20k on your energy bills and 3 tCO2e.");
+insert into insights (organisationId, type, text) values (1, "costs", "Considering your energy prices forecasts, your CHP units should be ran into thermal led mode. This could help you save £20k on your energy bills and 3 tCO2e.");
 insert into insights (organisationId, type, text) values (1, "energy", "You have exported 5,000 kWh this week. This is the equivalent of £2,000. By running your CHP units at maximum load, you could have exported an additional 6,000 kWh and increase your revenues by £3,000.");
 insert into insights (organisationId, type, text) values (1, "emissions", "Your carbon emissions have decreased by 10% for the past week compared to the week before.");
 
