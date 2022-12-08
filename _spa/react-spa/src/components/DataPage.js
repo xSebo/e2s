@@ -7,10 +7,15 @@ import Graph from "./Graph";
 import * as PropTypes from "prop-types";
 
 function DataPage(props){
-    const dataTypes = {
+    const graphDataTypes = {
         "Costs":"dailyCost",
         "Energy Imported":"importElectricity",
         "Energy Exported":"exportElectricity"
+};
+    const insightDataTypes = {
+        "Costs":"costs",
+        "Energy Imported":"energy",
+        "Energy Exported":"energy"
 };
 
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
@@ -34,9 +39,8 @@ function DataPage(props){
     return (
         <div style={pageFlex}>
             <h1 style={{fontSize:50, margin:0}}>{props.dataType}</h1>
-            <AdviceCard title={"Lorem ipsum"}
+            <AdviceCard ititle={insightDataTypes[props.dataType]}
                         style={{display: "flex", minWidth: "100%"}}
-                        text={"Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation."}
                         sub={[{
                             sTitle: "Gas",
                             sText: "£100,000",
@@ -65,7 +69,7 @@ function DataPage(props){
                     <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1}
                                      initTime2={time2}/>
                     <div id="preview" style={{width: "100%", height: "100%"}}>
-                        <Graph time1={time1} time2={time2} dataTypes={dataTypes[props.dataType]} xTitle={""} yTitle={""}
+                        <Graph time1={time1} time2={time2} dataTypes={graphDataTypes[props.dataType]} xTitle={""} yTitle={""}
                                graphType={"line"}/>
                     </div>
 
