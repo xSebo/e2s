@@ -1,23 +1,26 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.DTOs;
 using WebApplication2.Models;
 using WebApplication2.Repos;
+using WebApplication2.Services;
 
 namespace WebApplication2.Controllers;
 
 [ApiController]
+[Authorize(Roles="User")]
 [Route("data/")]
 public class DataController : Controller{
     private readonly IPowerDatas _powerData;
-    private readonly IInsights _insights;
+    private DataService _dataService;
 
-    public DataController(IPowerDatas powerData, IInsights insights){
+    public DataController(IPowerDatas powerData, DataService dataService){
         _powerData = powerData;
-        _insights = insights;
+        _dataService = dataService;
     }
 
-    private int getCurrentUserOrgId() {
+    private int GetCurrentUserOrgId() {
         return Int32.Parse(User.FindFirstValue("organisationId"));
     }
 
@@ -27,7 +30,7 @@ public class DataController : Controller{
         
         List<DataResponse> dataResponse = new List<DataResponse>();
         int test = Int32.Parse(User.FindFirstValue("organisationId"));
-        int currentUserOrgId = this.getCurrentUserOrgId();
+        int currentUserOrgId = this.GetCurrentUserOrgId();
         List<PowerData> powerDatas = _powerData.ByDates(date1,date2, currentUserOrgId);
         
         foreach (PowerData powerdata in powerDatas){
@@ -49,8 +52,10 @@ public class DataController : Controller{
     [HttpGet]
     [Route("insight")]
     public IActionResult GetInsight(string dataType) {
-        List<Insight> respList = _insights.ByType(dataType, this.getCurrentUserOrgId());
-        string response = respList[0].Text;
-        return Ok(response);
+        InsightDTO? topInsight = _dataService.getTopInsight(dataType, GetCurrentUserOrgId());
+        if (topInsight == null) {
+            return NotFound();
+        }
+        return Ok(topInsight);
     }
 }

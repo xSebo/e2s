@@ -54,6 +54,8 @@ builder.Services.AddScoped<IEmailLinks, EmailLinks>();
 builder.Services.AddScoped<IPowerDatas, PowerDatas>();
 builder.Services.AddScoped<IInsights, Insights>();
 
+builder.Services.AddScoped<DataService, DataService>();
+
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 
 builder.Services.AddAuthentication(item =>
