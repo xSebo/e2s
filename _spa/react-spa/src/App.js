@@ -12,6 +12,7 @@ import EnergyFlow from "./fragments/user/EnergyFlow";
 import CO2Emissions from "./fragments/user/CO2Emissions";
 import Export from "./fragments/user/Export";
 import "./static/css/App.css"
+import Unauthorised from "./routes/Unauthorised";
 
 const ROLES = {
     'User': "User",
@@ -45,8 +46,8 @@ function App() {
                     </Route>
 
                     {/* Error Pages */}
-                    <Route path="*" element={<ErrorPage errorTitle="Page Not Found!" errorMessage="Sorry, we couldn't find the page you're looking for." />} />
-                    <Route path="unauthorized" element={<ErrorPage errorTitle="Unauthorised!" errorMessage="You're no authorised to view this page." />} />
+                    <Route path="*" element={<ErrorPage errorTitle="404" errorMessage="Uh oh, Page Not Found!" errorDesc="Sorry, but the page you are looking for does not exist, has been removed, or is temporarily unavailable." />} />
+                    <Route path="unauthorized" element={<Unauthorised errorMessage="Unauthorised!" errorDesc="You're not authorised to view this page." />} />
 
                 </Route>
             </Routes>
