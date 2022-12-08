@@ -1,39 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {
     Checkbox,
     FormControl,
-    InputLabel,
-    ListItemIcon,
     ListItemText,
     MenuItem, OutlinedInput,
     Select
 } from "@mui/material";
 
-import { makeStyles } from '@mui/styles';
-
 //TAKEN FROM: https://codesandbox.io/s/givp5?file=/src/App.js
 function Multidropdown(props) {
     const options = props.options
-
-    const classes =  makeStyles((theme) => ({
-        formControl: {
-            margin: theme.spacing(1),
-            width: 300
-        },
-        indeterminateColor: {
-            color: "#f50057"
-        },
-        selectAllText: {
-            fontWeight: 500
-        },
-        selectedAll: {
-            backgroundColor: "rgba(0, 0, 0, 0.08)",
-            "&:hover": {
-                backgroundColor: "rgba(0, 0, 0, 0.08)"
-            }
-        }
-    }));
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
