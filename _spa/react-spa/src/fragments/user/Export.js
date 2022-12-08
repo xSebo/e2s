@@ -96,7 +96,8 @@ const Export = () => {
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        height: "100%"
+        height: "100%",
+        margin:"auto"
     };
 
     const handleFileType = (newValue) => {
@@ -106,7 +107,7 @@ const Export = () => {
     return (
         <div style={shadows}>
             <Card style={{display:"flex", width:"90%", height:"90%",alignItems: "center", justifyContent: "center"}} sx={{padding: 1}}>
-                <CardContent sx={{}} style={{display:"flex", flexDirection:"column", alignItems:"center", gap:"10px", height: "100%", width: "100%"}}>
+                <CardContent sx={{}} style={{display:"flex", flexDirection:"column", alignItems:"center", gap:"1%", height: "100%", width: "100%"}}>
                     <h1>Export</h1>
                         <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1}
                                          initTime2={time2}/>

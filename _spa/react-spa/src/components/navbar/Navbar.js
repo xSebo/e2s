@@ -13,7 +13,7 @@ function Navbar() {
         return (value != null) ? unescape(value[1]) : null;
     }
 
-    const [navbarExpanded, setNavbarExpanded] = useState(false);
+    const [navbarExpanded, setNavbarExpanded] = useState(true);
     const toggleExpanded = () => setNavbarExpanded(!navbarExpanded);
 
     const loggedIn = window.localStorage.getItem("isLoggedIn")
@@ -48,7 +48,7 @@ function Navbar() {
                     <img src={"Logo_v1_EES.png"} style={{backgroundColor:"white", width:"75%"}}/>
                 </div>
                 <div style={{marginLeft: navbarExpanded ? "10px" : "0px"}} className="nav-expand-button">
-                    <FaBars onClick={toggleExpanded}/>
+                    {/*<FaBars onClick={toggleExpanded}/>*/}
                 </div>
             </div>
 
