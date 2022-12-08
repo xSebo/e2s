@@ -179,8 +179,9 @@ insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (3,0,0,0);
 
 insert into insights (organisationId, type, text) values (1, "costs", "Considering your energy prices forecasts, your CHP units should be ran into thermal led mode. This could help you save £20k on your energy bills and 3 tCO2e.");
-insert into insights (organisationId, type, text) values (1, "energy", "You have exported 5,000 kWh this week. This is the equivalent of £2,000. By running your CHP units at maximum load, you could have exported an additional 6,000 kWh and increase your revenues by £3,000.");
-insert into insights (organisationId, type, text) values (1, "emissions", "Your carbon emissions have decreased by 10% for the past week compared to the week before.");
+insert into insights (organisationId, type, text) values (1, "energy-imported", "Last month, your electricity consumption increased by 20% compared to your baseline.");
+insert into insights (organisationId, type, text) values (1, "energy-exported", "You have exported 5,000 kWh this week. This is the equivalent of £2,000. By running your CHP units at maximum load, you could have exported an additional 6,000 kWh and increase your revenues by £3,000.");
+insert into insights (organisationId, type, text) values (1, "co2-emissions", "Your carbon emissions have decreased by 10% for the past week compared to the week before.");
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
