@@ -8,7 +8,7 @@ export const SidebarData = [
         title: "Facility Name",
         path: "/facilities",
         icon: <FaChartBar />,
-        cName: "nav-button",
+        cName: "nav-facility",
     },
     {
         title: "Advice",

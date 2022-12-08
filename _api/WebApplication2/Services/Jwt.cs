@@ -32,7 +32,9 @@ public class Jwt : IJwt{
                 new[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Authority.Name!)
+                    new Claim(ClaimTypes.Role, user.Authority.Name!),
+                    new Claim(ClaimTypes.Email, user.Email!),
+                    new Claim(ClaimTypes.Surname, user.Name!)
 
                 }
             ),
