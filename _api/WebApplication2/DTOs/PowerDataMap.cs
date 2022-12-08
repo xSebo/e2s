@@ -2,10 +2,10 @@ using WebApplication2.Models;
 
 namespace WebApplication2.DTOs;
 
-public class PowerDataMap{
+public abstract class PowerDataMap{
     public readonly Dictionary<string, float> dict;
 
-    public PowerDataMap(PowerData powerData){
+    protected PowerDataMap(PowerData powerData) {
         dict = new Dictionary<string, float>{
             { "chp1ElectricityGen", powerData.CHP1ElectricityGen },
             { "chp2ElectricityGen", powerData.CHP2ElectricityGen },

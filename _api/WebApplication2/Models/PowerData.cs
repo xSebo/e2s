@@ -24,4 +24,23 @@ public class PowerData{
     public float ImportElectricity{ get; set; }
     public float ExportElectricity{ get; set; }
 
+    public Dictionary<string, float> GetDataTypeStringDict() {
+        return new Dictionary<string, float>{
+            { "chp1ElectricityGen", this.CHP1ElectricityGen },
+            { "chp2ElectricityGen", this.CHP2ElectricityGen },
+            { "chp1HeatGen", this.CHP1HeatGen },
+            { "chp2HeatGen", this.CHP2HeatGen },
+            { "boilerHeat", this.BoilerHeat },
+            { "feelsLike", this.FeelsLike },
+            { "windSpeed", this.WindSpeed },
+            { "siteElectricityDemand", this.SiteElectricityDemand },
+            { "dayPowerPrice", this.DayPowerPrice },
+            { "siteHeatDemand", this.SiteHeatDemand },
+            { "importElectricity", this.ImportElectricity },
+            { "exportElectricity", this.ExportElectricity }
+        };
+    }
+    public float? GetDataByString(string dataType) {
+        return GetDataTypeStringDict()[dataType];
+    }
 }

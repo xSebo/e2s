@@ -27,24 +27,9 @@ public class DataController : Controller{
     [Route("byDate")]
     [HttpGet]
     public IActionResult GetData(string dataType, DateTime date1, DateTime date2){
-        
-        List<DataResponse> dataResponse = new List<DataResponse>();
-        int test = Int32.Parse(User.FindFirstValue("organisationId"));
         int currentUserOrgId = this.GetCurrentUserOrgId();
-        List<PowerData> powerDatas = _powerData.ByDates(date1,date2, currentUserOrgId);
+        List<DataResponse> data = _dataService.GetDataByDates();
         
-        foreach (PowerData powerdata in powerDatas){
-            try {
-                string date = powerdata.Date.ToString("dd/M/yyy HH:mm:ss");
-                dataResponse.Add(new DataResponse{
-                    XAxis = date,
-                    YAxis = new PowerDataMap(powerdata).dict[dataType]
-                });
-            }
-            catch (Exception e){
-                return Problem(e.Message);
-            }
-        }
 
         return Ok(dataResponse);
     }
@@ -52,7 +37,7 @@ public class DataController : Controller{
     [HttpGet]
     [Route("insight")]
     public IActionResult GetInsight(string dataType) {
-        InsightDTO? topInsight = _dataService.getTopInsight(dataType, GetCurrentUserOrgId());
+        InsightDTO? topInsight = _dataService.GetTopInsight(dataType, GetCurrentUserOrgId());
         if (topInsight == null) {
             return NotFound();
         }
