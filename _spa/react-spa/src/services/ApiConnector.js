@@ -46,7 +46,22 @@ export default class ApiConnector {
             {
                 headers: {'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + logToken},
-                withCredentials: true})
+                withCredentials: true}).then(data => data.data)
+    }
+
+    getInsightData(dataType) {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+
+        const path = "data/insight"
+        const logToken = this.getCookie("jwTtoken")
+        return api.get(this.constructUrl(path) + "?dataType=" + dataType,
+            {
+                headers: {'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken},
+                withCredentials: true}).then(data => data.data)
     }
 }
 

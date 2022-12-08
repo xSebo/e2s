@@ -53,7 +53,7 @@ export default function Graph(props) {
         let date2 = encodeURIComponent(props.time2.format())
 
         const apiConnector = new ApiConnector();
-        return apiConnector.getPowerData(dataTypes, date1, date2).then(data => data.data);
+        return apiConnector.getPowerData(dataTypes, date1, date2);
 
 
         // return api.get("/data/byDate?dataTypes=" + dataTypes + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
