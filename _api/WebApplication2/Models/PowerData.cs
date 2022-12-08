@@ -24,7 +24,17 @@ public class PowerData{
     public float ImportElectricity{ get; set; }
     public float ExportElectricity{ get; set; }
 
+    public float CalcDailyCost() {
+        float dailyCost = this.DayPowerPrice * this.ImportElectricity;
+        if (this.ExportElectricity > 0){
+            dailyCost = this.DayPowerPrice * (-1 * this.ExportElectricity);
+        }
+
+        return dailyCost / 48;
+    }
     public Dictionary<string, float> GetDataTypeStringDict() {
+        
+        
         return new Dictionary<string, float>{
             { "chp1ElectricityGen", this.CHP1ElectricityGen },
             { "chp2ElectricityGen", this.CHP2ElectricityGen },
@@ -37,7 +47,8 @@ public class PowerData{
             { "dayPowerPrice", this.DayPowerPrice },
             { "siteHeatDemand", this.SiteHeatDemand },
             { "importElectricity", this.ImportElectricity },
-            { "exportElectricity", this.ExportElectricity }
+            { "exportElectricity", this.ExportElectricity },
+            { "dailyCost", CalcDailyCost()}
         };
     }
     public float? GetDataByDataType(string dataType) {
