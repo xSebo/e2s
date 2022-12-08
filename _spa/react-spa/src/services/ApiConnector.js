@@ -17,6 +17,12 @@ export default class ApiConnector {
         return this.apiAddress + "/" + path + "/"
     }
 
+    getCookie(name)
+    {
+        var re = new RegExp(name + "=([^;]+)");
+        var value = re.exec(document.cookie);
+        return (value != null) ? unescape(value[1]) : null;
+    }
     ////////////////
     // Endpoints
     ////////////////
@@ -26,6 +32,21 @@ export default class ApiConnector {
         return axios.get(this.constructUrl(path)).then(response => {
             return response.status
         })
+    }
+
+    getPowerData(dataType, date1, date2) {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+
+        const path = "data/byDate"
+        const logToken = this.getCookie("jwTtoken")
+        return api.get(this.constructUrl(path) + "?dataTypes=" + dataType + "&date1=" + date1 + "&date2=" + date2,
+            {
+                headers: {'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken},
+                withCredentials: true})
     }
 }
 
