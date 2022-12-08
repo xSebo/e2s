@@ -1,19 +1,9 @@
 import React, {useEffect, useState} from 'react'
 
+import TwoTimeSelector from "./TwoTimeSelector";
+
 import axios from "axios";
-import {
-    CartesianGrid,
-    Tooltip,
-    XAxis,
-    YAxis,
-    LineChart,
-    Legend,
-    Line,
-    BarChart,
-    Bar,
-    Label,
-    ResponsiveContainer
-} from "recharts";
+import {CartesianGrid, Tooltip, XAxis, YAxis, LineChart, Legend, Line, BarChart, Bar, Label} from "recharts";
 import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import {TextField} from "@mui/material";
 import dayjs from 'dayjs';
@@ -25,113 +15,117 @@ const api = axios.create({
     withCredentials: true
 })
 
-export default function Graph(props) {
-    const [data, setData] = useState([]);
+function getRandomColor() {
+    var letters = '56789ABCD';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * (letters.length-1))];
+        console.log(Math.floor(Math.random() * (letters.length + 1)))
+    }
+    console.log(color)
+    return color;
+}
 
+export default function Graph(props) {
     function getList() {
-        let dataType = props.dataType
-        let date1 = encodeURIComponent(time1.format())
-        let date2 = encodeURIComponent(time2.format())
-        return api.get("/data/byDate?dataType=" + dataType + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
+        console.log(props.dataTypes)
+        let dataTypes = ""
+        if(props.dataTypes == ""){
+            console.log("thinks null")
+            dataTypes = "chp1ElectricityGen"
+        }
+        else{
+            dataTypes = props.dataTypes
+        }
+        let date1 = encodeURIComponent(props.time1.format())
+        let date2 = encodeURIComponent(props.time2.format())
+        return api.get("/data/byDate?dataTypes=" + dataTypes + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
             .then(data => data.data);
     }
+
+
+    useEffect(() => {
+        loadList();
+    }, [props.dataTypes, props.time1,props.time2]);
 
     function loadList(){
         let mounted = true;
         getList()
             .then(items => {
                 if (mounted) {
-                    setData(items)
+                    console.log(items)
+                    let graphTemp
+                    if(props.graphType == "line"){
+                        graphTemp = <CustLineChart data={items} xTitle={props.xTitle} yTitle={props.yTitle}/>
+                        setGraph(graphTemp);
+                    }if(props.graphType == "bar"){
+                        graphTemp = <CustBarChart data={items} xTitle={props.xTitle} yTitle={props.yTitle}/>
+                        setGraph(graphTemp);
+                    }
                 }
             })
-        let graphTemp
-        if(props.graphType == "line"){
-            graphTemp = <CustLineChart data={data} xTitle={props.xTitle} yTitle={props.yTitle}/>
-            setGraph(graphTemp);
-        }if(props.graphType == "bar"){
-            graphTemp = <CustBarChart data={data} xTitle={props.xTitle} yTitle={props.yTitle}/>
-            setGraph(graphTemp);
-        }
         return () => mounted = false;
     }
 
     const [graph,setGraph] = useState();
 
-    useEffect(() => {
-        loadList()
-    }, [props.dataType])
-
-    const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
-    const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
-
-
-    const handleChange1 = (newValue) => {
-        setTime1(newValue);
-    };
-    const handleChange2 = (newValue) => {
-        setTime2(newValue);
-    }
-
     return (
-        <div style={{display: "flex", flexDirection: "column", alignItems:"center", width:"100%"}}>
-            <h1>{props.dataType}</h1>
-            <div style={{display:"flex", flexDirection:"row", gap:"100px", justifyContent:"space-between"}}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                    label="Start date & time"
-                    value={time1}
-                    ampm={false}
-                    views={["month", "day", "hours", "minutes"]}
-                    inputFormat="DD/MM/YYYY HH:mm:ss"
-                    onChange={(value) => {
-                        handleChange1(value);
-                        loadList();
-                }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-                <DateTimePicker
-                    label="End date & time"
-                    value={time2}
-                    ampm={false}
-                    views={["month", "day", "hours", "minutes"]}
-                    inputFormat="DD/MM/YYYY HH:mm:ss"
-                    onChange={(value) => {
-                        handleChange2(value);
-                        loadList();
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-                </LocalizationProvider>
-            </div>
+        <div style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
             {graph}
         </div>
     )
 }
 
-function CustLineChart(props) {
-    return(
-        <ResponsiveContainer width="100%" height={200}>
+function formatData(data){
+    let finalData = [];
+    for(let i = 0; i<data.length; i++){
+        let tempJson = {};
+        tempJson["date"] = data[i].xAxis
+        for(const [k, v] of Object.entries(data[i].yAxis)){
+            tempJson[k] = v;
+        }
+        finalData.push(tempJson)
+    }
+    return finalData;
+}
 
-        <LineChart width={1000} height={250} data={props.data}
-                   margin={{top: 5, right: 30, left: 0, bottom: 5}}>
+const genRows = (data) => {
+    let lines = [];
+    for(let k in data[0]){
+        if(k != "date"){
+            lines.push(k)
+        }
+    }
+    return lines;
+};
+
+function CustLineChart(props) {
+    const data = formatData(props.data);
+    return(
+        <LineChart width={1000} height={250} data={data}
+                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <CartesianGrid strokeDasharray="3 3"/>
-            <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
-            <YAxis label={{ value: props.yTitle, angle: -90, offset: 40, position: 'insideLeft' }} />
+            <XAxis dataKey="date" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
+            <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip/>
-            <Line type="monotone" dataKey="yAxis" stroke="#8884d8" dot={false}/>
+            {genRows(data).map((k) => (
+                <Line type="monotone" name={k} dataKey={k} stroke={getRandomColor()} dot={false}/>
+            ))}
         </LineChart>
-        </ResponsiveContainer>
     )
 }
 
 function CustBarChart(props){
+    const data = formatData(props.data);
     return(
-        <BarChart width={730} height={250} data={props.data}>
+        <BarChart width={730} height={250} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="xAxis" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
+            <XAxis dataKey="date" label={{ value: props.xTitle, offset: -5, position: 'insideBottom' }}/>
             <YAxis label={{ value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft' }} />
             <Tooltip />
-            <Bar dataKey="yAxis" fill="#8884d8" />
+            {genRows(data).map((k) => (
+                <Line type="monotone" dataKey={k} stroke={getRandomColor()} dot={false}/>
+            ))}
         </BarChart>
     )
 }

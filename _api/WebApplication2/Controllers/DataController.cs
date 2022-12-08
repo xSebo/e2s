@@ -1,3 +1,4 @@
+using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ public class DataController : Controller{
         return Int32.Parse(User.FindFirstValue("organisationId"));
     }
 
-    [Route("byDate")]
+    [Route("byDate")] //byDate?dataTypes=<datatype>&date1=<date>&date2=<date>
     [HttpGet]
     public IActionResult GetData(string dataType, DateTime date1, DateTime date2){
         List<GraphDataDTO>? graphData = _dataService.GetDataByDates(dataType, date1, date2, GetCurrentUserOrgId());
