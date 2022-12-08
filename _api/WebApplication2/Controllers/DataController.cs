@@ -27,8 +27,8 @@ public class DataController : Controller{
 
     [Route("byDate")] //byDate?dataTypes=<datatype>&date1=<date>&date2=<date>
     [HttpGet]
-    public IActionResult GetData(string dataType, DateTime date1, DateTime date2){
-        List<GraphDataDTO>? graphData = _dataService.GetDataByDates(dataType, date1, date2, GetCurrentUserOrgId());
+    public IActionResult GetData(string dataTypes, DateTime date1, DateTime date2){
+        List<GraphDataDTO>? graphData = _dataService.GetDataByDates(dataTypes.Split(","), date1, date2, GetCurrentUserOrgId());
 
         return Ok(graphData);
     }
