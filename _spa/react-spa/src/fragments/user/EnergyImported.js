@@ -1,10 +1,9 @@
 ﻿import React from 'react'
+import DataPage from "../../components/DataPage";
 
 function EnergyImported(){
-    return(
-        <div className="EnergyImported">
-            <h1>Energy Imported</h1>
-        </div>
+    return (
+        <DataPage dataType="Energy Imported"/>
     );
 }
 

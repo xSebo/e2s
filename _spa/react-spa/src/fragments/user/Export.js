@@ -92,12 +92,11 @@ const Export = () => {
 
     const shadows = {
         boxShadow: '1px 2px 9px #BFAFB2',
-        maxWidth: '50%',
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100%",
-        minWidth: "100%"
+        width: "100%",
+        height: "100%"
     };
 
     const handleFileType = (newValue) => {
@@ -106,13 +105,13 @@ const Export = () => {
 
     return (
         <div style={shadows}>
-            <Card sx={{padding: 1}}>
-                <CardContent sx={{}} style={{display:"flex", flexDirection:"column", alignItems:"center", gap:"10px"}}>
+            <Card style={{display:"flex", width:"90%", height:"90%",alignItems: "center", justifyContent: "center"}} sx={{padding: 1}}>
+                <CardContent sx={{}} style={{display:"flex", flexDirection:"column", alignItems:"center", gap:"10px", height: "100%", width: "100%"}}>
                     <h1>Export</h1>
                         <TwoTimeSelector handleChange1={handleChange1} handleChange2={handleChange2} initTime1={time1}
                                          initTime2={time2}/>
                         <Multidropdown options={dropDownOptions} handleChange={onDropdownChange}/>
-                        <div id="preview">
+                        <div id="preview" style={{width:"100%", height:"100%"}}>
                             <Graph time1={time1} time2={time2} dataTypes={selected} xTitle={""} yTitle={""}
                                    graphType={"line"}/>
                         </div>
