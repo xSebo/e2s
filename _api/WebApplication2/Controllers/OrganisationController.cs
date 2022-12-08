@@ -16,12 +16,17 @@ public class OrganisationController : Controller{
     private readonly IUsers _users;
     private readonly IAuthorities _authorities;
     
-
     public OrganisationController(IImages images, IOrganisations orgDb, IUsers users, IAuthorities authorities){
         _images = images;
         _orgDb = orgDb;
         _users = users;
         _authorities = authorities;
+    }
+
+    [HttpGet]
+    [Route("listOrganisations")]
+    public IActionResult ListOrganisation(){
+        return Ok(_orgDb.ToList());
     }
 
     [HttpPost]
