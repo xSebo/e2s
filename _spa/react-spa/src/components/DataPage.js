@@ -8,7 +8,7 @@ import * as PropTypes from "prop-types";
 
 function DataPage(props){
     const dataTypes = {
-        "Daily Power Price":"dayPowerPrice",
+        "Costs":"dailyCost",
         "Energy Imported":"importElectricity",
         "Energy Exported":"exportElectricity"
 };

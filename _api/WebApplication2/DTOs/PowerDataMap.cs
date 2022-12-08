@@ -6,6 +6,13 @@ public class PowerDataMap{
     public readonly Dictionary<string, float> dict;
 
     public PowerDataMap(PowerData powerData){
+        float dailyCost = powerData.DayPowerPrice * powerData.ImportElectricity;
+        if (powerData.ExportElectricity > 0){
+            dailyCost = powerData.DayPowerPrice * (-1 * powerData.ExportElectricity);
+        }
+
+        dailyCost /= 48;
+        
         dict = new Dictionary<string, float>{
             { "chp1ElectricityGen", powerData.CHP1ElectricityGen },
             { "chp2ElectricityGen", powerData.CHP2ElectricityGen },
@@ -18,7 +25,8 @@ public class PowerDataMap{
             { "dayPowerPrice", powerData.DayPowerPrice },
             { "siteHeatDemand", powerData.SiteHeatDemand },
             { "importElectricity", powerData.ImportElectricity },
-            { "exportElectricity", powerData.ExportElectricity }
+            { "exportElectricity", powerData.ExportElectricity },
+            { "dailyCost", dailyCost}
         };
     }
     

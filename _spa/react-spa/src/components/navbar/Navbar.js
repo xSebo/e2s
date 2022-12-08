@@ -5,8 +5,10 @@ import "../../static/css/navbar.css";
 import { FaBars } from "react-icons/fa";
 
 function Navbar() {
-    const [navbarExpanded, setNavbarExpanded] = useState(false);
-    const toggleExpanded = () => setNavbarExpanded(!navbarExpanded);
+    //const [navbarExpanded, setNavbarExpanded] = useState(false);
+    //const toggleExpanded = () => setNavbarExpanded(!navbarExpanded);
+
+    const navbarExpanded = true;
 
     const currentUserName = "John Smith"
     const currentUserEmail = "JohnSmith@SmithCo.com"
@@ -18,7 +20,7 @@ function Navbar() {
             <div className={"nav-title"}>
                 <h1 style={{display: navbarExpanded ? "block" : "none"}} className="nav-logo">E2S</h1>
                 <div style={{marginLeft: navbarExpanded ? "50px" : "0px"}} className="nav-expand-button">
-                    <FaBars onClick={toggleExpanded}/>
+                    {/*<FaBars onClick={toggleExpanded}/>*/}
                 </div>
             </div>
 
