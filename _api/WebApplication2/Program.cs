@@ -7,6 +7,7 @@ using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Repos;
 using WebApplication2.Services;
+using Insights = WebApplication2.Repos.Insights;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,9 @@ builder.Services.AddScoped<IAuthorities, Authorities>();
 builder.Services.AddScoped<IOrganisations, Organisations>();
 builder.Services.AddScoped<IEmailLinks, EmailLinks>();
 builder.Services.AddScoped<IPowerDatas, PowerDatas>();
+builder.Services.AddScoped<IInsights, Insights>();
+
+builder.Services.AddScoped<DataService, DataService>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 

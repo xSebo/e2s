@@ -34,8 +34,8 @@ public class Jwt : IJwt{
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Authority.Name!),
                     new Claim(ClaimTypes.Email, user.Email!),
-                    new Claim(ClaimTypes.Surname, user.Name!)
-
+                    new Claim(ClaimTypes.Surname, user.Name!),
+                    new Claim("organisationId", user.Organisation.Id.ToString())
                 }
             ),
             Expires = DateTime.Now.AddMinutes(180),
