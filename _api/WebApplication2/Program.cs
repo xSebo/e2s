@@ -7,6 +7,7 @@ using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Repos;
 using WebApplication2.Services;
+using Insights = WebApplication2.Repos.Insights;
 
 var builder = WebApplication.CreateBuilder(args);
 
