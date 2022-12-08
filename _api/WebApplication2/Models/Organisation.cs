@@ -10,6 +10,7 @@ public class Organisation{
     
     public string FacilityName{ get; set; }
 
+    public string FacilityName{ get; set; }
     public Organisation(){
         
     }

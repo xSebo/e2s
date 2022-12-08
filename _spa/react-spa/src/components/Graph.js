@@ -21,6 +21,7 @@ import {TextField} from "@mui/material";
 import dayjs from 'dayjs';
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import ApiConnector from "../services/ApiConnector";
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -50,8 +51,13 @@ export default function Graph(props) {
         }
         let date1 = encodeURIComponent(props.time1.format())
         let date2 = encodeURIComponent(props.time2.format())
-        return api.get("/data/byDate?dataTypes=" + dataTypes + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
-            .then(data => data.data);
+
+        const apiConnector = new ApiConnector();
+        return apiConnector.getPowerData(dataTypes, date1, date2);
+
+
+        // return api.get("/data/byDate?dataTypes=" + dataTypes + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
+        //     .then(data => data.data);
     }
 
 

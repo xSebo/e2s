@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `e2s`.`organisations` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `logo` VARCHAR(45) NULL DEFAULT NULL,
+  `facilityName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -69,6 +70,56 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
+-- Table `e2s`.`emaillinks`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `e2s`.`emaillinks` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `userId` INT(11) NOT NULL,
+  `weekly` TINYINT(4) NOT NULL,
+  `monthly` TINYINT(4) NOT NULL,
+  `yearly` TINYINT(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userEmailLink_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `userEmailLink`
+    FOREIGN KEY (`userId`)
+    REFERENCES `e2s`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `e2s`.`powerdata`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `e2s`.`powerdata` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` DATETIME NOT NULL,
+  `organisationId` INT(11) NOT NULL,
+  `CHP1ElectricityGen` FLOAT NULL DEFAULT NULL,
+  `CHP2ElectricityGen` FLOAT NULL DEFAULT NULL,
+  `CHP1HeatGen` FLOAT NULL DEFAULT NULL,
+  `CHP2HeatGen` FLOAT NULL DEFAULT NULL,
+  `BoilerHeat` FLOAT NULL DEFAULT NULL,
+  `FeelsLike` FLOAT NULL DEFAULT NULL,
+  `WindSpeed` FLOAT NULL DEFAULT NULL,
+  `SiteElectricityDemand` FLOAT NULL DEFAULT NULL,
+  `DayPowerPrice` FLOAT NULL DEFAULT NULL,
+  `SiteHeatDemand` FLOAT NULL DEFAULT NULL,
+  `ImportElectricity` FLOAT NULL DEFAULT NULL,
+  `ExportElectricity` FLOAT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_powerdata_organisations1_idx` (`organisationId` ASC) VISIBLE,
+  CONSTRAINT `fk_powerdata_organisations1`
+    FOREIGN KEY (`organisationId`)
+    REFERENCES `e2s`.`organisations` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
 -- Table `e2s`.`usertokens`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `e2s`.`usertokens` (
@@ -89,53 +140,48 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `e2s`.`emaillinks`
+-- Table `e2s`.`insights`
 -- -----------------------------------------------------
-CREATE TABLE `e2s`.`emaillinks` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `userId` INT NOT NULL,
-  `weekly` TINYINT NOT NULL,
-  `monthly` TINYINT NOT NULL,
-  `yearly` TINYINT NOT NULL,
+CREATE TABLE IF NOT EXISTS `e2s`.`insights` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `organisationId` INT(11) NOT NULL,
+  `type` VARCHAR(45) NOT NULL DEFAULT '\"\"',
+  `text` MEDIUMTEXT NULL DEFAULT '\"\"',
   PRIMARY KEY (`id`),
-  INDEX `userEmailLink_idx` (`userId` ASC) VISIBLE,
-  CONSTRAINT `userEmailLink`
-    FOREIGN KEY (`userId`)
-    REFERENCES `e2s`.`users` (`id`)
+  INDEX `fk_powerdata_organisations1_idx` (`organisationId` ASC) VISIBLE,
+  CONSTRAINT `fk_powerdata_organisations10`
+    FOREIGN KEY (`organisationId`)
+    REFERENCES `e2s`.`organisations` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-CREATE TABLE `e2s`.`powerdata` (
-  `date` DATETIME NOT NULL,
-  `CHP1ElectricityGen` FLOAT NULL,
-  `CHP2ElectricityGen` FLOAT NULL,
-  `CHP1HeatGen` FLOAT NULL,
-  `CHP2HeatGen` FLOAT NULL,
-  `BoilerHeat` FLOAT NULL,
-  `FeelsLike` FLOAT NULL,
-  `WindSpeed` FLOAT NULL,
-  `SiteElectricityDemand` FLOAT NULL,
-  `DayPowerPrice` FLOAT NULL,
-  `SiteHeatDemand` FLOAT NULL,
-  `ImportElectricity` FLOAT NULL,
-  `ExportElectricity` FLOAT NULL,
-  PRIMARY KEY (`date`));
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 insert into authorities (name) values ("User");
 insert into authorities (name) values ("Admin");
 insert into authorities (name) values ("Super Admin");
 
-insert into organisations (name,logo) values ("TestOrg1","Testimg.png");
-insert into organisations (name,logo) values ("TestOrg2","Testimg.png");
+insert into organisations (name,logo, facilityName) values ("TestOrg1","Testimg.png", "Abacws");
+insert into organisations (name,logo, facilityName) values ("TestOrg2","Testimg.png", "Abacws");
 
-insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,2);
+insert into users (name,email,password,authorityId,organisationId) values ("Seb","seb@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",1,1);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam","sam@email.com","$2a$12$lhy3gdLMAlhdIgXh3etcrOcPQmzVzffqUk4Tw3NEhvQ8eK8l4N3Wu",2,1);
 insert into users (name,email,password,authorityId,organisationId) values ("Sam2","sam2@email.com","$2a$12$IiRb3RdMSK4/nvfkyXkecuVtIUlwEdMLcB/3u/fstWm6Uuj5RoBWa",3,2);
 
 insert into emaillinks (userId, weekly, monthly, yearly) values (1,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (2,0,0,0);
 insert into emaillinks (userId, weekly, monthly, yearly) values (3,0,0,0);
+
+insert into insights (organisationId, type, text) values (1, "costs", "Considering your energy prices forecasts, your CHP units should be ran into thermal led mode. This could help you save £20k on your energy bills and 3 tCO2e.");
+insert into insights (organisationId, type, text) values (1, "energy-imported", "Last month, your electricity consumption increased by 20% compared to your baseline.");
+insert into insights (organisationId, type, text) values (1, "energy-exported", "You have exported 5,000 kWh this week. This is the equivalent of £2,000. By running your CHP units at maximum load, you could have exported an additional 6,000 kWh and increase your revenues by £3,000.");
+insert into insights (organisationId, type, text) values (1, "co2-emissions", "Your carbon emissions have decreased by 10% for the past week compared to the week before.");
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
