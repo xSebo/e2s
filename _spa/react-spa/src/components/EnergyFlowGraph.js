@@ -36,14 +36,13 @@ export default function EnergyFlowGraph(props) {
     }
 
 
-
-
     function loadFlow() {
         let mounted = true;
         getFlow()
             .then(result => {
                 if (mounted) {
-                    console.log(result.import)
+                    console.log("sup")
+                    console.log(result)
                     let dataTemp
                     if (result.import > 0) {
                         dataTemp = {
@@ -62,20 +61,83 @@ export default function EnergyFlowGraph(props) {
                                 }
                             ],
                             "links": [
-                                {
-                                    "source": 0,
+                                 result.chp1Gen > 0 ?
+                                     {"source": 0,
                                     "target": 3,
-                                    "value": 10
+                                    "value": result.chp1Gen
+                                }
+                                :
+                                     {"source": 0,
+                                         "target": 0,
+                                         "value": 0
+                                     }
+                                ,
+                                result.chp2Gen > 0 ?
+                                    {"source": 1,
+                                        "target": 3,
+                                        "value": result.chp2Gen
+                                    }
+                                    :
+                                    {"source": 0,
+                                        "target": 0,
+                                        "value": 0
+                                    },
+                                result.import > 0 ?
+                                    {"source": 2,
+                                        "target": 3,
+                                        "value": result.import
+                                    }
+                                    :
+                                    {"source": 0,
+                                        "target": 0,
+                                        "value": 0
+                                    }
+                            ]
+                        };
+                        console.log(dataTemp)
+                        setData3(dataTemp);
+                    }
+                    if (result.export > 0) {
+                        dataTemp = {
+                            "nodes": [
+                                {
+                                    "name": "CHP1ElectricityGen"
                                 },
                                 {
-                                    "source": 1,
-                                    "target": 3,
-                                    "value": 10
+                                    "name": "CHP2ElectricityGen"
                                 },
                                 {
-                                    "source": 2,
-                                    "target": 3,
-                                    "value": 10
+                                    "name": "ExportElectricity"
+                                },
+                                {
+                                    "name": "SiteElectricityDemand"
+                                }
+                            ],
+                            "links": [
+                                result.chp1Gen > 0 ?
+                                    {"source": 0,
+                                        "target": 3,
+                                        "value": result.chp1Gen
+                                    }
+                                    :
+                                    {"source": 0,
+                                        "target": 0,
+                                        "value": 0
+                                    }
+                                ,
+                                result.chp2Gen > 0 ?
+                                    {"source": 1,
+                                        "target": 3,
+                                        "value": result.chp2Gen
+                                    }
+                                    :
+                                    {"source": 0,
+                                        "target": 0,
+                                        "value": 0
+                                    },
+                                {"source": 3,
+                                    "target": 2,
+                                    "value": result.export
                                 }
                             ]
                         };
@@ -88,16 +150,17 @@ export default function EnergyFlowGraph(props) {
                     // }
                 }
             })
+        console.log("woof")
         console.log(data1)
         return () => mounted = false;
     }
 
     const [sankey, setSankey] = useState();
-    const [data3, setData3] = useState(String);
+    const [data3, setData3] = useState();
 
     useEffect(() => {
         loadFlow();
-    },[]);
+    }, []);
 
     const data0 = {
         "nodes": [
@@ -179,38 +242,49 @@ export default function EnergyFlowGraph(props) {
         boxShadow: '1px 2px 9px #BFAFB2'
     };
 
-    return (
-        <div style={{display: "flex", flexDirection: "column", alignItems:"center", maxWidth:"80%"}}>
-            <div style={shadows}>
-                <Card sx={{ padding:1}}>
-                    <CardContent sx={{}}>
-                        <div style={{display: "flex", flexDirection: "column", alignItems:"center", maxWidth:"80%"}}>
-                            <Sankey
 
-                                width={960}
-                                height={500}
-                                data={data3}
-                                node={<DemoSankeyNode containerWidth={960} />}
-                                nodePadding={50}
-                                margin={{
-                                    left: 200,
-                                    right: 200,
-                                    top: 100,
-                                    bottom: 100,
-                                }}
-                                link={{stroke: '#77c878' }}
-                            >
-                                <Tooltip />
-                            </Sankey>
-                        </div>
-                    </CardContent>
-                </Card>
+    if (data3 == null) {
+        return null;
+    }
+    else {
+        return (
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "80%"}}>
+                <div style={shadows}>
+                    <Card sx={{padding: 1}}>
+                        <CardContent sx={{}}>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                maxWidth: "80%"
+                            }}>
+                                {}
+                                <Sankey
+
+                                    width={960}
+                                    height={500}
+                                    data={data3}
+                                    node={<DemoSankeyNode containerWidth={960}/>}
+                                    nodePadding={50}
+                                    margin={{
+                                        left: 200,
+                                        right: 200,
+                                        top: 100,
+                                        bottom: 100,
+                                    }}
+                                    link={{stroke: '#77c878'}}
+                                >
+                                    <Tooltip/>
+                                </Sankey>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
-        </div>
 
-    )
+        )
+    }
 }
-
 // function formatData(data) {
 //     let finalData = [];
 //     for (let i = 0; i < data.length; i++) {
