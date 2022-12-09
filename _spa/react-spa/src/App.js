@@ -1,18 +1,19 @@
-import Login from './routes/Login';
+import Login from './routes/User/Login';
 import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
 import {Routes, Route} from 'react-router-dom';
-import ErrorPage from "./routes/ErrorPage";
-import Dashboard from "./routes/Dashboard";
+import ErrorPage from "./routes/User/ErrorPage";
+import Dashboard from "./routes/User/Dashboard";
+import Export from "./fragments/user/Export";
+import "./static/css/App.css"
+import CreateOrganisation from "./routes/Admin/CreateOrganisation";
 import Advice from "./fragments/user/Advice";
-import Costs from "./fragments/user/Costs";
+import Costs from "./routes/User/Costs";
 import EnergyImported from "./fragments/user/EnergyImported";
 import EnergyExported from "./fragments/user/EnergyExported";
 import EnergyFlow from "./fragments/user/EnergyFlow";
 import CO2Emissions from "./fragments/user/CO2Emissions";
-import Export from "./fragments/user/Export";
-import "./static/css/App.css"
-import CreateOrganisation from "./routes/CreateOrganisation";
+import ListOrganisations from "./routes/Admin/ListOrganisations";
 
 const ROLES = {
     'User': "User",
@@ -44,6 +45,7 @@ function App() {
                     </Route>
                     <Route element={<RequireAuth allowedRoles={ROLES.Admin}/>}>
                         <Route path="createOrganisation" element={<CreateOrganisation />}/>
+                        <Route path="listOrganisations" element={<ListOrganisations />} />
                     </Route>
 
                     {/* Error Pages */}

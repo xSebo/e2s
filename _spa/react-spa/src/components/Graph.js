@@ -23,11 +23,6 @@ import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import ApiConnector from "../services/ApiConnector";
 
-const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true
-})
-
 function getRandomColor() {
     var letters = '56789ABCD';
     var color = '#';

@@ -1,6 +1,7 @@
 ﻿import React, {useEffect, useState} from 'react';
 import background from '../../static/images/background.png';
 import Center from "../../components/Center";
+
 import {
     Button,
     Card,

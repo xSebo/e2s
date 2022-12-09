@@ -9,8 +9,7 @@ public class Organisation{
     public string Logo{ get; set; }
     
     public string FacilityName{ get; set; }
-
-    public string FacilityName{ get; set; }
+    
     public Organisation(){
         
     }

@@ -11,16 +11,16 @@ import {
     TextField,
     Typography
 } from '@mui/material'
-import Center from "../components/Center";
+import Center from "../../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import useForm from "../hooks/useForm";
-import logo from '../static/images/logo.png';
+import useForm from "../../hooks/useForm";
+import logo from '../../static/images/logo.png';
 import axios from "axios";
 
 import { useRef, useState } from 'react';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
@@ -207,7 +207,7 @@ export default function Login() {
                                     <div>
                                         <FormControlLabel control={<Checkbox defaultChecked={false} size={"small"} />}
                                                           label={<Typography variant="caption">Remember Me</Typography>} sx={{mr:10}}/>
-                                        <Link href="src/routes/Login#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
+                                        <Link href="src/routes/User/Login#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
                                     </div>
                                     <Button
                                         type="submit"

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import Graph from '../components/Graph';
+import Graph from '../../components/Graph';
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import Multidropdown from "../components/Multidropdown";
+import Multidropdown from "../../components/Multidropdown";
 import dayjs from "dayjs";
-import TwoTimeSelector from "../components/TwoTimeSelector";
+import TwoTimeSelector from "../../components/TwoTimeSelector";
 
 const Costs = () => {
     const dropDownOptions = [
