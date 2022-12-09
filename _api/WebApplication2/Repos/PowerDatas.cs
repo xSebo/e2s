@@ -14,5 +14,9 @@ public class PowerDatas : IPowerDatas{
     public List<PowerData> ByDates(DateTime date1, DateTime date2, int orgId)
     {
         return _powerData.Where(pd => pd.Date > date1 && pd.Date < date2 && pd.Organisation.Id == orgId).ToList();
+    }    
+    public List<PowerData> All(int orgId)
+    {
+        return _powerData.Where(pd => pd.Organisation.Id == orgId).ToList();
     }
 }

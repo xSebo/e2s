@@ -49,6 +49,21 @@ export default class ApiConnector {
                 withCredentials: true}).then(data => data.data)
     }
 
+    getSankeyData() {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+
+        const path = "data/flow"
+        const logToken = this.getCookie("jwTtoken")
+        return api.get(this.constructUrl(path),
+            {
+                headers: {'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken},
+                withCredentials: true}).then(data => data.data)
+    }
+
     getInsightData(dataType) {
         const api = axios.create({
             baseURL: process.env.REACT_APP_API_URL,

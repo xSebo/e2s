@@ -45,4 +45,14 @@ public class DataService {
         }
         return insightList[0].ToDto();
     }
+
+    public FlowDTO? GetTopFlow(int orgId) {
+        List<PowerData> powerDataList = _powerData.All(orgId);
+
+        if (powerDataList.Count <= 0) {
+            return null;
+        }
+        return powerDataList[0].ToFlowDto();
+        
+    }
 }

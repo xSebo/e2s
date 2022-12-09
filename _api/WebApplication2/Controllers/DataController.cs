@@ -32,6 +32,13 @@ public class DataController : Controller{
 
         return Ok(graphData);
     }
+    
+    [Route("flow")] //flow
+    [HttpGet]
+    public IActionResult GetFlow(){
+        FlowDTO? flowData = _dataService.GetTopFlow(GetCurrentUserOrgId());
+        return Ok(flowData);
+    }
 
     [HttpGet]
     [Route("insight")]
