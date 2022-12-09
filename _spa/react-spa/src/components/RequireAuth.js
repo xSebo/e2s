@@ -12,20 +12,13 @@ const RequireAuth = ({ allowedRoles }) => {
         return (value != null) ? unescape(value[1]) : null;
     }
 
-    const loggedIn = window.localStorage.getItem("isLoggedIn")
-    let logToken;
+    let logToken = getCookie("jwTtoken");
+    const loggedIn = (logToken != null)
     let logRoles = '';
-    // console.log(auth)
-    // console.log("your roles are vvv")
-    // console.log(auth.roles)
-    // console.log("allowed roles are vvv")
-    // console.log(allowedRoles)
 
-    if (loggedIn == "true"){
-        logToken = getCookie("jwTtoken")
+    if (loggedIn){
         logRoles = JSON.parse(window.atob(logToken.split(".")[1])).role;
     }
-    else {}
 
     return (
         loggedIn === "true"

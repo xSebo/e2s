@@ -8,6 +8,14 @@ export default class ApiConnector {
     constructor() {
         // Getting the http address of the API from environment variables
         this.apiAddress = process.env.REACT_APP_API_URL
+
+        // Look up dictionary for the API's data types
+        this.insightDataTypes = {
+            "Costs": "costs",
+            "Energy Imported": "energy-imported",
+            "Energy Exported": "energy-exported",
+            "Emissions": "co2-emissions"
+        };
     }
 
     ////////////////
@@ -72,7 +80,7 @@ export default class ApiConnector {
 
         const path = "data/insight"
         const logToken = this.getCookie("jwTtoken")
-        return api.get(this.constructUrl(path) + "?dataType=" + dataType,
+        return api.get(this.constructUrl(path) + "?dataType=" + this.insightDataTypes[dataType],
             {
                 headers: {'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + logToken},
