@@ -29,6 +29,12 @@ public class OrganisationController : Controller{
         return Ok(_orgDb.ToList());
     }
 
+    [HttpGet]
+    [Route("listUsers")] //listUser?orgId=<orgId>
+    public IActionResult ListUsers(int orgId){
+        return Ok(_users.ByOrgId(orgId));
+    }
+        
     [HttpPost]
     [Route("createOrganisation")]
     public IActionResult CreateOrganisation([FromForm] OrganisationCreationDTO org){

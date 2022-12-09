@@ -51,6 +51,23 @@ export default class ApiConnector {
                 withCredentials: true
             })
     }
+    getUsers(orgId) {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        const path = "organisations/listUsers"
+        const logToken = this.getCookie("jwTtoken",)
+
+        return api.get(this.constructUrl(path) + "?orgId=" + orgId,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
+    }
 
     getPowerData(dataType, date1, date2) {
         const api = axios.create({
