@@ -49,7 +49,7 @@ export default class ApiConnector {
                     'Authorization': 'Bearer ' + logToken
                 },
                 withCredentials: true
-            }).then(data => data.data)
+            })
     }
 
     getPowerData(dataType, date1, date2) {
