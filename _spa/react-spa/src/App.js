@@ -1,7 +1,7 @@
 import Login from './routes/Login';
 import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route, NavLink} from 'react-router-dom';
 import ErrorPage from "./routes/ErrorPage";
 import Dashboard from "./routes/Dashboard";
 import Advice from "./fragments/user/Advice";
@@ -21,7 +21,6 @@ const ROLES = {
 }
 
 function App() {
-
     return (
         <div className={"background-img"}>
             <Routes>
@@ -47,8 +46,11 @@ function App() {
 
                     {/* Error Pages */}
                     <Route path="*" element={<ErrorPage errorTitle="404" errorMessage="Uh oh, Page Not Found!" errorDesc="Sorry, but the page you are looking for does not exist, has been removed, or is temporarily unavailable." />} />
-                    <Route path="unauthorized" element={<Unauthorised errorMessage="Unauthorised!" errorDesc="You're not authorised to view this page." />} />
-
+                    <Route path="unauthorized" element={<Unauthorised errorMessage="Unauthorised!" errorDesc="You're not authorised to view this page, please sign in first." />} />
+                    <Route path="error" element={<Unauthorised errorTitle="Error!" errorMessage="Sorry we've encountered an error on our end :(" errorDesc="Please try again later."/>} />
+                    <Route path="forbidden" element={<Unauthorised errorMessage="Unauthorised!" errorDesc="You're not authorised to view this page." />} />
+                    <Route path="request-timeout" element={<Unauthorised errorMessage="Request Timed Out!" errorDesc="Sorry, the request timed out, please try again" />} />
+                    <Route path="teapot" element={<ErrorPage errorTitle="I'm a Teapot!" errorMessage="Not sorry, you cannot brew coffee in a teapot." />} />
                 </Route>
             </Routes>
         </div>

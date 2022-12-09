@@ -15,9 +15,9 @@ public class People : Controller{
         _powerData = powerData;
     }
 
-    [Route("")]
-    [HttpGet]
-    public List<DataResponse> GetPeople(){
-        return new List<DataResponse>();
-    }
+    // [Route("")]
+    // [HttpGet]
+    // public List<DataResponse> GetPeople(){
+    //     return new List<DataResponse>();
+    // }
 }

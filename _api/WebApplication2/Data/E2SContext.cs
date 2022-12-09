@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
+using WebApplication2.Repos;
 
 namespace WebApplication2.Data;
 
@@ -14,6 +15,7 @@ public class E2SContext : DbContext{
     public virtual DbSet<Organisation> Organisations{ get; set; } = null!;
     public virtual DbSet<EmailLink> EmailLinks{ get; set; } = null!;
     public virtual DbSet<PowerData> PowerDatas{ get; set; } = null!;
+    public virtual DbSet<Insight> Insights{ get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         modelBuilder.Entity<User>().ToTable("users");
@@ -21,5 +23,6 @@ public class E2SContext : DbContext{
         modelBuilder.Entity<UserToken>().ToTable("usertokens");
         modelBuilder.Entity<Organisation>().ToTable("organisations");
         modelBuilder.Entity<PowerData>().ToTable("powerdata");
+        modelBuilder.Entity<Insight>().ToTable("insights");
     }
 }
