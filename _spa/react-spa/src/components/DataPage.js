@@ -10,13 +10,9 @@ function DataPage(props){
     const graphDataTypes = {
         "Costs":"dailyCost",
         "Energy Imported":"importElectricity",
-        "Energy Exported":"exportElectricity"
-};
-    const insightDataTypes = {
-        "Costs":"costs",
-        "Energy Imported":"energy",
-        "Energy Exported":"energy"
-};
+        "Energy Exported":"exportElectricity",
+        "Emissions":"co2-emissions",
+    };
 
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
     const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
@@ -39,7 +35,7 @@ function DataPage(props){
     return (
         <div style={pageFlex}>
             <h1 style={{fontSize:50, margin:0}}>{props.dataType}</h1>
-            <AdviceCard ititle={insightDataTypes[props.dataType]}
+            <AdviceCard ititle={props.dataType}
                         style={{display: "flex", minWidth: "100%"}}
                         sub={[{
                             sTitle: "Gas",

@@ -13,7 +13,6 @@ const api = axios.create({
 
 export default function LoadAdviceCard(props) {
 
-
     function getInsight() {
         let dataType = props.ititle
         const apiConnector = new ApiConnector();
@@ -25,10 +24,13 @@ export default function LoadAdviceCard(props) {
         getInsight()
             .then(result => {
                 if (mounted) {
-                    console.log(result.type)
-                    setInsightType(result.type);
+                    // setInsightType(result.type);
                     setInsightText(result.text);
-
+                }
+            })
+            .catch(error => {
+                if (mounted) {
+                    setInsightText("We don't have any insights for you at this time");
                 }
             })
         return () => mounted = false;
@@ -36,9 +38,9 @@ export default function LoadAdviceCard(props) {
     const [insightType, setInsightType] = useState();
     const [insightText, setInsightText] = useState();
 
-
     useEffect(() => {
         loadInsight();
+        setInsightType(props.ititle);
     }, [props.ititle, props.text]);
     
 
