@@ -52,33 +52,29 @@ function Navbar() {
                 </div>
             </div>
 
-            <nav className={"nav-menu"}>
+            <nav className={"nav-menu"} role="navigation">
                 <ul className="nav-menu-items">
                     {SidebarData.map((item, index) => {
                         return (
-
-                                item.path !== "/log-out"
-                                    ? item.path !== "/facilities"
-                                        ?   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName} >
-                                                <Link to={item.path} aria-label={item.title} aria-selected={currentPath === item.path ? true : false}>
-                                                    <div className={"icon"}> {item.icon} </div>
-                                                    <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
-                                                </Link>
-                                            </li>
-                                        :   <li key={index} className={item.cName}>
-                                                <Link >
-                                                    <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
-                                                </Link>
-                                            </li>
-                                    :   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
-                                            <Link onClick={logout} to={"/login"} aria-label={item.title} aria-selected={currentPath === item.path ? true : false}>
-                                                <div className={"icon"}> {item.icon} </div>
-                                                <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
-                                            </Link>
-                                        </li>
-
-
-
+                            item.path !== "/facilities"
+                                    ?
+                                    <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
+                                        <Link
+                                            to={item.path}
+                                            onClick={item.path === "/log-out" ? logout : null}
+                                            aria-label={item.title}
+                                            aria-selected={currentPath === item.path}
+                                        >
+                                            {item.path !== "/facilities" && (
+                                                <div className="icon" alt={`Icon representing ${item.title}`}>{item.icon}</div>
+                                            )}
+                                            <span style={{ display: navbarExpanded ? "block" : "none" }}>
+                                                {item.title}
+                                             </span>
+                                        </Link>
+                                    </li>
+                                    :
+                                    <div className={currentPath === item.path ? item.cName + " selected" : item.cName}><a style={{ display: navbarExpanded ? "block" : "none" }}>{item.title}</a></div>
                         );
                     })}
                 </ul>
