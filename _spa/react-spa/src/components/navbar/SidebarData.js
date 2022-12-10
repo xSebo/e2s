@@ -6,7 +6,7 @@ import {
 export const SidebarData = [
     {
         title: "Skip to Content",
-        path: "/",
+        path: null,
         icon: <FaWallet />,
         cName: "nav-button",
     },
