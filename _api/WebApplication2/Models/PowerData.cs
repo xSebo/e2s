@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApplication2.DTOs;
 
 namespace WebApplication2.Models;
 
@@ -56,5 +57,9 @@ public class PowerData{
             return null;
         }
         return GetDataTypeStringDict()[dataType];
+    }
+    
+    public FlowDTO ToFlowDto() {
+        return new FlowDTO(this.CHP1ElectricityGen, this.CHP2ElectricityGen, this.ImportElectricity, this.ExportElectricity, this.SiteElectricityDemand);
     }
 }
