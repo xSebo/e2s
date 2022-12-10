@@ -50,9 +50,9 @@ export default function LoadAdviceCard(props) {
                 <Typography variant="h6"  sx ={{ fontWeight:'bold'}} >
                     {sTitle}
                 </Typography>
-                <div>
+                <p>
                     {sText}
-                </div>
+                </p>
             </div>
             <div style={{background: good ? "hsl(140,40%,55%)" : "hsl(0,100%,65%)", marginLeft:"20px", margin:"20px", width:"50px", height:"20px"}}>
                 {arrowUp

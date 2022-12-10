@@ -90,6 +90,8 @@
   height: 100%;
   display: flex;
   align-items: center;
+  padding-top: 20px;
+  padding-left: 30px;
 }
 
 .nav-facility span {
@@ -142,5 +144,19 @@
 
 .navbar .user-info h4 {
   margin: 5px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -100000px;
+}
+
+.skip-link:focus {
+  position: static;
+  height: 8vh;
+  font-weight: 500;
+  font-size: large;
+  width: 100%;
+  padding-left: 30px;
 }
 

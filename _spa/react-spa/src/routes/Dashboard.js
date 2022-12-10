@@ -11,7 +11,7 @@ const Dashboard = ({fragment}) => {
     return (
         <div className={"page-container"}>
             <Navbar />
-            <div className={"fragment-container"}>
+            <div className={"fragment-container"} id="content">
                 <Fragment />
             </div>
         </div>
