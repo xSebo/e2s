@@ -55,7 +55,12 @@ builder.Services.AddScoped<IEmailLinks, EmailLinks>();
 builder.Services.AddScoped<IPowerDatas, PowerDatas>();
 builder.Services.AddScoped<IInsights, Insights>();
 
-builder.Services.AddScoped<DataService, DataService>();
+// https://codewithmukesh.com/blog/send-emails-with-aspnet-core/ @ 10/12/2022
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddHostedService<WeeklyMailingService>();
 
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 

@@ -14,9 +14,9 @@ namespace WebApplication2.Controllers;
 [Route("data/")]
 public class DataController : Controller{
     private readonly IPowerDatas _powerData;
-    private DataService _dataService;
+    private IDataService _dataService;
 
-    public DataController(IPowerDatas powerData, DataService dataService){
+    public DataController(IPowerDatas powerData, IDataService dataService){
         _powerData = powerData;
         _dataService = dataService;
     }

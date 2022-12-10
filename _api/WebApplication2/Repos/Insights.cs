@@ -15,4 +15,8 @@ public class Insights : IInsights {
     {
         return _insights.Where(i => i.Type.Equals(type) && i.Organisation.Id == orgId).ToList();
     }
+
+    public List<Insight> All(int orgId) {
+        return _insights.Where(i => i.Organisation.Id == orgId).ToList();
+    }
 }
