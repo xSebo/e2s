@@ -45,7 +45,7 @@ function Navbar() {
             <div className={"nav-title"}>
                 {/*<h1 style={{display: navbarExpanded ? "block" : "none"}} className="nav-logo">E2S</h1>*/}
                 <div>
-                    <img src={"Logo_v1_EES.png"} style={{backgroundColor:"white", width:"75%"}}/>
+                    <img src={"Logo_v1_EES.png"} style={{backgroundColor:"white", width:"75%"}} alt={"E E S: Empowering Energy Solutions"}/>
                 </div>
                 <div style={{marginLeft: navbarExpanded ? "10px" : "0px"}} className="nav-expand-button">
                     <FaBars onClick={toggleExpanded}/>
@@ -56,11 +56,11 @@ function Navbar() {
                 <ul className="nav-menu-items">
                     {SidebarData.map((item, index) => {
                         return (
-                            <div> {
+
                                 item.path !== "/log-out"
                                     ? item.path !== "/facilities"
-                                        ?   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
-                                                <Link to={item.path}>
+                                        ?   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName} >
+                                                <Link to={item.path} aria-label={item.title} aria-selected={currentPath === item.path ? true : false}>
                                                     <div className={"icon"}> {item.icon} </div>
                                                     <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
                                                 </Link>
@@ -71,13 +71,13 @@ function Navbar() {
                                                 </Link>
                                             </li>
                                     :   <li key={index} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
-                                            <Link onClick={logout} to={"/login"}>
+                                            <Link onClick={logout} to={"/login"} aria-label={item.title} aria-selected={currentPath === item.path ? true : false}>
                                                 <div className={"icon"}> {item.icon} </div>
                                                 <span style={{display: navbarExpanded ? "block" : "none"}}>{item.title}</span>
                                             </Link>
                                         </li>
-                            }
-                            </div>
+
+
 
                         );
                     })}
