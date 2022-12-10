@@ -5,6 +5,12 @@ import {
 
 export const SidebarData = [
     {
+        title: "Skip to Content",
+        path: "/",
+        icon: <FaWallet />,
+        cName: "nav-button",
+    },
+    {
         title: "Facility Name",
         path: "/facilities",
         icon: <FaChartBar />,
