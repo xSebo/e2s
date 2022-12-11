@@ -3,39 +3,29 @@ import {Link, useLocation} from "react-router-dom";
 import {SidebarData} from "./SidebarData";
 import "../../static/css/navbar.css";
 import {FaBars} from "react-icons/fa";
+import ApiConnector from "../../services/ApiConnector";
 
 function Navbar() {
-
-    function getCookie(name) {
-        var re = new RegExp(name + "=([^;]+)");
-        var value = re.exec(document.cookie);
-        return (value != null) ? unescape(value[1]) : null;
-    }
 
     const [navbarExpanded, setNavbarExpanded] = useState(false);
     const toggleExpanded = () => setNavbarExpanded(!navbarExpanded);
 
-    const loggedIn = window.localStorage.getItem("isLoggedIn")
+    const apiConnector = new ApiConnector();
 
+    const loggedIn = apiConnector.getLoggedIn()
     let currentUserName = ""
     let currentUserEmail = ""
 
-    if (loggedIn == "true") {
-        const currentUserToken = getCookie("jwTtoken")
-        currentUserName = JSON.parse(window.atob(currentUserToken.split(".")[1])).family_name;
-        currentUserEmail = JSON.parse(window.atob(currentUserToken.split(".")[1])).email;
-    } else {
-        currentUserName = "John Smith"
-        currentUserEmail = "JohnSmith@SmithCo.com"
+    if (loggedIn) {
+        const userDetails = apiConnector.getUserDetails()
+        currentUserName = userDetails.name;
+        currentUserEmail = userDetails.email;
     }
-
 
     const currentPath = useLocation().pathname
 
     const logout = () => {
-        localStorage.removeItem('user')
-        localStorage.removeItem('isLoggedIn')
-        localStorage.setItem('isLoggedIn', 'false')
+        apiConnector.setLoggedOut();
     }
 
     return (
@@ -63,7 +53,7 @@ function Navbar() {
                                         className={currentPath === item.path ? item.cName + " selected" : item.cName}>
                                         <Link
                                             to={item.path}
-                                            onClick={item.path === "/log-out" ? logout : null}
+                                            onClick={item.type === "log-out" ? logout : null}
                                             aria-label={item.title}
                                             aria-selected={currentPath === item.path}
                                             title={item.title}

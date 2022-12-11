@@ -59,8 +59,9 @@ export const SidebarData = [
         cName: "nav-button",
     },
     {
+        type: "log-out",
         title: "Log Out",
-        path: "/log-out",
+        path: "/login",
         icon: <FaSignOutAlt />,
         cName: "nav-button border-top",
     },
