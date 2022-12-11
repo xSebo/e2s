@@ -1,6 +1,6 @@
 import React from 'react'
 import dayjs from "dayjs";
-import {Card, CardContent} from "@mui/material";
+import {Card, CardContent, Typography} from "@mui/material";
 import TwoTimeSelector from "./TwoTimeSelector";
 import AdviceCard from "./AdviceCard"
 import Graph from "./Graph";
@@ -34,7 +34,11 @@ function DataPage(props){
 
     return (
         <div style={pageFlex}>
-            <h1 style={{fontSize:50, margin:0}}>{props.dataType}</h1>
+            <div style={{display:"flex", justifyContent:"space-around"}}>
+                <Typography variant="h1"  sx ={{ fontWeight:400, fontSize:50}} >
+                    {props.dataType}
+                </Typography>
+            </div>
             <AdviceCard ititle={props.dataType}
                         style={{display: "flex", minWidth: "100%"}}
                         sub={[{

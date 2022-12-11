@@ -12,7 +12,7 @@ const Advice = () => {
         <ResponsiveContainer >
             <div>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <Typography variant="h4"  sx ={{ fontWeight:'bold'}} >
+                    <Typography variant="h1"  sx ={{ fontWeight:400, fontSize:50}} >
                     Advice
                     </Typography>
                 </div>
