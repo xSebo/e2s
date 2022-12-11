@@ -12,6 +12,8 @@ public class E2SContext : DbContext{
     public virtual DbSet<User> Users{ get; set; } = null!;
     public virtual DbSet<Authority> Authorities{ get;set; } = null!;
     public virtual DbSet<UserToken> UserTokens{ get; set; } = null!;
+
+    public virtual DbSet<BlacklistToken> BlacklistTokens { get; set; } = null!;
     public virtual DbSet<Organisation> Organisations{ get; set; } = null!;
     public virtual DbSet<EmailLink> EmailLinks{ get; set; } = null!;
     public virtual DbSet<PowerData> PowerDatas{ get; set; } = null!;

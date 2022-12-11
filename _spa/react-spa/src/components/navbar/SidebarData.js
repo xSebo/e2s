@@ -60,7 +60,7 @@ export const SidebarData = [
     },
     {
         title: "Log Out",
-        path: "/log-out",
+        path: "/login",
         icon: <FaSignOutAlt />,
         cName: "nav-button border-top",
     },

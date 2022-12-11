@@ -15,10 +15,12 @@ namespace WebApplication2.Controllers;
 public class DataController : Controller{
     private readonly IPowerDatas _powerData;
     private IDataService _dataService;
+    private IBlacklistTokens _blacklistTokens;
 
-    public DataController(IPowerDatas powerData, IDataService dataService){
+    public DataController(IPowerDatas powerData, IDataService dataService, IBlacklistTokens blacklistTokens){
         _powerData = powerData;
         _dataService = dataService;
+        _blacklistTokens = blacklistTokens;
     }
 
     private int GetCurrentUserOrgId() {

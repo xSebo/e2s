@@ -20,6 +20,26 @@ public class AuthController : Controller{
     [HttpPost]
     [Route("create")]
     public IActionResult Auth([FromBody] UserLoginDTO userLoginDto){
+        
+        
+        try
+        {
+            Console.WriteLine(Request.Cookies.TryGetValue("jwTtoken", out string strval));
+            Console.WriteLine("hiiiiiiiiiiiiiiii");
+
+            if (strval == "sam")
+            {
+                
+            }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        
         User? user;
         try{
             user = _users.ByEmail(userLoginDto.Email);
@@ -29,7 +49,7 @@ public class AuthController : Controller{
             return Unauthorized();
         }
 
-        if (user == null){
+        if (user == null ){
             return Unauthorized();
         }
         bool verified = BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password);
@@ -71,5 +91,4 @@ public class AuthController : Controller{
 
         return Ok(refreshResponse.Response);
     }
-    
 }
