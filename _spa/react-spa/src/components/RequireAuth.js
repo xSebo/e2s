@@ -1,23 +1,18 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import ApiConnector from "../services/ApiConnector";
 
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
 
-    function getCookie(name)
-    {
-        var re = new RegExp(name + "=([^;]+)");
-        var value = re.exec(document.cookie);
-        return (value != null) ? unescape(value[1]) : null;
-    }
+    const apiConnector = new ApiConnector()
 
-    let logToken = getCookie("jwTtoken");
-    const loggedIn = (logToken != null)
+    const loggedIn = apiConnector.getLoggedIn();
     let logRoles = '';
 
     if (loggedIn){
-        logRoles = JSON.parse(window.atob(logToken.split(".")[1])).role;
+        logRoles = apiConnector.getUserRole();
     }
 
     return (
