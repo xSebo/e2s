@@ -47,14 +47,14 @@ export default function LoadAdviceCard(props) {
     const Sub = ({ sTitle, sText, percent, arrowUp, good }) => (
         <div style={{display: "flex", borderBottomWidth: "1px", borderBottomColor: "grey", borderBottomStyle: "solid"}}>
             <div style={{width: "120px"}}>
-                <Typography variant="h6"  sx ={{ fontWeight:'bold'}} >
+                <Typography variant="h3"  sx={{ fontWeight:'bold', fontSize:20}}>
                     {sTitle}
                 </Typography>
-                <p>
+                <p style={{marginTop:0, marginBottom:0}}>
                     {sText}
                 </p>
             </div>
-            <div style={{background: good ? "hsl(140,40%,55%)" : "hsl(0,100%,65%)", marginLeft:"20px", margin:"20px", width:"50px", height:"20px"}}>
+            <div style={{background: good ? "hsl(140,40%,55%)" : "hsl(0,100%,65%)", marginLeft:"20px", margin:"15px", width:"50px", height:"20px"}}>
                 {arrowUp
                     ? <AiOutlineArrowUp/>
                     : <AiOutlineArrowDown/>
@@ -77,7 +77,7 @@ export default function LoadAdviceCard(props) {
                             <div style={{display: "flex", justifyContent: "space-between"}}>
                                 {/*Left-hand box*/}
                                 <div style={{paddingRight: "10px", maxWidth:"50%", flexGrow: "2"}}>
-                                    <Typography variant="h4"  sx ={{ fontWeight:'bold'}} >
+                                    <Typography variant="h2"  sx ={{ fontWeight:'bold', fontSize:32}} >
                                         {insightType}
                                     </Typography>
                                     <br/>
