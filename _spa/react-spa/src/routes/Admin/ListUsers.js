@@ -4,40 +4,30 @@ import ApiConnector from '../../services/ApiConnector';
 import {DataGrid} from '@mui/x-data-grid';
 import {useLocation} from 'react-router-dom';
 
-const ListUsers = (props) => {
+const ListUsers = () => {
     const location = useLocation();
 
     const columns = [
-        {field: 'id', headerName: 'ID'},
         {
             field: 'name',
             headerName: 'Name',
+            flex: 1,
             editable: true,
         },
         {
             field: 'email',
             headerName: 'Email',
+            flex: 1,
             editable: true,
         },
         {
-            field: 'userButton',
-            headerName: '',
-            renderCell: (params) => {
-                return (
-                    <Button
-                        onClick={(e) => onButtonClick(e, params.row)}
-                        variant="outlined"
-                    >
-                        Edit
-                    </Button>
-                );
-            }
+            field: 'password',
+            headerName: 'Password',
+            flex: 1,
+            editable: true,
         }
-    ];
 
-    const onButtonClick = (e, row) => {
-        e.stopPropagation();
-    };
+    ];
 
     const [users, setUsers] = useState([]);
 
@@ -56,6 +46,18 @@ const ListUsers = (props) => {
         };
     }, []);
 
+    const processRowUpdate = React.useCallback(
+        (newRow) => {
+            let api = new ApiConnector();
+            api.setUser(newRow);
+        },
+        [],
+    );
+
+    const handleProcessRowUpdateError = React.useCallback((error) => {
+        console.log(error)
+    }, []);
+
     return (
         <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
             <Box style={{background: "white"}} sx={{height: 400, width: '40%'}}>
@@ -64,7 +66,8 @@ const ListUsers = (props) => {
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    checkboxSelection
+                    processRowUpdate={processRowUpdate}
+                    onProcessRowUpdateError={handleProcessRowUpdateError}
                     disableSelectionOnClick
                     experimentalFeatures={{newEditingApi: true}}
                 />

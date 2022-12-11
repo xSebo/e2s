@@ -69,6 +69,41 @@ export default class ApiConnector {
             })
     }
 
+    setOrganisation(row){
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        console.log(row)
+        const path = "organisations/editOrganisation"
+        const logToken = this.getCookie("jwTtoken",)
+        return api.post(this.constructUrl(path), row,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
+    }
+    setUser(row){
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        console.log(row)
+        const path = "organisations/editUser"
+        const logToken = this.getCookie("jwTtoken",)
+        return api.post(this.constructUrl(path), row,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
+    }
+
     getPowerData(dataType, date1, date2) {
         const api = axios.create({
             baseURL: process.env.REACT_APP_API_URL,

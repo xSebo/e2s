@@ -29,10 +29,47 @@ public class OrganisationController : Controller{
         return Ok(_orgDb.ToList());
     }
 
+    [HttpPost]
+    [Route("editOrganisation")]
+    public IActionResult EditOrganisation([FromBody] OrganisationEditDTO org){
+        try{
+            var foundOrg = _orgDb.ById(org.Id);
+            if (foundOrg == null) return Problem();
+            foundOrg.Name = org.Name;
+            foundOrg.FacilityName = org.FacilityName;
+            _orgDb.Save();
+            return Ok();
+        }
+        catch (Exception e){
+            return Problem();
+        }
+    }
+    
+    [HttpPost]
+    [Route("editUser")]
+    public IActionResult EditUser([FromBody] UserEditDTO user){
+        try{
+            var foundUser = _users.ById(user.Id);
+            Console.WriteLine(foundUser);
+            Console.WriteLine(user);
+            if (foundUser == null) return Problem();
+            foundUser.Email = user.Email;
+            foundUser.Name = user.Name;
+            foundUser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            _users.Save();
+            return Ok();
+        }
+        catch (Exception e){
+            return Problem();
+        }
+    }
+
     [HttpGet]
     [Route("listUsers")] //listUser?orgId=<orgId>
     public IActionResult ListUsers(int orgId){
-        return Ok(_users.ByOrgId(orgId));
+        List<UserTransferDTO> users = new List<UserTransferDTO>();
+        _users.ByOrgId(orgId).ForEach(user => users.Add(new UserTransferDTO(user)));
+        return Ok(users);
     }
         
     [HttpPost]

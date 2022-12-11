@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import ApiConnector from "../../services/ApiConnector";
-import {Box, Button, List, ListItem, ListItemText} from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid';
-import {useNavigate, useNavigation} from 'react-router-dom';
+import {Box, Button} from "@mui/material";
+import {DataGrid} from '@mui/x-data-grid';
+import {useNavigate} from 'react-router-dom';
+
 
 const ListOrganisations = () => {
     const navigate = useNavigate();
@@ -24,19 +25,21 @@ const ListOrganisations = () => {
     }, []);
 
     const columns = [
-        { field: 'id', headerName: 'ID' },
         {
             field: 'name',
+            flex: 1,
             headerName: 'Organisation name',
             editable: true,
         },
         {
             field: 'logo',
+            flex: 1,
             headerName: 'Logo Name',
-            editable: true,
+            editable: false,
         },
         {
             field: 'facilityName',
+            flex: 1,
             headerName: 'Facility Name',
             editable: true,
         },
@@ -58,24 +61,37 @@ const ListOrganisations = () => {
 
     const onButtonClick = (e, row) => {
         e.stopPropagation();
-        navigate("/listUsers", {state:{orgId:row.id}})
+        navigate("/listUsers", {state: {orgId: row.id}})
     };
 
+    const processRowUpdate = React.useCallback(
+        (newRow) => {
+            let api = new ApiConnector();
+            api.setOrganisation(newRow)
+        },
+        [],
+    );
+
+    const handleProcessRowUpdateError = React.useCallback((error) => {
+        console.log(error)
+    }, []);
+
     return (
-        <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-            <Box style={{background:"white"}} sx={{ height: 400, width: '40%' }}>
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <Box style={{background: "white"}} sx={{height: 400, width: '40%'}}>
                 <DataGrid
+                    getRowId={(row) => {return row.id}}
                     rows={organisations}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    checkboxSelection
+                    processRowUpdate={processRowUpdate}
+                    onProcessRowUpdateError={handleProcessRowUpdateError}
                     disableSelectionOnClick
-                    experimentalFeatures={{ newEditingApi: true }}
+                    experimentalFeatures={{newEditingApi: true}}
                 />
             </Box>
         </div>
     );
 };
-
 export default ListOrganisations;
