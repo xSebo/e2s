@@ -15,6 +15,7 @@ import EnergyFlow from "./fragments/user/EnergyFlow";
 import CO2Emissions from "./fragments/user/CO2Emissions";
 import ListOrganisations from "./routes/Admin/ListOrganisations";
 import ListUsers from "./routes/Admin/ListUsers";
+import AdminDashboard from "./routes/User/AdminDashboard";
 
 const ROLES = {
     'User': "User",
@@ -45,9 +46,9 @@ function App() {
                         <Route path="log-out" element={<Dashboard />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={ROLES.Admin}/>}>
-                        <Route path="createOrganisation" element={<CreateOrganisation />}/>
-                        <Route path="listOrganisations" element={<ListOrganisations />} />
-                        <Route path="listUsers" element={<ListUsers />}/>
+                        <Route path="createOrganisation" element={<AdminDashboard fragment={CreateOrganisation} />}/>
+                        <Route path="listOrganisations" element={<AdminDashboard fragment={ListOrganisations} />} />
+                        <Route path="listUsers" element={<AdminDashboard fragment={ListUsers} />} />
                     </Route>
 
                     {/* Error Pages */}
