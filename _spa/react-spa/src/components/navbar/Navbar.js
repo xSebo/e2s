@@ -68,7 +68,7 @@ function Navbar() {
                                         </Link>
                                     </li>
                                     :
-                                    <div className={currentPath === item.path ? item.cName + " selected" : item.cName}>
+                                    <div key={index+"-a-tag"} className={currentPath === item.path ? item.cName + " selected" : item.cName}>
                                         <a style={{display: navbarExpanded ? "block" : "none"}}>
                                             {item.title}
                                         </a>
