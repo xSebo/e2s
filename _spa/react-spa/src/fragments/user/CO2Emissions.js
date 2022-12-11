@@ -19,10 +19,11 @@ function CO2Emissions(){
         <div className="CO2Emissions">
             <div className="home" style={sectionStyle}>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <Typography variant="h4"  sx ={{ fontWeight:'bold'}} >
+                    <Typography variant="h1"  sx ={{ fontWeight:400, fontSize:50}} >
                         CO2 Emissions
                     </Typography>
                 </div>
+                <br/>
                 <Center>
                     <div style={shadows}>
                         <div style={{display:"flex", justifyContent: "space-around"}}>

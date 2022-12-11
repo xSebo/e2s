@@ -67,6 +67,10 @@
   border-bottom: 2px solid white;
 }
 
+.border-top {
+  border-top: 2px solid grey;
+}
+
 .nav-button a {
   text-decoration: none;
   color: #c7c7c7;

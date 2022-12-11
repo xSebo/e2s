@@ -66,6 +66,7 @@ function Navbar() {
                                             onClick={item.path === "/log-out" ? logout : null}
                                             aria-label={item.title}
                                             aria-selected={currentPath === item.path}
+                                            title={item.title}
                                         >
                                             {item.path !== "/facilities" && (
                                                 <div className="icon"
