@@ -1,6 +1,6 @@
 import React from 'react'
 import {NavLink, useNavigate} from "react-router-dom";
-import "../static/css/error.css"
+import "../../static/css/error.css"
 
 function ErrorPage(props) {
 

@@ -23,11 +23,6 @@ import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import ApiConnector from "../services/ApiConnector";
 
-const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true
-})
-
 function getRandomColor() {
     var letters = '56789ABCD';
     var color = '#';
@@ -121,7 +116,7 @@ function CustLineChart(props) {
     const data = formatData(props.data);
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <LineChart width={1000} height={500} data={data}
+            <LineChart data={data}
                        margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="date" label={{value: props.xTitle, offset: -5, position: 'insideBottom'}}/>
@@ -138,7 +133,7 @@ function CustLineChart(props) {
 function CustBarChart(props) {
     const data = formatData(props.data);
     return (
-        <BarChart width={730} height={250} data={data}>
+        <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3"/>
             <XAxis dataKey="date" label={{value: props.xTitle, offset: -5, position: 'insideBottom'}}/>
             <YAxis label={{value: props.yTitle, angle: -90, offset: 15, position: 'insideLeft'}}/>

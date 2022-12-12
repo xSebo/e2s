@@ -7,19 +7,19 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel,
-     OutlinedInput,
+    OutlinedInput,
     TextField,
     Typography
 } from '@mui/material'
-import Center from "../components/Center";
+import Center from "../../components/Center";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import useForm from "../hooks/useForm";
-import logo from '../static/images/logo.png';
+import useForm from "../../hooks/useForm";
+import logo from '../../static/images/logo.png';
 import axios from "axios";
 
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 
@@ -33,7 +33,7 @@ const getFreshModel = ()=>({
 })
 
 export default function Login() {
-    
+
     const {
         errors,
         setErrors,
@@ -113,7 +113,7 @@ export default function Login() {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    
+
     const sectionStyle = {
         width: "100%",
         height: "100%",

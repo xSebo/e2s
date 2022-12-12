@@ -1,5 +1,5 @@
-﻿import "../static/css/dashboard.css"
-import Navbar from "../components/navbar/Navbar";
+﻿import "../../static/css/dashboard.css"
+import Navbar from "../../components/navbar/Navbar";
 
 const Dashboard = ({fragment}) => {
 

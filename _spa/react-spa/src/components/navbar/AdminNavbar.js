@@ -1,11 +1,11 @@
 ﻿import React, {useState} from "react";
 import {Link, useLocation} from "react-router-dom";
-import {SidebarData} from "./SidebarData";
+import {AdminNavbarData as SidebarData} from "./AdminNavbarData";
 import "../../static/css/navbar.css";
 import {FaBars} from "react-icons/fa";
 import ApiConnector from "../../services/ApiConnector";
 
-function Navbar() {
+function AdminNavbar() {
     const [navbarExpanded, setNavbarExpanded] = useState(true);
     const toggleExpanded = () => setNavbarExpanded(!navbarExpanded);
 
@@ -91,4 +91,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default AdminNavbar;
