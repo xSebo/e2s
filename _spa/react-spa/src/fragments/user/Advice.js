@@ -12,21 +12,21 @@ const Advice = () => {
         <ResponsiveContainer >
             <div>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <Typography variant="h4"  sx ={{ fontWeight:'bold'}} >
+                    <Typography variant="h1"  sx ={{ fontWeight:400, fontSize:50}} >
                     Advice
                     </Typography>
                 </div>
                 <br/>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <AdviceCard ititle={"costs"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
+                    <AdviceCard ititle={"Costs"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
                 </div>
                 <br/>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <AdviceCard ititle={"energy"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
+                    <AdviceCard ititle={"Energy Exported"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
                 </div>
                 <br/>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <AdviceCard ititle={"emissions"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
+                    <AdviceCard ititle={"Emissions"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
                 </div>
             </div>
         </ResponsiveContainer>

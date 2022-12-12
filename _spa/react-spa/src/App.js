@@ -4,11 +4,10 @@ import RequireAuth from './components/RequireAuth';
 import {Routes, Route} from 'react-router-dom';
 import ErrorPage from "./routes/User/ErrorPage";
 import Dashboard from "./routes/User/Dashboard";
-import Export from "./fragments/user/Export";
 import "./static/css/App.css"
 import CreateOrganisation from "./routes/Admin/CreateOrganisation";
 import Advice from "./fragments/user/Advice";
-import Costs from "./routes/User/Costs";
+import Costs from "./fragments/user/Costs";
 import EnergyImported from "./fragments/user/EnergyImported";
 import EnergyExported from "./fragments/user/EnergyExported";
 import EnergyFlow from "./fragments/user/EnergyFlow";
@@ -16,6 +15,9 @@ import CO2Emissions from "./fragments/user/CO2Emissions";
 import ListOrganisations from "./routes/Admin/ListOrganisations";
 import ListUsers from "./routes/Admin/ListUsers";
 import AdminDashboard from "./routes/User/AdminDashboard";
+import Export from "./fragments/user/Export";
+import "./static/css/App.css"
+import Unauthorised from "./routes/Unauthorised";
 
 const ROLES = {
     'User': "User",
@@ -52,13 +54,12 @@ function App() {
                     </Route>
 
                     {/* Error Pages */}
-                    <Route path="error" element={<ErrorPage errorTitle="Error!" errorMessage="Sorry we've encountered and error on our end :(" />} />
-                    <Route path="*" element={<ErrorPage errorTitle="Page Not Found!" errorMessage="Sorry, we couldn't find the page you're looking for." />} />
-                    <Route path="unauthorised" element={<ErrorPage errorTitle="Unauthorised!" errorMessage="You're no authorised to view this page, please sign in first." />} />
-                    <Route path="forbidden" element={<ErrorPage errorTitle="Unauthorised!" errorMessage="You're no authorised to view this page." />} />
-                    <Route path="request-timeout" element={<ErrorPage errorTitle="Request Timed Out!" errorMessage="Sorry, the request timed out, please try again" />} />
+                    <Route path="*" element={<ErrorPage errorTitle="404" errorMessage="Uh oh, Page Not Found!" errorDesc="Sorry, but the page you are looking for does not exist, has been removed, or is temporarily unavailable." />} />
+                    <Route path="unauthorized" element={<Unauthorised errorMessage="Unauthorised!" errorDesc="You're not authorised to view this page, please sign in first." />} />
+                    <Route path="error" element={<Unauthorised errorTitle="Error!" errorMessage="Sorry we've encountered an error on our end :(" errorDesc="Please try again later."/>} />
+                    <Route path="forbidden" element={<Unauthorised errorMessage="Unauthorised!" errorDesc="You're not authorised to view this page." />} />
+                    <Route path="request-timeout" element={<Unauthorised errorMessage="Request Timed Out!" errorDesc="Sorry, the request timed out, please try again" />} />
                     <Route path="teapot" element={<ErrorPage errorTitle="I'm a Teapot!" errorMessage="Not sorry, you cannot brew coffee in a teapot." />} />
-
                 </Route>
             </Routes>
         </div>

@@ -5,6 +5,12 @@ import {
 
 export const SidebarData = [
     {
+        title: "Skip to Content",
+        path: null,
+        icon: <FaWallet />,
+        cName: "nav-button",
+    },
+    {
         title: "Facility Name",
         path: "/facilities",
         icon: <FaChartBar />,
@@ -53,9 +59,10 @@ export const SidebarData = [
         cName: "nav-button",
     },
     {
+        type: "log-out",
         title: "Log Out",
-        path: "/log-out",
+        path: "/login",
         icon: <FaSignOutAlt />,
-        cName: "nav-button border-both",
+        cName: "nav-button border-top",
     },
 ];

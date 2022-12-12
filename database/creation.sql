@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `e2s`.`organisations` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `logo` VARCHAR(45) NULL DEFAULT NULL,
-  `facilityName` VARCHAR(45) NOT NULL,
+  `facilityName` VARCHAR(45) NULL DEFAULT("Abacws"),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;

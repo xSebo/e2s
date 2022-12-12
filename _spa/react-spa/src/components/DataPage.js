@@ -1,6 +1,6 @@
 import React from 'react'
 import dayjs from "dayjs";
-import {Card, CardContent} from "@mui/material";
+import {Card, CardContent, Typography} from "@mui/material";
 import TwoTimeSelector from "./TwoTimeSelector";
 import AdviceCard from "./AdviceCard"
 import Graph from "./Graph";
@@ -10,13 +10,9 @@ function DataPage(props){
     const graphDataTypes = {
         "Costs":"dailyCost",
         "Energy Imported":"importElectricity",
-        "Energy Exported":"exportElectricity"
-};
-    const insightDataTypes = {
-        "Costs":"costs",
-        "Energy Imported":"energy",
-        "Energy Exported":"energy"
-};
+        "Energy Exported":"exportElectricity",
+        "Emissions":"co2-emissions",
+    };
 
     const [time1, setTime1] = React.useState(dayjs('2020-01-01T00:00:00'));
     const [time2, setTime2] = React.useState(dayjs('2020-02-01T00:00:00'));
@@ -38,8 +34,12 @@ function DataPage(props){
 
     return (
         <div style={pageFlex}>
-            <h1 style={{fontSize:50, margin:0}}>{props.dataType}</h1>
-            <AdviceCard ititle={insightDataTypes[props.dataType]}
+            <div style={{display:"flex", justifyContent:"space-around"}}>
+                <Typography variant="h1"  sx ={{ fontWeight:400, fontSize:50}} >
+                    {props.dataType}
+                </Typography>
+            </div>
+            <AdviceCard ititle={props.dataType}
                         style={{display: "flex", minWidth: "100%"}}
                         sub={[{
                             sTitle: "Gas",

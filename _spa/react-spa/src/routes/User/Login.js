@@ -7,7 +7,7 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel,
-     OutlinedInput,
+    OutlinedInput,
     TextField,
     Typography
 } from '@mui/material'
@@ -19,9 +19,8 @@ import useForm from "../../hooks/useForm";
 import logo from '../../static/images/logo.png';
 import axios from "axios";
 
-import { useRef, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 const api = axios.create({
@@ -34,13 +33,10 @@ const getFreshModel = ()=>({
 })
 
 export default function Login() {
-    
+
     const {
-        values,
-        setValues,
         errors,
         setErrors,
-        handleInputChange
     } = useForm(getFreshModel);
     const { setAuth } = useAuth();
 
@@ -48,17 +44,9 @@ export default function Login() {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-
-    const [user, setUser] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-
-
     const login = async (e) => {
         e.preventDefault();
-        let loginForm = {
-            "email":adValues.email,
-            "password":adValues.password
-        }
+
         if ((/\S+@\S+\.\S+/).test(adValues.email)) {
 
             try {
@@ -74,10 +62,6 @@ export default function Login() {
                 const accessToken = response?.data?.jwTtoken;
                 const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
                 const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
-                localStorage.removeItem('user')
-                localStorage.removeItem('isLoggedIn')
-                localStorage.setItem('user', response.data)
-                localStorage.setItem('isLoggedIn', 'true')
 
                 setAuth({name, roles, accessToken});
                 navigate(from, {replace: true});
@@ -109,14 +93,6 @@ export default function Login() {
         return Object.values(temp).every(x=> x== "")
     }
 
-    //TODO remove logout button
-    const logout = ()=> {
-        localStorage.removeItem('user')
-        localStorage.removeItem('isLoggedIn')
-        localStorage.setItem('isLoggedIn', 'false')
-    }
-//////////////////
-
     const [adValues, setAdValues] = React.useState({
         email: '',
         password: '',
@@ -137,7 +113,7 @@ export default function Login() {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    
+
     const sectionStyle = {
         width: "100%",
         height: "100%",
@@ -170,7 +146,6 @@ export default function Login() {
                             }}>
                                 <form noValidate autoComplete="off" onSubmit={login}>
                                     <TextField
-        
                                         label="Email"
                                         name="email"
                                         value={adValues.email}
@@ -206,8 +181,7 @@ export default function Login() {
                                     </div>
                                     <div>
                                         <FormControlLabel control={<Checkbox defaultChecked={false} size={"small"} />}
-                                                          label={<Typography variant="caption">Remember Me</Typography>} sx={{mr:10}}/>
-                                        <Link href="src/routes/User/Login#" sx ={{my:3, fontSize:12}}>Forgot your password?</Link>
+                                                          label={<Typography variant="caption">Remember Me</Typography>}/>
                                     </div>
                                     <Button
                                         type="submit"
@@ -215,7 +189,6 @@ export default function Login() {
                                         size="large"
                                         sx={{width: '90%'}}>Sign In</Button>
                                 </form>
-                                <Button onClick={logout}>Logout</Button>
                             </Box>
                         </CardContent>
                     </Card>

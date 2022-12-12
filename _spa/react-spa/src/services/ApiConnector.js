@@ -8,6 +8,16 @@ export default class ApiConnector {
     constructor() {
         // Getting the http address of the API from environment variables
         this.apiAddress = process.env.REACT_APP_API_URL
+
+        this.jwtTokenName = "jwTtoken"
+
+        // Look up dictionary for the API's data types
+        this.insightDataTypes = {
+            "Costs": "costs",
+            "Energy Imported": "energy-imported",
+            "Energy Exported": "energy-exported",
+            "Emissions": "co2-emissions"
+        };
     }
 
     ////////////////
@@ -22,6 +32,11 @@ export default class ApiConnector {
         var value = re.exec(document.cookie);
         return (value != null) ? unescape(value[1]) : null;
     }
+
+    getJwtToken() {
+        return this.getCookie(this.jwtTokenName)
+    }
+
 
     ////////////////
     // Endpoints
@@ -122,6 +137,21 @@ export default class ApiConnector {
             }).then(data => data.data)
     }
 
+    getSankeyData() {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+
+        const path = "data/flow"
+        const logToken = this.getCookie("jwTtoken")
+        return api.get(this.constructUrl(path),
+            {
+                headers: {'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken},
+                withCredentials: true}).then(data => data.data)
+    }
+
     getInsightData(dataType) {
         const api = axios.create({
             baseURL: process.env.REACT_APP_API_URL,
@@ -130,7 +160,7 @@ export default class ApiConnector {
 
         const path = "data/insight"
         const logToken = this.getCookie("jwTtoken")
-        return api.get(this.constructUrl(path) + "?dataType=" + dataType,
+        return api.get(this.constructUrl(path) + "?dataType=" + this.insightDataTypes[dataType],
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,6 +168,38 @@ export default class ApiConnector {
                 },
                 withCredentials: true
             }).then(data => data.data)
+    }
+
+    getLoggedIn() {
+        return this.getJwtToken() != null;
+    }
+
+    getUserRole() {
+        if (this.getLoggedIn()) {
+            return JSON.parse(window.atob(this.getJwtToken().split(".")[1])).role;
+        }
+        return null;
+    }
+
+    getUserDetails() {
+        if (this.getLoggedIn()) {
+            const tokenDetails = JSON.parse(window.atob(this.getJwtToken().split(".")[1]))
+            return {
+                "name": tokenDetails.family_name,
+                "email": tokenDetails.email
+            }
+        }
+        return null;
+    }
+
+    setLoggedOut() {
+        // Removes all page cookies
+        // https://www.jsdiaries.com/how-to-remove-all-cookies-in-react-js/#:~:text=Using%20native%20DOM%20methods @ 11/12/2022
+        document.cookie.split(";").forEach((c) => {
+            document.cookie = c
+                .replace(/^ +/, "")
+                .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
     }
 }
 

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApplication2.DTOs;
 
 namespace WebApplication2.Models;
 
@@ -33,8 +34,7 @@ public class PowerData{
         return dailyCost / 48;
     }
     public Dictionary<string, float> GetDataTypeStringDict() {
-        
-        
+
         return new Dictionary<string, float>{
             { "chp1ElectricityGen", this.CHP1ElectricityGen },
             { "chp2ElectricityGen", this.CHP2ElectricityGen },
@@ -56,5 +56,9 @@ public class PowerData{
             return null;
         }
         return GetDataTypeStringDict()[dataType];
+    }
+    
+    public FlowDTO ToFlowDto() {
+        return new FlowDTO(this.CHP1ElectricityGen, this.CHP2ElectricityGen, this.ImportElectricity, this.ExportElectricity, this.SiteElectricityDemand, this.Date);
     }
 }

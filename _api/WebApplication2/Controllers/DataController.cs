@@ -14,9 +14,9 @@ namespace WebApplication2.Controllers;
 [Route("data/")]
 public class DataController : Controller{
     private readonly IPowerDatas _powerData;
-    private DataService _dataService;
+    private IDataService _dataService;
 
-    public DataController(IPowerDatas powerData, DataService dataService){
+    public DataController(IPowerDatas powerData, IDataService dataService){
         _powerData = powerData;
         _dataService = dataService;
     }
@@ -31,6 +31,13 @@ public class DataController : Controller{
         List<GraphDataDTO>? graphData = _dataService.GetDataByDates(dataTypes.Split(","), date1, date2, GetCurrentUserOrgId());
 
         return Ok(graphData);
+    }
+    
+    [Route("flow")] //flow
+    [HttpGet]
+    public IActionResult GetFlow(){
+        FlowDTO? flowData = _dataService.GetTopFlow(GetCurrentUserOrgId());
+        return Ok(flowData);
     }
 
     [HttpGet]
