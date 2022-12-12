@@ -42,7 +42,7 @@ export default function Login() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const userPath = location.state?.from?.pathname || "/";
+    const userPath = location.state?.from?.pathname || "/advice";
     const adminPath = location.state?.from?.pathname || "/createOrganisation";
 
     const login = async (e) => {
