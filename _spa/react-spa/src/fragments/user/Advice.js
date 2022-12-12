@@ -22,11 +22,24 @@ const Advice = () => {
                 </div>
                 <br/>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <AdviceCard ititle={"Energy Exported"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
+                    <AdviceCard ititle={"Energy Exported"}  sub={[{
+                        sTitle: "Exported",
+                        sText: "5,000 kWh",
+                        percent: "na",
+                        arrowUp: true,
+                        good: true
+                    },
+                        {
+                            sTitle: "Exported",
+                            sText: "£2,000",
+                            percent: "na",
+                            arrowUp: true,
+                            good: true
+                        }]}></AdviceCard>
                 </div>
                 <br/>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <AdviceCard ititle={"Emissions"}  sub={[{ sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true }]}></AdviceCard>
+                    <AdviceCard ititle={"Emissions"}  sub={[{ sTitle: "Emissions", sText: "Weekly", percent: "10", arrowUp:false, good:true },{ sTitle: "Emissions", sText: "Monthly", percent: "4", arrowUp:false, good:true }]}></AdviceCard>
                 </div>
             </div>
         </ResponsiveContainer>
