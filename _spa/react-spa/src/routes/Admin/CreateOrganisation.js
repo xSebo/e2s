@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import axios from "axios";
 import {PhotoCamera} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -16,6 +17,9 @@ const api = axios.create({
 })
 
 export default function CreateOrganisation() {
+    const navigate = useNavigate();
+
+
     let config = {
         headers: {
             'Access-Control-Allow-Origin': 'https://localhost:7215',
@@ -40,13 +44,18 @@ export default function CreateOrganisation() {
             setEmpty(true);
             return;
         }
+        if(formData.FacilityName == ""){
+            setEmpty(true);
+            return;
+        }
         console.log(formData.File);
         console.log(formData.Name);
-        api.post("/organisations/createOrganisation", formData, config);
+        api.post("/organisations/createOrganisation", formData, config).then(() => navigate("/listOrganisations"));
     }
 
     const [formData] = useState({
         Name: "",
+        FacilityName: "",
         File: null,
     });
 
@@ -71,6 +80,18 @@ export default function CreateOrganisation() {
                             helperText={emptyField ? "Company name required" : ""}
                             onChange={(event) => {
                                 formData.Name = event.target.value
+                            }}/>
+                        <TextField
+                            error={emptyField ? emptyField : emptyField}
+                            id="facilityField"
+                            style={{width: "100%"}}
+                            label="Facility name*"
+                            name="name"
+                            variant={emptyField ? "filled" : "outlined"}
+                            color={emptyField ? "error" : "secondary"}
+                            helperText={emptyField ? "Facility name required" : ""}
+                            onChange={(event) => {
+                                formData.FacilityName = event.target.value
                             }}/>
                         <div style={{
                             display: "flex",

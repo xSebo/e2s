@@ -80,15 +80,13 @@ public class OrganisationController : Controller{
             Organisation organisation = new Organisation{
                 Name = org.Name,
                 Logo = upload.Name!,
-                FacilityName = ""
+                FacilityName = org.FacilityName
             };
             _orgDb.Add(organisation);
             _orgDb.Save();
             return Ok();
         }
-
         return Problem();
-
     }
     
     [HttpPost]
