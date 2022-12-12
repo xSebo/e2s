@@ -45,8 +45,6 @@ export default function EnergyFlowGraph(props) {
                     setDate(dateTimeString.split('T')[0])
                     setTime(dateTimeString.split('T')[1])
 
-                    console.log("sup")
-                    console.log(result)
                     let dataTemp
                     if (result.import > 0) {
                         dataTemp = {
@@ -98,7 +96,6 @@ export default function EnergyFlowGraph(props) {
                                     }
                             ]
                         };
-                        console.log(dataTemp)
                         setData3(dataTemp);
                     }
                     if (result.export > 0) {
@@ -145,7 +142,6 @@ export default function EnergyFlowGraph(props) {
                                 }
                             ]
                         };
-                        console.log(dataTemp)
                         setData3(dataTemp);
                     }
                     // if (props.graphType == "bar") {
@@ -154,8 +150,6 @@ export default function EnergyFlowGraph(props) {
                     // }
                 }
             })
-        console.log("woof")
-        console.log(data1)
         return () => mounted = false;
     }
 
