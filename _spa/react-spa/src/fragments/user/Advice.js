@@ -25,14 +25,14 @@ const Advice = () => {
                     <AdviceCard ititle={"Energy Exported"}  sub={[{
                         sTitle: "Exported",
                         sText: "5,000 kWh",
-                        percent: "na",
+                        percent: "10",
                         arrowUp: true,
                         good: true
                     },
                         {
                             sTitle: "Exported",
                             sText: "£2,000",
-                            percent: "na",
+                            percent: "10",
                             arrowUp: true,
                             good: true
                         }]}></AdviceCard>
