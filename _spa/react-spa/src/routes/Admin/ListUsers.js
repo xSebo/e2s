@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {Box, Button} from '@mui/material';
 import ApiConnector from '../../services/ApiConnector';
 import {DataGrid} from '@mui/x-data-grid';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const ListUsers = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const columns = [
         {
@@ -59,9 +61,14 @@ const ListUsers = () => {
     }, []);
 
     return (
-        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div style={{display: "flex", height:"100%", justifyContent: "center", alignItems: "center"}}>
             <Box style={{background: "white"}} sx={{height: 400, width: '40%'}}>
-                <DataGrid
+                <Button variant="contained" onClick={() => {
+                    navigate("/listOrganisations")
+                }} startIcon={<ArrowBackIcon/>}>
+                    Back
+                </Button>
+                <DataGrid style={{background:"white"}}
                     rows={users}
                     columns={columns}
                     pageSize={5}

@@ -76,7 +76,7 @@ const ListOrganisations = () => {
     }, []);
 
     return (
-        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div style={{display: "flex", height:"100%", justifyContent: "center", alignItems: "center"}}>
             <Box style={{background: "white"}} sx={{height: 400, width: '40%'}}>
                 <Button variant="contained" onClick={() => {
                     navigate("/createOrganisation")

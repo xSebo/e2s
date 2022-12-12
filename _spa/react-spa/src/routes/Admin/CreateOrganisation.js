@@ -61,7 +61,7 @@ export default function CreateOrganisation() {
 
     return (
         <div style={{display:"flex", alignItems:"center", justifyContent:"center", width:"100%", height:"100%"}}>
-        <Card style={{display:"flex", alignItems:"center", justifyContent:"center", width:"25%", height:"100%"}}>
+        <Card style={{display:"flex", alignItems:"center", justifyContent:"center", width:"25%", height:"50%"}}>
             <CardContent sx={{textAlign: 'center'}}>
                 <form noValidate autoComplete="off"
                       style={{display: "flex", flexDirection: "column", alignItems: "center", gap: "100px"}}>
