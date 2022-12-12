@@ -41,13 +41,63 @@ function DataPage(props){
             </div>
             <AdviceCard ititle={props.dataType}
                         style={{display: "flex", minWidth: "100%"}}
-                        sub={[{
-                            sTitle: "Gas",
-                            sText: "£100,000",
-                            percent: "40",
-                            arrowUp: true,
-                            good: true
-                        }]}></AdviceCard>
+                        sub={props.dataType == "Energy Imported"
+                                ?
+                                    [
+                                        {
+                                            sTitle: "Consumption",
+                                            sText: "Monthly",
+                                            percent: "20",
+                                            arrowUp: true,
+                                            good: false
+                                        }
+                                    ]
+
+                                : props.dataType == "Energy Exported"
+                                    ?
+                                        [
+                                            {
+                                                sTitle: "Exported",
+                                                sText: "5,000 kWh",
+                                                percent: "na",
+                                                arrowUp: true,
+                                                good: true
+                                            },
+                                            {
+                                                sTitle: "Exported",
+                                                sText: "£2,000",
+                                                percent: "na",
+                                                arrowUp: true,
+                                                good: true
+                                            }
+                                        ]
+                                    :
+                                        [
+                                            {
+                                                sTitle: "Daily cost",
+                                                sText: "£395",
+                                                percent: "8",
+                                                arrowUp: false,
+                                                good: true
+                                            },
+                                            {
+                                                sTitle: "Gas",
+                                                sText: "£200",
+                                                percent: "6",
+                                                arrowUp: false,
+                                                good: true
+                                            },
+                                            {
+                                                sTitle: "Imported",
+                                                sText: "£195",
+                                                percent: "6",
+                                                arrowUp: false,
+                                                good: true
+                                            }
+                                        ]
+                                    }>
+
+            </AdviceCard>
             <Card style={{
                 display: "flex",
                 width: "79%",
