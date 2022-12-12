@@ -59,6 +59,6 @@ public class PowerData{
     }
     
     public FlowDTO ToFlowDto() {
-        return new FlowDTO(this.CHP1ElectricityGen, this.CHP2ElectricityGen, this.ImportElectricity, this.ExportElectricity, this.SiteElectricityDemand);
+        return new FlowDTO(this.CHP1ElectricityGen, this.CHP2ElectricityGen, this.ImportElectricity, this.ExportElectricity, this.SiteElectricityDemand, this.Date);
     }
 }

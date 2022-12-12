@@ -71,7 +71,8 @@ public class DataService : IDataService {
         if (powerDataList.Count <= 0) {
             return null;
         }
-        return powerDataList[0].ToFlowDto();
+        Console.WriteLine(powerDataList[^1].Id);
+        return powerDataList[^1].ToFlowDto();
         
     }
 }

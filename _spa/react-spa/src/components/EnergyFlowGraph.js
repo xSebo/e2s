@@ -41,6 +41,10 @@ export default function EnergyFlowGraph(props) {
         getFlow()
             .then(result => {
                 if (mounted) {
+                    let dateTimeString = result.date.toString()
+                    setDate(dateTimeString.split('T')[0])
+                    setTime(dateTimeString.split('T')[1])
+
                     console.log("sup")
                     console.log(result)
                     let dataTemp
@@ -157,6 +161,8 @@ export default function EnergyFlowGraph(props) {
 
     const [sankey, setSankey] = useState();
     const [data3, setData3] = useState();
+    const [date, setDate] = useState();
+    const [time, setTime] = useState();
 
     useEffect(() => {
         loadFlow();
@@ -252,6 +258,8 @@ export default function EnergyFlowGraph(props) {
                 <div style={shadows}>
                     <Card sx={{padding: 1}}>
                         <CardContent sx={{}}>
+                            <div> {date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{time}
+                            </div>
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -276,6 +284,9 @@ export default function EnergyFlowGraph(props) {
                                 >
                                     <Tooltip/>
                                 </Sankey>
+                            </div>
+                            <div>
+                                This graph represents the flow of energy in this facility over the last half-hour. This data was captured on {date} at {time}.
                             </div>
                         </CardContent>
                     </Card>

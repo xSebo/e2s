@@ -4,6 +4,8 @@ import { Tooltip, Layer } from 'recharts';
 
 export default class Demo extends Component {
 
+    // Code used from xile611 at https://github.com/recharts/recharts/blob/db0f3f254f12d59583052e77a43822163c476c9f/demo/component/DemoLinkDemo.js
+
     static displayName = 'SankeyLinkDemo';
 
     static propTypes = {
