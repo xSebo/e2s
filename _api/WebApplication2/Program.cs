@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Repos;
 using WebApplication2.Services;
 using Insights = WebApplication2.Repos.Insights;
+using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,10 @@ builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHostedService<WeeklyMailingService>();
 
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo() {Title = "E2S API", Version = "v1"});
+});
+
 string authKey = config.GetSection(JWTKey.Position + ":Key").Value;
 
 builder.Services.AddAuthentication(item =>
@@ -88,6 +94,11 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseSwagger();
+app.UseSwaggerUI(c => {
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E2S v1");
+});
 
 app.UseCors(corsRulesName);
 
