@@ -25,7 +25,7 @@ export default function DemoSankeyNode({ x, y, width, height, index, payload, co
                 fontSize="12"
                 stroke="#333"
                 strokeOpacity="0.5"
-            >{payload.value + 'k'}</text>
+            >{payload.value + 'kW'}</text>
         </Layer>
     );
 }
