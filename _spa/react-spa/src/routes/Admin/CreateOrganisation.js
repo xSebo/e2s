@@ -76,7 +76,7 @@ export default function CreateOrganisation() {
                             label="Company name*"
                             name="name"
                             variant={emptyField ? "filled" : "outlined"}
-                            color={emptyField ? "error" : "secondary"}
+                            color={emptyField ? "error" : "primary"}
                             helperText={emptyField ? "Company name required" : ""}
                             onChange={(event) => {
                                 formData.Name = event.target.value
@@ -88,7 +88,7 @@ export default function CreateOrganisation() {
                             label="Facility name*"
                             name="name"
                             variant={emptyField ? "filled" : "outlined"}
-                            color={emptyField ? "error" : "secondary"}
+                            color={emptyField ? "error" : "primary"}
                             helperText={emptyField ? "Facility name required" : ""}
                             onChange={(event) => {
                                 formData.FacilityName = event.target.value
