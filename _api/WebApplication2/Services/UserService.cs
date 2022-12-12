@@ -17,4 +17,9 @@ public class UserService : IUserService {
         usersList.ForEach(user => usersToEmail.Add(new UserEmailDTO(user)));
         return usersToEmail;
     }
+
+    public UserEmailDTO? GetUserToEmail(string email) {
+        User? user = _users.ByEmail(email);
+        return user == null ? null : new UserEmailDTO(user);
+    }
 }

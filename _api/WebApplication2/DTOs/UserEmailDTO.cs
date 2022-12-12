@@ -10,4 +10,7 @@ public class UserEmailDTO {
         Email = user.Email;
         OrganisationId = user.Organisation.Id;
     }
+
+    public UserEmailDTO() {
+    }
 }
