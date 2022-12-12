@@ -32,7 +32,9 @@ public class DataService : IDataService {
         powerDatas.ForEach(powerdata => {
             GraphDataDTO dataEntry = new GraphDataDTO(dataTypes[0], powerdata);
             for (int i=1; i < (dataTypes.Length); i++) {
-                dataEntry.AddDataType(dataTypes[i], powerdata);
+                if (!dataEntry.YAxis.ContainsKey(dataTypes[i])) {
+                    dataEntry.AddDataType(dataTypes[i], powerdata);
+                }
             }
             graphData.Add(dataEntry);
         });
@@ -57,7 +59,7 @@ public class DataService : IDataService {
     public InsightDTO? GetTopInsight(String dataType, int orgId) {
         List<Insight> insightList = _insights.ByType(dataType, orgId);
 
-        if (insightList.Count <= 0) {
+        if (insightList == null || insightList.Count <= 0) {
             return null;
         }
         return insightList[0].ToDto();
