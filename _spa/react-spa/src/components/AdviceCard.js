@@ -1,19 +1,46 @@
 import axios from "axios";
 import {Card, CardContent, Divider, Typography} from "@mui/material"
 import {AiOutlineArrowUp, AiOutlineArrowDown} from 'react-icons/ai';
+import ApiConnector from "../services/ApiConnector";
+import React, {useEffect, useState} from "react";
+import {props} from "react-csv/lib/metaProps";
+import Advice from "../fragments/user/Advice";
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
 })
 
-export default function LoadAdviceCard({title, text, sub}) {
+export default function LoadAdviceCard(props) {
 
-    // const dummySub = [
-    //     { sTitle: "Gas", sText: "£100,000", percent: "40", arrowUp:true, good:true },
-    //     { sTitle: "emissions", sText: "£100,000", percent: "40", arrowUp:false, good:false },
-    //     { sTitle: "lorem ipsum", sText: "£100,000", percent: "40", arrowUp:true, good:true }
-    // ];
+
+    function getInsight() {
+        let dataType = props.ititle
+        const apiConnector = new ApiConnector();
+        return apiConnector.getInsightData(dataType);
+    }
+
+    function loadInsight() {
+        let mounted = true;
+        getInsight()
+            .then(result => {
+                if (mounted) {
+                    console.log(result.type)
+                    setInsightType(result.type);
+                    setInsightText(result.text);
+
+                }
+            })
+        return () => mounted = false;
+    }
+    const [insightType, setInsightType] = useState();
+    const [insightText, setInsightText] = useState();
+
+
+    useEffect(() => {
+        loadInsight();
+    }, [props.ititle, props.text]);
+    
 
     const Sub = ({ sTitle, sText, percent, arrowUp, good }) => (
         <div style={{display: "flex", borderBottomWidth: "1px", borderBottomColor: "grey", borderBottomStyle: "solid"}}>
@@ -49,11 +76,11 @@ export default function LoadAdviceCard({title, text, sub}) {
                                 {/*Left-hand box*/}
                                 <div style={{paddingRight: "10px", maxWidth:"50%", flexGrow: "2"}}>
                                     <Typography variant="h4"  sx ={{ fontWeight:'bold'}} >
-                                        {title}
+                                        {insightType}
                                     </Typography>
                                     <br/>
                                     <Typography variant="body1">
-                                        {text}
+                                        {insightText}
                                     </Typography>
                                 </div>
                                 {/*Divider*/}
@@ -61,7 +88,7 @@ export default function LoadAdviceCard({title, text, sub}) {
                                 {/*Right-hand box*/}
                                 <div style={{paddingLeft: "10px"}}>
                                     <div>
-                                        {sub.map((p, i) => (
+                                        {props.sub.map((p, i) => (
                                             <Sub {...p} key={i} />
                                         ))}
                                     </div>

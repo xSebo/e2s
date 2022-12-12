@@ -17,12 +17,12 @@ export default class ApiConnector {
         return this.apiAddress + "/" + path + "/"
     }
 
-    getCookie(name)
-    {
+    getCookie(name) {
         var re = new RegExp(name + "=([^;]+)");
         var value = re.exec(document.cookie);
         return (value != null) ? unescape(value[1]) : null;
     }
+
     ////////////////
     // Endpoints
     ////////////////
@@ -32,6 +32,76 @@ export default class ApiConnector {
         return axios.get(this.constructUrl(path)).then(response => {
             return response.status
         })
+    }
+
+    getOrganisations() {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        const path = "organisations/listOrganisations"
+        const logToken = this.getCookie("jwTtoken",)
+
+        return api.get(this.constructUrl(path),
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
+    }
+    getUsers(orgId) {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        const path = "organisations/listUsers"
+        const logToken = this.getCookie("jwTtoken",)
+
+        return api.get(this.constructUrl(path) + "?orgId=" + orgId,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
+    }
+
+    setOrganisation(row){
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        console.log(row)
+        const path = "organisations/editOrganisation"
+        const logToken = this.getCookie("jwTtoken",)
+        return api.post(this.constructUrl(path), row,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
+    }
+    setUser(row){
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+        console.log(row)
+        const path = "organisations/editUser"
+        const logToken = this.getCookie("jwTtoken",)
+        return api.post(this.constructUrl(path), row,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            })
     }
 
     getPowerData(dataType, date1, date2) {
@@ -44,9 +114,30 @@ export default class ApiConnector {
         const logToken = this.getCookie("jwTtoken")
         return api.get(this.constructUrl(path) + "?dataTypes=" + dataType + "&date1=" + date1 + "&date2=" + date2,
             {
-                headers: {'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + logToken},
-                withCredentials: true})
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            }).then(data => data.data)
+    }
+
+    getInsightData(dataType) {
+        const api = axios.create({
+            baseURL: process.env.REACT_APP_API_URL,
+            withCredentials: true
+        })
+
+        const path = "data/insight"
+        const logToken = this.getCookie("jwTtoken")
+        return api.get(this.constructUrl(path) + "?dataType=" + dataType,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + logToken
+                },
+                withCredentials: true
+            }).then(data => data.data)
     }
 }
 
@@ -78,7 +169,7 @@ axios.interceptors.response.use(response => {
     }
     window.location.href = path
 
-},error => {
+}, error => {
     return error
 });
 
