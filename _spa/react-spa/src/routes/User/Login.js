@@ -42,7 +42,8 @@ export default function Login() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    const userPath = location.state?.from?.pathname || "/";
+    const adminPath = location.state?.from?.pathname || "/createOrganisation";
 
     const login = async (e) => {
         e.preventDefault();
@@ -55,16 +56,20 @@ export default function Login() {
                     {
                         headers: {'Content-Type': 'application/json'},
                         withCredentials: true
-
                     }
                 );
 
                 const accessToken = response?.data?.jwTtoken;
                 const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
                 const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
-
                 setAuth({name, roles, accessToken});
-                navigate(from, {replace: true});
+                if (roles == "Admin"){
+                    navigate(adminPath, {replace: true});
+                }
+                else {
+                    navigate(userPath, {replace: true});
+
+                }
             } catch (err) {
                 if (!err?.response) {
                 }
