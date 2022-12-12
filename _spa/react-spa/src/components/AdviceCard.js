@@ -70,7 +70,7 @@ export default function LoadAdviceCard(props) {
 
     return (
 
-            <div style={{display: "flex", flexDirection: "column", alignItems:"center", maxWidth:"80%"}}>
+            <div style={{ flexDirection: "column", alignItems:"center", width:"80%"}}>
                 <div style={shadows}>
                     <Card sx={{ padding:1}}>
                         <CardContent sx={{}}>
