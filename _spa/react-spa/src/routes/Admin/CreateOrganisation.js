@@ -65,8 +65,8 @@ export default function CreateOrganisation() {
             <CardContent sx={{textAlign: 'center'}}>
                 <form noValidate autoComplete="off"
                       style={{display: "flex", flexDirection: "column", alignItems: "center", gap: "100px"}}>
-                    <div style={{display: "flex", flexDirection: "column", gap: "20px", alignItems: "center"}}>
-                        <Typography variant="h4" sx={{my: 3, fontWeight: 'bold'}}>
+                    <div style={{display: "flex", flexDirection: "column", gap: "8px", width:"100%", alignItems: "center"}}>
+                        <Typography variant="h1"sx ={{ fontSize:24, fontWeight:"bold"}}>
                             Create an organisation
                         </Typography>
                         <TextField
