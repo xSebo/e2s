@@ -4,7 +4,12 @@ import {
 } from "react-icons/fa";
 
 export const AdminNavbarData = [
-
+    {
+        title: "Skip to Content",
+        path: null,
+        icon: <FaWallet />,
+        cName: "nav-button",
+    },
     {
         title: "Create Organisation",
         path: "/createOrganisation",
@@ -18,9 +23,10 @@ export const AdminNavbarData = [
         cName: "nav-button",
     },
     {
+        type: "log-out",
         title: "Log Out",
         path: "/log-out",
         icon: <FaSignOutAlt />,
-        cName: "nav-button border-both",
+        cName: "nav-button border-top",
     },
 ];
