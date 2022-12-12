@@ -34,8 +34,7 @@ public class PowerData{
         return dailyCost / 48;
     }
     public Dictionary<string, float> GetDataTypeStringDict() {
-        
-        
+
         return new Dictionary<string, float>{
             { "chp1ElectricityGen", this.CHP1ElectricityGen },
             { "chp2ElectricityGen", this.CHP2ElectricityGen },
