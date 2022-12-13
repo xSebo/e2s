@@ -28,13 +28,18 @@ export default class ApiConnector {
     }
 
     getCookie(name) {
-        var re = new RegExp(name + "=([^;]+)");
-        var value = re.exec(document.cookie);
-        return (value != null) ? unescape(value[1]) : null;
+        // var re = new RegExp(name + "=([^;]+)");
+        // var value = re.exec(document.cookie);
+        return window.localStorage.getItem(this.jwtTokenName);
+        // return (value != null) ? unescape(value[1]) : null;
     }
 
     getJwtToken() {
         return this.getCookie(this.jwtTokenName)
+    }
+
+    saveJwtToken(token) {
+        window.localStorage.setItem(this.jwtTokenName, token)
     }
 
 
@@ -200,6 +205,7 @@ export default class ApiConnector {
                 .replace(/^ +/, "")
                 .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
         });
+        window.localStorage.removeItem(this.jwtTokenName)
     }
 }
 

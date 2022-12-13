@@ -21,6 +21,7 @@ import axios from "axios";
 
 import useAuth from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ApiConnector from "../../services/ApiConnector";
 
 
 const api = axios.create({
@@ -45,6 +46,8 @@ export default function Login() {
     const userPath = location.state?.from?.pathname || "/";
     const adminPath = location.state?.from?.pathname || "/createOrganisation";
 
+    const apiConnector = new ApiConnector;
+
     const login = async (e) => {
         e.preventDefault();
 
@@ -57,9 +60,13 @@ export default function Login() {
                         headers: {'Content-Type': 'application/json'},
                         withCredentials: true
                     }
-                );
+                ).then(data => {
+                    apiConnector.saveJwtToken(data.data["jwTtoken"])
+                    return data
+                });
 
                 const accessToken = response?.data?.jwTtoken;
+                console.log(accessToken)
                 const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
                 const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
                 setAuth({name, roles, accessToken});
