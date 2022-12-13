@@ -23,4 +23,12 @@
 ## Instructional Paragraph
 After cloning the application on to your machine. You will be able to go into the database folder where you can access the SQL scripts creation and example data. Then make sure you open and execute both scripts inside SQL as they will create and populate the needed database. After that, open it project into your preferred IDE then navigate to the terminal, once there make sure you are in the correct directory, react-spa. Inside here you can start the project with npm start. You also need to make sure the API is running for this to be complete. 
 
-* Head over to our [Wiki](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/home) to find out more about the project. 
+* Head over to our Wiki to find out more about the project in detail, contents shown below.
+### Wiki Contents
+* [Wiki Home](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/home)
+* [The Single Page Application](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/The-Single-Page-Application)
+* [The API & Database](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/The-API-and-Database)
+* [Tech Stack](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/Tech-stack)
+* [Pipeline](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/Pipeline)
+* [Design Patterns](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/Design-Patterns)
+* [C4 Model](https://git.cardiff.ac.uk/c1950117/adopting-tech-team-3/-/wikis/C4-Model)
