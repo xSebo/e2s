@@ -19,6 +19,7 @@ import Export from "./fragments/user/Export";
 import "./static/css/App.css"
 import Unauthorised from "./routes/Unauthorised";
 
+// followed a tutorial by Dave Gray https://www.youtube.com/watch?v=X3qyxo_UTR4&t=620s
 const ROLES = {
     'User': "User",
     'Admin': "Admin",
@@ -33,11 +34,11 @@ function App() {
                     {/* public routes */}
                     <Route path="login" element={<Login />} />
 
-                    {/* we want to protect these routes */}
+                    {/* User protected routes */}
                     <Route element={<RequireAuth allowedRoles={ROLES.User}/>}>
 
                         {/* User Dashboard Routes */}
-                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/" element={<Dashboard fragment={Advice} />} />
                         <Route path="advice" element={<Dashboard fragment={Advice} />} />
                         <Route path="costs" element={<Dashboard fragment={Costs} />} />
                         <Route path="energy-imported" element={<Dashboard fragment={EnergyImported} />} />
@@ -47,6 +48,7 @@ function App() {
                         <Route path="export" element={<Dashboard fragment={Export} />} />
                         <Route path="log-out" element={<Dashboard />} />
                     </Route>
+                    {/* Admin protected routes */}
                     <Route element={<RequireAuth allowedRoles={ROLES.Admin}/>}>
                         <Route path="createOrganisation" element={<AdminDashboard fragment={CreateOrganisation} />}/>
                         <Route path="listOrganisations" element={<AdminDashboard fragment={ListOrganisations} />} />
