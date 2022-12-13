@@ -3,6 +3,7 @@ import background from "../../static/images/background.png";
 import Center from "../../components/Center";
 import {Card, CardContent, Typography} from "@mui/material";
 import graph from "../../static/images/graph.png"
+import DataPage from "../../components/DataPage";
 
 function CO2Emissions(){
 
@@ -16,7 +17,8 @@ function CO2Emissions(){
     };
 
     return(
-        <div className="CO2Emissions">
+        <DataPage dataType="Emissions"/>
+        /*<div className="CO2Emissions">
             <div className="home" style={sectionStyle}>
                 <div style={{display:"flex", justifyContent:"space-around"}}>
                     <Typography variant="h1"  sx ={{ fontWeight:400, fontSize:50}} >
@@ -77,7 +79,7 @@ function CO2Emissions(){
                     </div>
                 </Center>
             </div>
-        </div>
+        </div>*/
     );
 }
 
