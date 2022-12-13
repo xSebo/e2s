@@ -11,7 +11,7 @@ export const SidebarData = [
         cName: "nav-button",
     },
     {
-        title: "Facility Name",
+        title: "Abacws",
         path: "/facilities",
         icon: <FaChartBar />,
         cName: "nav-facility",

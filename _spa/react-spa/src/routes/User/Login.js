@@ -66,7 +66,6 @@ export default function Login() {
                 });
 
                 const accessToken = response?.data?.jwTtoken;
-                console.log(accessToken)
                 const roles = JSON.parse(window.atob(accessToken.split(".")[1])).role;
                 const name = JSON.parse(window.atob(accessToken.split(".")[1])).name;
                 setAuth({name, roles, accessToken});

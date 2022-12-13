@@ -28,18 +28,14 @@ function getRandomColor() {
     var color = '#';
     for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * (letters.length - 1))];
-        console.log(Math.floor(Math.random() * (letters.length + 1)))
     }
-    console.log(color)
     return color;
 }
 
 export default function Graph(props) {
     function getList() {
-        console.log(props.dataTypes)
         let dataTypes = ""
         if (props.dataTypes == "") {
-            console.log("thinks null")
             dataTypes = "chp1ElectricityGen"
         } else {
             dataTypes = props.dataTypes
@@ -65,7 +61,6 @@ export default function Graph(props) {
         getList()
             .then(items => {
                 if (mounted) {
-                    console.log(items)
                     let graphTemp
                     if (props.graphType == "line") {
                         graphTemp = <CustLineChart data={items} xTitle={props.xTitle} yTitle={props.yTitle}/>

@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import dayjs from "dayjs";
-import {Button, Card, CardContent, InputLabel, MenuItem, Select} from "@mui/material";
+import {Button, Card, CardContent, MenuItem, Select} from "@mui/material";
 import axios from "axios";
 import TwoTimeSelector from "../../components/TwoTimeSelector";
 import Multidropdown from "../../components/Multidropdown";
 import Graph from "../../components/Graph";
+import ApiConnector from "../../services/ApiConnector";
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -26,11 +27,14 @@ const Export = () => {
         "importElectricity",
         "exportElectricity"
     ];
+
     const submit = () => {
+        const apiConnector = new ApiConnector();
         let date1 = encodeURIComponent(time1.format())
         let date2 = encodeURIComponent(time2.format())
-        return api.get("/data/byDate?dataTypes=" + selected + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
-            .then(data => data.data);
+        // return api.get("/data/byDate?dataTypes=" + selected + "&date1=" + date1 + "&date2=" + date2) //2020-12-31T17%3A00%3A00
+        //     .then(data => data.data);
+        return apiConnector.getPowerData(selected, date1, date2);
     }
 
     function formatData(data) {
@@ -59,7 +63,6 @@ const Export = () => {
         })
         csv.unshift(fields.join(',')) // add header column
         csv = csv.join('\r\n');
-        console.log(csv)
 
         var downloadLink = document.createElement("a");
         var blob = new Blob(["\ufeff", csv]);
